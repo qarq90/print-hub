@@ -1,0 +1,12 @@
+Pages:
+    Home
+    Today's Log
+    Upload Files
+    User
+        History
+        Authentication
+    Admin
+    About Us            -
+    Contact Us          -
+    Terms of service    -
+    Privacy Policy      -
