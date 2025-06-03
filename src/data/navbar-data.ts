@@ -6,7 +6,6 @@ import {
     LuUser,
     LuHistory,
     LuMail,
-    LuLogIn,
 } from "react-icons/lu";
 import {
     RiTerminalBoxLine,

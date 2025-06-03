@@ -8,6 +8,7 @@ import {
     LuPlus
 } from "react-icons/lu";
 import { DocumentType } from "@/interfaces/Document";
+import { cn } from "@/lib/utils"
 
 interface DetailsProps {
     doc: DocumentType;
@@ -61,12 +62,14 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
 
     const copiesHandler = (type: string) => {
         if (type === "inc") {
-            setNumberOfCopies(numberOfCopies + 1)
-            return
+            setNumberOfCopies(numberOfCopies + 1);
+            return;
         } else {
-            numberOfCopies === 1
-                ? alert("Number of copies cannot be negative or zero. If you do not want this document delete it.")
-                : setNumberOfCopies(numberOfCopies - 1)
+            if (numberOfCopies === 1) {
+                return
+            } else {
+                setNumberOfCopies(numberOfCopies - 1);
+            }
         }
     }
 
@@ -154,7 +157,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                             <span className="text-foreground">Copies:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
                                 <LuMinus
-                                    className="mt-1 bg-foreground/10 p-1 rounded-sm cursor-pointer"
+                                    className={cn("mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm", numberOfCopies === 1 && "cursor-not-allowed pointer-events-none")}
                                     size="24"
                                     onClick={() => copiesHandler("dec")}
                                 />
@@ -162,7 +165,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                                     {numberOfCopies}
                                 </span>
                                 <LuPlus
-                                    className="mt-1 bg-foreground/10 p-1 rounded-sm cursor-pointer"
+                                    className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
                                     size="24"
                                     onClick={() => copiesHandler("inc")}
                                 />

@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { cn } from "@/lib/utils"
 
 interface MainLayoutProps {
     children: ReactNode;
@@ -7,7 +8,7 @@ interface MainLayoutProps {
 
 export const MainLayout = ({ children, className }: MainLayoutProps) => {
     return (
-        <div className="min-h-[85vh] w-screen p-4 md:w-[65vw]">
+        <div className={cn("min-h-[85vh] w-screen p-4 md:w-[65vw]", className)}>
             {children}
         </div>
     )

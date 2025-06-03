@@ -117,7 +117,7 @@ export default function Client() {
                                                                 size={24}
                                                                 className={cn(
                                                                     "p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm",
-                                                                    file.print_count <= 1 && "opacity-50 cursor-not-allowed hover:bg-foreground/10"
+                                                                    file.print_count <= 1 && "opacity-50 cursor-not-allowed pointer-events-none hover:bg-foreground/10"
                                                                 )}
                                                                 onClick={() => file.print_count > 1 && decrementPrintCount(index)}
                                                             />
