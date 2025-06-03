@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Page() {
     return (
         <MainLayout>
-            <div className="mb-4 text-left">
+            <div className="mb-8 text-left">
                 <Text size="5xl" weight="bold">Privacy Policy</Text>
                 <Text size="base">
                     Last updated: 30/05/2025
