@@ -98,7 +98,6 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                                     <td className="p-4 align-middle">
                                                         <div className="flex flex-col">
                                                             <div className="font-medium text-foreground">{item.user_name}</div>
-                                                            <div className="text-sm text-foreground/70">{item.user_id}</div>
                                                         </div>
                                                     </td>
                                                 )}

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Baseball from "../../../public/img/not-logged-in/Baseball.png";
 import Basketball from "../../../public/img/not-logged-in/Basketball.png";
 import Diving from "../../../public/img/not-logged-in/Diving.png";
@@ -8,34 +7,26 @@ import Volleyball from "../../../public/img/not-logged-in/Volleyball.png";
 import Image from "next/image";
 import Link from "next/link";
 import { LuUserPlus } from "react-icons/lu";
-export const NotLoggedIn = () => {
-    const [number] = useState<number>(Math.floor(Math.random() * 6) + 1);
 
-    const getImage = () => {
-        switch (number) {
-            case 1:
-                return Baseball;
-            case 2:
-                return Basketball;
-            case 3:
-                return Volleyball;
-            case 4:
-                return Diving;
-            case 5:
-                return Fitness;
-            case 6:
-                return Surfing;
-            default:
-                return Baseball;
-        }
-    };
+const images = [
+    Baseball,
+    Basketball,
+    Volleyball,
+    Diving,
+    Fitness,
+    Surfing
+];
+
+export const NotLoggedIn = () => {
+    const randomImage = images[Math.floor(Math.random() * images.length)];
 
     return (
         <div className="w-full h-[82vh] md:h-[85vh] md:w-full flex justify-center items-center flex-col gap-6 md:mt-0 text-center">
             <Image
-                src={getImage()}
+                src={randomImage}
                 alt="Decorative illustration"
                 className="w-72 h-w-72 md:w-80 h-w-80 md:mx-auto"
+                priority
             />
 
             <div className="space-y-4 max-w-[275px] md:max-w-[300px]">

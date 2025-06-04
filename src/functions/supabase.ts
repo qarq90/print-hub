@@ -35,3 +35,41 @@ export const insertSupabase = async (
         };
     }
 };
+
+export const fetchUserHistory = async (user: UserProps) => {
+    try {
+        const { data: data } = await supabase
+            .from("prints")
+            .select("*")
+            .or(`user_id.eq.${user.id}`)
+            .order("uploaded_at", { ascending: false });
+
+        return { data, error: null, status: true };
+    } catch (error) {
+        console.error("Error inserting to Supabase:", error);
+        return {
+            data: null,
+            error: error instanceof Error ? error : new Error(String(error)),
+            status: false,
+        };
+    }
+};
+
+export const fetchTodaysQueue = async () => {
+    try {
+        const { data: data } = await supabase
+            .from("prints")
+            .select("*")
+            .or(`print_status.eq.${"pending"}`)
+            .order("uploaded_at", { ascending: false });
+
+        return { data, error: null, status: true };
+    } catch (error) {
+        console.error("Error inserting to Supabase:", error);
+        return {
+            data: null,
+            error: error instanceof Error ? error : new Error(String(error)),
+            status: false,
+        };
+    }
+};

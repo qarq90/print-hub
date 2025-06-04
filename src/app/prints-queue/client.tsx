@@ -9,8 +9,9 @@ import { ViewType } from "@/components/pages/common/ViewType";
 import { StatusType } from "@/components/pages/common/StatusType";
 import { UserProps } from "@/interfaces/User";
 import { DocumentType } from "@/interfaces/Document";
-import { fetchUserHistory } from "@/functions/supabase";
+import { fetchTodaysQueue, fetchUserHistory } from "@/functions/supabase";
 import { Loader } from "@/components/ui/loader";
+import { getFormatDate } from "@/functions/file";
 
 interface ClientProps {
     user: UserProps;
@@ -18,7 +19,6 @@ interface ClientProps {
 
 export default function Client({ user }: ClientProps) {
     const [viewType, setViewType] = useState(false);
-    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
     const [prints, setPrints] = useState<DocumentType[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -27,7 +27,7 @@ export default function Client({ user }: ClientProps) {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const result = await fetchUserHistory(user);
+                const result = await fetchTodaysQueue();
 
                 if (result.error) {
                     throw result.error;
@@ -47,10 +47,6 @@ export default function Client({ user }: ClientProps) {
             fetchData();
         }
     }, [user]);
-
-    const filteredHistory = statusType === "all"
-        ? prints || []
-        : (prints || []).filter(item => item.print_status === statusType);
 
     if (loading) {
         return (
@@ -83,19 +79,19 @@ export default function Client({ user }: ClientProps) {
     return (
         <MainLayout>
             <div className="mb-4 text-left">
-                <Text size="5xl" weight="bold">Print History</Text>
+                <Text size="5xl" weight="bold">Today&apos;s Queue</Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>
+
             </div>
-            <div className="flex justify-between md:py-0 py-3 flex-row items-center">
+            <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
                 <ViewType setViewType={setViewType} viewType={viewType} />
-                <StatusType setStatusType={setStatusType} statusType={statusType} />
             </div>
             {viewType ? (
-                <TableView documentResult={filteredHistory} page_type="user_history" />
+                <TableView documentResult={prints} page_type="todays_queue" />
             ) : (
-                <GridView documentResult={filteredHistory} page_type="user_history" />
+                <GridView documentResult={prints} page_type="todays_queue" />
             )}
         </MainLayout>
     );

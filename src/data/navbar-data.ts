@@ -29,9 +29,9 @@ export const NavbarLinks: NavbarLink[] = [
         isPrimaryLink: true,
     },
     {
-        text: "Today's Queue",
+        text: "Prints Queue",
         icon: LuCalendarRange,
-        href: "/todays-queue",
+        href: "/prints-queue",
         isPrimaryLink: true,
     },
     {
