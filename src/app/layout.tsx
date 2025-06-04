@@ -3,6 +3,7 @@ import "./globals.css";
 import { PrimaryBar } from "@/components/PrimaryBar";
 import { SecondaryBar } from "@/components/SecondaryBar";
 import { Footer } from "@/components/Footer";
+import { ClerkProvider } from '@clerk/nextjs';
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,15 +16,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="flex justify-center items-center">
-        <PrimaryBar />
-        <SecondaryBar />
-        <div>
-          {children}
-          <Footer />
-        </div>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className="flex justify-center items-center">
+          <PrimaryBar />
+          <SecondaryBar />
+          <div>
+            {children}
+            <Footer />
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

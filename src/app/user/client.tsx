@@ -1,12 +1,8 @@
 "use client";
 
-import { MainLayout } from "@/components/layouts/MainLayout";
-import { Text } from "@/components/ui/text";
+export default async function Client() {
 
-export default function Client() {
     return (
-        <MainLayout>
-            <Text size="5xl" weight="bold">Profile</Text>
-        </MainLayout>
+        <></>
     );
 }

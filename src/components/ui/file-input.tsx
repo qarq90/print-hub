@@ -10,7 +10,7 @@ interface FileUploadProps extends React.InputHTMLAttributes<HTMLInputElement> {
 }
 
 const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
-    ({ className, label = "Click to upload or drag and drop", description = ".pdf, .docx, .pptx, .xlsx, .png, .jpeg, .jpg", supportedFormats, handleFiles, ...props }, ref) => {
+    ({ className, label = "Click to upload or drag and drop", description = ".pdf, .png, .jpeg, .jpg", supportedFormats, handleFiles, ...props }, ref) => {
 
         const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.files) {
@@ -43,6 +43,7 @@ const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                         multiple
                         type="file"
                         className="hidden"
+                        accept=".pdf,.png,.jpeg,.jpg,application/pdf,image/png,image/jpeg"
                         onChange={onFileChange}
                         {...props}
                     />
