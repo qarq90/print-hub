@@ -129,7 +129,7 @@ export default function Client({ user }: ClientProps) {
                         router.push("/user/history");
                     }
                 } catch (e) {
-                    console.log("Something went wrong");
+                    console.log("Something went wrong: ", e);
                 } finally {
                     setSelectedFiles([]);
                     setLoading(false);

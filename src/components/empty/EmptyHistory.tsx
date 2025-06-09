@@ -9,7 +9,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuUpload } from "react-icons/lu";
 
-export const EmptyHistory = () => {
+interface EmptyHistoryProps {
+    variant?: "history" | "log";
+}
+
+export const EmptyHistory = ({ variant = "history" }: EmptyHistoryProps) => {
     const [number] = useState<number>(Math.floor(Math.random() * 6) + 1);
 
     const getImage = () => {
@@ -31,8 +35,13 @@ export const EmptyHistory = () => {
         }
     };
 
+    const title = variant === "history" ? "Empty History" : "Empty Print Queue";
+    const description = variant === "history"
+        ? "You haven't uploaded or scheduled any documents for printouts yet"
+        : "No documents have been uploaded or scheduled for printouts yet";
+
     return (
-        <div className="w-full h-[82vh] md:h-[85vh] md:w-full flex justify-center items-center flex-col gap-6 md:mt-0 text-center">
+        <div className="w-full h-[82vh] md:h-[60vh] md:w-full flex justify-center items-center flex-col gap-6 md:mt-0 text-center">
             <Image
                 src={getImage()}
                 alt="Decorative illustration"
@@ -41,10 +50,10 @@ export const EmptyHistory = () => {
 
             <div className="space-y-4 max-w-[275px] md:max-w-[300px]">
                 <h2 className="text-2xl font-bold text-foreground">
-                    Empty History
+                    {title}
                 </h2>
                 <p className="text-muted-foreground">
-                    You haven&apos;t uploaded or scheduled any documents for printouts yet
+                    {description}
                 </p>
                 <Link
                     href="/upload-files"

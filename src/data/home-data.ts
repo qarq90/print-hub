@@ -17,7 +17,7 @@ type featuresType = {
     icon: IconType;
     text: string;
     header: string;
-    columns: Number;
+    columns: number;
 };
 
 export const printHubFeatures: featuresType[] = [

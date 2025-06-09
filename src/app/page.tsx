@@ -2,8 +2,7 @@ import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
 import { Metadata } from "next";
 import Client from "./client";
-import { LuCloudLightning, LuShieldEllipsis, LuUpload, LuUserPlus, LuUsers } from "react-icons/lu";
-import { LuCheck, LuClock, LuList, LuShieldCheck } from "react-icons/lu";
+import { LuUpload, LuUserPlus } from "react-icons/lu";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils"

@@ -2,7 +2,7 @@
 import { Text } from "@/components/ui/text";
 import { DocumentType } from "@/interfaces/Document";
 import { useEffect, useState } from "react";
-import { LuX, LuCheck, LuClock, LuList, LuShieldCheck } from "react-icons/lu";
+import { LuX, LuCheck, LuClock, LuList } from "react-icons/lu";
 import { homeDataRecords } from "@/functions/supabase";
 
 export default function Client() {

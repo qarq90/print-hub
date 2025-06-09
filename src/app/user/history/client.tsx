@@ -81,7 +81,17 @@ export default function Client({ user }: ClientProps) {
     }
 
     if (!prints || prints.length === 0) {
-        return <EmptyHistory />;
+        return (
+            <MainLayout>
+                <div className="mb-4 flex flex-col gap-2 text-left">
+                    <Text size="5xl" weight="bold">Prints Queue</Text>
+                    <Text size="base">
+                        Last updated: {new Date().toLocaleDateString()}
+                    </Text>
+                </div>
+                <EmptyHistory variant="history" />
+            </MainLayout>
+        );
     }
 
     return (
