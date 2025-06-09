@@ -84,6 +84,12 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                                 Status
                                             </th>
                                             <th className="h-12 px-4 align-middle text-center text-foreground font-bold">
+                                                Color
+                                            </th>
+                                            <th className="h-12 px-4 align-middle text-center text-foreground font-bold">
+                                                Sided
+                                            </th>
+                                            <th className="h-12 px-4 align-middle text-center text-foreground font-bold">
                                             </th>
                                         </tr>
                                     </thead>
@@ -117,6 +123,12 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
                                                     <div className={`inline-block h-3 w-3 rounded-full ${getStatusColor(item.print_status)}`} />
+                                                </td>
+                                                <td className="p-4 align-middle text-center">
+                                                    {item.print_color === "b/w" ? "B/W" : "Colored"}
+                                                </td>
+                                                <td className="p-4 align-middle text-center">
+                                                    {item.print_type === "double_side" ? "Double" : "Single"}
                                                 </td>
                                                 <td className="p-4 align-middle text-foreground cursor-pointer">
                                                     <LuEllipsisVertical />

@@ -86,11 +86,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                                                 />
                                             </div>
 
-                                            <div className="mt-4 space-y-2">
-                                                <div className="flex justify-between text-sm">
-                                                    <span className="text-foreground/70">User :</span>
-                                                    <span className="text-foreground font-medium">{item.user_name}</span>
-                                                </div>
+                                            <div className="mt-2 space-y-2">
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Pages :</span>
                                                     <span className="text-foreground font-medium">{item.page_count}</span>
@@ -98,6 +94,14 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Copies :</span>
                                                     <span className="text-foreground font-medium">{item.print_count}</span>
+                                                </div>
+                                                <div className="flex justify-between text-sm">
+                                                    <span className="text-foreground/70">Color :</span>
+                                                    <span className="text-foreground font-medium">{item.print_color === "b/w" ? "Black & White" : "Colored"}</span>
+                                                </div>
+                                                <div className="flex justify-between text-sm">
+                                                    <span className="text-foreground/70">Sided :</span>
+                                                    <span className="text-foreground font-medium">{item.print_type === "double_side" ? "Double Side" : "Single Side"}</span>
                                                 </div>
                                             </div>
                                         </div>

@@ -15,7 +15,6 @@
         "@radix-ui/react-slot": "^1.2.3",
         "@supabase/supabase-js": "^2.49.9",
         "class-variance-authority": "^0.7.1",
-        "jszip": "^3.10.1",
         "next": "15.3.3",
         "pdf-lib": "^1.17.1",
         "pinata": "^2.4.4",

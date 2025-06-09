@@ -1,5 +1,4 @@
 import { PDFDocument } from "pdf-lib";
-import JSZip from "jszip";
 
 export const getFileType = (mimeType: string): string => {
     const mimeToExtension: Record<string, string> = {
@@ -75,95 +74,6 @@ export const getPDFPageCount = async (file: File): Promise<number> => {
         return pdfDoc.getPageCount();
     } catch (e) {
         console.error("Error estimating PDF page count:", e);
-        return 1;
-    }
-};
-
-export const getDOCXPageCount = async (file: File): Promise<number> => {
-    try {
-        const arrayBuffer = await file.arrayBuffer();
-        const zip = await JSZip.loadAsync(arrayBuffer);
-
-        const documentFile = zip.file("word/document.xml");
-        if (!documentFile) {
-            console.warn("DOCX file is missing document.xml");
-            return 1;
-        }
-
-        const documentXml = await documentFile.async("text");
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(documentXml, "text/xml");
-
-        const pageBreaks = xmlDoc.getElementsByTagName(
-            "w:lastRenderedPageBreak"
-        ).length;
-        const sectionBreaks = xmlDoc.getElementsByTagName("w:sectPr").length;
-        const paragraphs = xmlDoc.getElementsByTagName("w:p").length;
-
-        return Math.max(
-            pageBreaks || sectionBreaks || Math.ceil(paragraphs / 15)
-        );
-    } catch (error) {
-        console.error("Error estimating DOCX page count:", error);
-        return 1;
-    }
-};
-
-export const getXLSXPageCount = async (file: File): Promise<number> => {
-    try {
-        const arrayBuffer = await file.arrayBuffer();
-        const zip = await JSZip.loadAsync(arrayBuffer);
-
-        const worksheets = zip.file(/xl\/worksheets\/sheet\d+\.xml/);
-        const sheetCount = worksheets.length;
-
-        let totalPages = sheetCount;
-
-        const workbook = zip.file("xl/workbook.xml");
-        if (workbook) {
-            const workbookXml = await workbook.async("text");
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(workbookXml, "text/xml");
-
-            const definedNames = xmlDoc.getElementsByTagName("definedName");
-            totalPages =
-                Array.from(definedNames).filter((n) =>
-                    n.textContent?.includes("Print_Area")
-                ).length || sheetCount;
-        }
-
-        return Math.max(1, totalPages);
-    } catch (error) {
-        console.error("Error estimating XLSX page count:", error);
-        return 1;
-    }
-};
-
-export const getPPTXPageCount = async (file: File): Promise<number> => {
-    try {
-        const arrayBuffer = await file.arrayBuffer();
-        const zip = await JSZip.loadAsync(arrayBuffer);
-
-        const slides = zip.file(/ppt\/slides\/slide\d+\.xml/);
-        const notes = zip.file(/ppt\/notesSlides\/notesSlide\d+\.xml/);
-
-        const slideCount = slides.length;
-        const notesCount = notes.length;
-
-        const presentation = zip.file("ppt/presentation.xml");
-        let hiddenSlides = 0;
-
-        if (presentation) {
-            const presXml = await presentation.async("text");
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(presXml, "text/xml");
-            hiddenSlides =
-                xmlDoc.getElementsByTagName("p:sldId").length - slideCount;
-        }
-
-        return Math.max(1, slideCount + notesCount + hiddenSlides);
-    } catch (error) {
-        console.error("Error estimating PPTX page count:", error);
         return 1;
     }
 };

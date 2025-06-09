@@ -21,7 +21,7 @@ type AboutUsFAQ = {
 export const AboutUsFAQs: AboutUsFAQ[] = [
     {
         question: "What file types can I print through the system?",
-        answer: "We support all common file formats including PNG, JPG, PDF, DOCX, XLSX, and PPTX. For specialty formats, please contact our support team.",
+        answer: "We support all common file formats including PNG, JPG, PDF. For specialty formats, please contact our support team.",
     },
     {
         question: "How much does printing cost per page?",

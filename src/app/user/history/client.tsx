@@ -10,7 +10,7 @@ import { StatusType } from "@/components/pages/common/StatusType";
 import { UserProps } from "@/interfaces/User";
 import { DocumentType } from "@/interfaces/Document";
 import { fetchUserHistory } from "@/functions/supabase";
-import { Loader } from "@/components/ui/loader";
+import { HalfLoader } from "@/components/ui/loader";
 
 interface ClientProps {
     user: UserProps;
@@ -55,13 +55,17 @@ export default function Client({ user }: ClientProps) {
     if (loading) {
         return (
             <MainLayout>
-                <div className="mb-4 text-left">
-                    <Text size="5xl" weight="bold">Print History</Text>
+                <div className="mb-4 flex flex-col gap-2 text-left">
+                    <Text size="5xl" weight="bold">{user.fullName + "'s "}Print History</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <Loader />
+                <div className="flex justify-between md:py-0 py-3 flex-row items-center">
+                    <ViewType setViewType={setViewType} viewType={viewType} />
+                    <StatusType setStatusType={setStatusType} statusType={statusType} />
+                </div>
+                <HalfLoader />
             </MainLayout>
         );
     }
@@ -82,8 +86,8 @@ export default function Client({ user }: ClientProps) {
 
     return (
         <MainLayout>
-            <div className="mb-4 text-left">
-                <Text size="5xl" weight="bold">Print History</Text>
+            <div className="mb-4 flex flex-col gap-2 text-left">
+                <Text size="5xl" weight="bold">{user.fullName + "'s "}Print History</Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>

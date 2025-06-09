@@ -15,7 +15,7 @@ export const uploadToPinata = async (file: DocumentType) => {
         const data = new FormData();
         data.set("file", file.original_file);
 
-        const uploadRequest = await fetch("/api/post/file", {
+        const uploadRequest = await fetch("/api/post/upload-files", {
             method: "POST",
             body: data,
         });
@@ -28,5 +28,33 @@ export const uploadToPinata = async (file: DocumentType) => {
     } catch (e) {
         console.error(e);
         alert("Error uploading file");
+    }
+};
+
+export const deleteFromPinata = async (file: DocumentType) => {
+    try {
+        const response = await fetch("/api/delete/delete-file", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: file.document_id }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            return {
+                success: false,
+                error:
+                    data.error || `Failed to delete file (${response.status})`,
+            };
+        }
+
+        return { success: true, data };
+    } catch (e) {
+        const error = e instanceof Error ? e.message : "Connection failed";
+        console.error("Deletion error:", error);
+        return { success: false, error };
     }
 };

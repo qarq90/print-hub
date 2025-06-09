@@ -5,10 +5,16 @@ import {
     LuFileImage, LuFileArchive, LuBadgeIndianRupee,
     LuFileInput, LuCalendar, LuCopy, LuClock,
     LuMinus,
-    LuPlus
+    LuPlus,
+    LuPaintbrush,
+    LuBookOpen
 } from "react-icons/lu";
 import { DocumentType } from "@/interfaces/Document";
 import { cn } from "@/lib/utils"
+import { deleteDocument, updateDocument } from "@/functions/supabase";
+import { useRouter } from "next/navigation";
+import { deleteFromPinata } from "@/functions/pinata";
+import { FullLoader } from "@/components/ui/loader";
 
 interface DetailsProps {
     doc: DocumentType;
@@ -55,23 +61,56 @@ const formatFileType = (fileType: string) => {
 };
 
 export const Details = ({ doc, onClose }: DetailsProps) => {
-    const statusStyles = getStatusStyles(doc.print_status);
-    const cost = (doc.page_count * doc.print_count) * 2;
+    const [currentDoc, setCurrentDoc] = useState(doc);
+    const [loading, setLoading] = useState(false)
+    const router = useRouter()
+    const statusStyles = getStatusStyles(currentDoc.print_status);
+    const cost = (currentDoc.page_count * currentDoc.print_count) * (currentDoc.print_color === "colored" ? 10 : 2);
 
-    const [numberOfCopies, setNumberOfCopies] = useState(doc.print_count)
+    const incrementPrintCount = () => {
+        setCurrentDoc(prev => ({
+            ...prev,
+            print_count: prev.print_count + 1
+        }));
+    };
 
-    const copiesHandler = (type: string) => {
-        if (type === "inc") {
-            setNumberOfCopies(numberOfCopies + 1);
-            return;
-        } else {
-            if (numberOfCopies === 1) {
-                return
-            } else {
-                setNumberOfCopies(numberOfCopies - 1);
-            }
-        }
-    }
+    const decrementPrintCount = () => {
+        setCurrentDoc(prev => ({
+            ...prev,
+            print_count: Math.max(1, prev.print_count - 1)
+        }));
+    };
+
+    const togglePrintType = () => {
+        setCurrentDoc(prev => ({
+            ...prev,
+            print_type: prev.print_type === "single_side" ? "double_side" : "single_side"
+        }));
+    };
+
+    const togglePrintColor = () => {
+        setCurrentDoc(prev => ({
+            ...prev,
+            print_color: prev.print_color === "b/w" ? "colored" : "b/w"
+        }));
+    };
+
+    const deleteHandler = async () => {
+        setLoading(true)
+        await deleteDocument(currentDoc)
+        await deleteFromPinata(currentDoc)
+        router.refresh()
+        onClose();
+        setLoading(false)
+    };
+
+    const updateHandler = async () => {
+        setLoading(true)
+        await updateDocument(currentDoc)
+        router.refresh()
+        onClose();
+        setLoading(false)
+    };
 
     return (
         <>
@@ -108,19 +147,19 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Owner:</span>
                             <span className="font-medium text-right">
-                                {doc.user_name}
+                                {currentDoc.user_name}
                             </span>
                         </div>
                     </div>
 
                     <div className="flex justify-center items-center gap-3">
                         <span className="text-foreground flex-shrink-0 mt-1">
-                            {getFileTypeIcon(doc.file_type)}
+                            {getFileTypeIcon(currentDoc.file_type)}
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">File Name:</span>
                             <span className="font-medium text-right">
-                                {doc.file_name}
+                                {currentDoc.file_name}
                             </span>
                         </div>
                     </div>
@@ -132,7 +171,47 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">File Type:</span>
                             <span className="font-medium text-right">
-                                {formatFileType(doc.file_type)}
+                                {formatFileType(currentDoc.file_type)}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-center items-center gap-3">
+                        <span className="text-foreground flex-shrink-0 mt-1">
+                            <LuBookOpen />
+                        </span>
+                        <div className="flex-1 flex justify-between">
+                            <span className="text-foreground">Sided:</span>
+                            <span
+                                className={cn(
+                                    "cursor-pointer rounded-md transition-colors text-right",
+                                    currentDoc.print_type !== "single_side"
+                                        ? "text-foreground"
+                                        : "bg-foreground/10 px-2 py-0.5 hover:bg-foreground hover:text-background"
+                                )}
+                                onClick={togglePrintType}
+                            >
+                                {currentDoc.print_type === "double_side" ? "Double Side" : "Single Side"}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-center items-center gap-3">
+                        <span className="text-foreground flex-shrink-0 mt-1">
+                            <LuPaintbrush />
+                        </span>
+                        <div className="flex-1 flex justify-between">
+                            <span className="text-foreground">Color:</span>
+                            <span
+                                className={cn(
+                                    "cursor-pointer rounded-md transition-colors text-right",
+                                    currentDoc.print_color !== "colored"
+                                        ? "text-foreground"
+                                        : "bg-foreground/10 px-2 py-0.5 hover:bg-foreground hover:text-background"
+                                )}
+                                onClick={togglePrintColor}
+                            >
+                                {currentDoc.print_color === "b/w" ? "Black & White" : "Colored"}
                             </span>
                         </div>
                     </div>
@@ -144,7 +223,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Pages:</span>
                             <span className="font-medium text-right">
-                                {doc.page_count}
+                                {currentDoc.page_count}
                             </span>
                         </div>
                     </div>
@@ -157,17 +236,17 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                             <span className="text-foreground">Copies:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
                                 <LuMinus
-                                    className={cn("mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm", numberOfCopies === 1 && "cursor-not-allowed pointer-events-none")}
+                                    className={cn("mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm", currentDoc.print_count <= 1 && "cursor-not-allowed pointer-events-none")}
                                     size="24"
-                                    onClick={() => copiesHandler("dec")}
+                                    onClick={decrementPrintCount}
                                 />
                                 <span>
-                                    {numberOfCopies}
+                                    {currentDoc.print_count}
                                 </span>
                                 <LuPlus
                                     className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
                                     size="24"
-                                    onClick={() => copiesHandler("inc")}
+                                    onClick={incrementPrintCount}
                                 />
                             </span>
                         </div>
@@ -180,7 +259,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Status:</span>
                             <span className={`font-medium text-right ${statusStyles.text}`}>
-                                {doc.print_status}
+                                {currentDoc.print_status}
                             </span>
                         </div>
                     </div>
@@ -192,7 +271,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Uploaded:</span>
                             <span className="font-medium text-right">
-                                {doc.uploaded_at}
+                                {currentDoc.uploaded_at}
                             </span>
                         </div>
                     </div>
@@ -210,12 +289,20 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                     </div>
 
                     <div className="grid grid-cols-3 gap-2 pt-3">
-                        <Button variant="destructive" className="w-auto">Delete</Button>
+                        <Button variant="destructive" className="w-auto" onClick={deleteHandler}>Delete</Button>
                         <Button variant="outline" className="w-auto" onClick={onClose}>Close</Button>
-                        <Button variant={numberOfCopies === doc.print_count ? "ghost" : "default"} disabled={numberOfCopies === doc.print_count} className="w-auto">Update</Button>
+                        <Button
+                            variant={JSON.stringify(currentDoc) === JSON.stringify(doc) ? "ghost" : "default"}
+                            onClick={updateHandler}
+                            disabled={JSON.stringify(currentDoc) === JSON.stringify(doc)}
+                            className="w-auto"
+                        >
+                            Update
+                        </Button>
                     </div>
                 </div>
             </div>
+            {loading && <FullLoader />}
         </>
     );
 };

@@ -6,6 +6,8 @@ export interface DocumentType {
     file_type: string;
     print_count: number;
     page_count: number;
+    print_type: "single_side" | "double_side";
+    print_color: "colored" | "b/w";
     print_status: "pending" | "completed" | "cancelled";
     ipfs_cid?: string;
     uploaded_at: string;
