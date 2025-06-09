@@ -82,7 +82,6 @@ const Text: React.FC<TextProps> = ({
     tracking,
     decoration,
     transform,
-    asChild = false,
     ...props
 }) => {
     return (
