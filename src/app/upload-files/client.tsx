@@ -141,7 +141,7 @@ export default function Client({ user }: ClientProps) {
     return (
         <>
             <MainLayout>
-                <div className="space-y-4">
+                <div className="flex flex-col gap-4">
                     <Text size="5xl" weight="bold">
                         Upload Files
                     </Text>

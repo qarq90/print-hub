@@ -13,7 +13,7 @@ import { DocumentType } from "@/interfaces/Document";
 import { cn } from "@/lib/utils"
 import { deleteDocument, updateDocument } from "@/functions/supabase";
 import { useRouter } from "next/navigation";
-import { deleteFromPinata } from "@/functions/pinata";
+import { deleteFromPinata, downloadFile } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
 
 interface DetailsProps {
@@ -70,7 +70,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
     const incrementPrintCount = () => {
         setCurrentDoc(prev => ({
             ...prev,
-            print_count: prev.print_count + 1
+            print_count: prev.print_count + 1,
         }));
     };
 
@@ -111,6 +111,14 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
         onClose();
         setLoading(false)
     };
+
+    const downloadHandler = async () => {
+        setLoading(true)
+        const generatedLink: string = await downloadFile(currentDoc)
+        console.log(generatedLink)
+        onClose();
+        setLoading(false)
+    }
 
     return (
         <>
@@ -158,7 +166,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">File Name:</span>
-                            <span className="font-medium text-right">
+                            <span className="font-medium text-right truncate">
                                 {currentDoc.file_name}
                             </span>
                         </div>
@@ -288,7 +296,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2 pt-3">
+                    <div className="grid grid-cols-4 gap-2 pt-3">
                         <Button variant="destructive" className="w-auto" onClick={deleteHandler}>Delete</Button>
                         <Button variant="outline" className="w-auto" onClick={onClose}>Close</Button>
                         <Button
@@ -299,6 +307,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         >
                             Update
                         </Button>
+                        <Button className="w-auto" onClick={downloadHandler}>Download</Button>
                     </div>
                 </div>
             </div>
