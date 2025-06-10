@@ -114,7 +114,7 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
 
     const downloadHandler = async () => {
         setLoading(true)
-        const generatedLink: string = await downloadFile(currentDoc)
+        const generatedLink = await downloadFile(currentDoc)
         console.log(generatedLink)
         onClose();
         setLoading(false)
