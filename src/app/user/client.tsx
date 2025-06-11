@@ -1,7 +1,6 @@
 "use client";
 
-export default async function Client() {
-
+export default function Client() {
     return (
         <></>
     );

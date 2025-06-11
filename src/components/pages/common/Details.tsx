@@ -11,14 +11,15 @@ import {
 } from "react-icons/lu";
 import { DocumentType } from "@/interfaces/Document";
 import { cn } from "@/lib/utils"
-import { deleteDocument, updateDocument } from "@/functions/supabase";
+import { cancelDocument, completeDocument, updateDocument } from "@/functions/supabase";
 import { useRouter } from "next/navigation";
-import { deleteFromPinata, downloadFile } from "@/functions/pinata";
+import { deleteFromPinata, viewFile } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
 
 interface DetailsProps {
     doc: DocumentType;
     onClose: () => void;
+    page_type: "user_history" | "todays_queue" | "admin_page";
 }
 
 const getStatusStyles = (status: string) => {
@@ -60,7 +61,7 @@ const formatFileType = (fileType: string) => {
     return fileType.charAt(0).toUpperCase() + fileType.slice(1).toLowerCase();
 };
 
-export const Details = ({ doc, onClose }: DetailsProps) => {
+export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const [currentDoc, setCurrentDoc] = useState(doc);
     const [loading, setLoading] = useState(false)
     const router = useRouter()
@@ -82,22 +83,30 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
     };
 
     const togglePrintType = () => {
-        setCurrentDoc(prev => ({
-            ...prev,
-            print_type: prev.print_type === "single_side" ? "double_side" : "single_side"
-        }));
+        if (page_type === "todays_queue") {
+            return
+        } else {
+            setCurrentDoc(prev => ({
+                ...prev,
+                print_type: prev.print_type === "single_side" ? "double_side" : "single_side"
+            }));
+        }
     };
 
     const togglePrintColor = () => {
-        setCurrentDoc(prev => ({
-            ...prev,
-            print_color: prev.print_color === "b/w" ? "colored" : "b/w"
-        }));
+        if (page_type === "todays_queue") {
+            return
+        } else {
+            setCurrentDoc(prev => ({
+                ...prev,
+                print_color: prev.print_color === "b/w" ? "colored" : "b/w"
+            }));
+        }
     };
 
-    const deleteHandler = async () => {
+    const cancelHandler = async () => {
         setLoading(true)
-        await deleteDocument(currentDoc)
+        await cancelDocument(currentDoc)
         await deleteFromPinata(currentDoc)
         router.refresh()
         onClose();
@@ -112,10 +121,16 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
         setLoading(false)
     };
 
-    const downloadHandler = async () => {
+    const viewHandler = async () => {
         setLoading(true)
-        const generatedLink = await downloadFile(currentDoc)
-        console.log(generatedLink)
+        await viewFile(currentDoc)
+    }
+
+    const completeHandler = async () => {
+        setLoading(true)
+        await completeDocument(currentDoc)
+        await deleteFromPinata(currentDoc)
+        router.refresh()
         onClose();
         setLoading(false)
     }
@@ -190,17 +205,32 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Sided:</span>
-                            <span
-                                className={cn(
-                                    "cursor-pointer rounded-md transition-colors text-right",
-                                    currentDoc.print_type !== "single_side"
-                                        ? "text-foreground"
-                                        : "bg-foreground/10 px-2 py-0.5 hover:bg-foreground hover:text-background"
-                                )}
-                                onClick={togglePrintType}
-                            >
-                                {currentDoc.print_type === "double_side" ? "Double Side" : "Single Side"}
-                            </span>
+                            <div className="flex flex-row gap-2">
+                                <span
+                                    className={cn(
+                                        "rounded-md transition-colors text-right px-2 py-0.5",
+                                        currentDoc.print_type !== "single_side"
+                                            ? "text-foreground"
+                                            : "bg-foreground/10",
+                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                    )}
+                                    onClick={togglePrintType}
+                                >
+                                    Double Side
+                                </span>
+                                <span
+                                    className={cn(
+                                        "rounded-md transition-colors px-2 py-0.5 text-right",
+                                        currentDoc.print_type !== "double_side"
+                                            ? "text-foreground"
+                                            : "bg-foreground/10",
+                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                    )}
+                                    onClick={togglePrintType}
+                                >
+                                    Single Side
+                                </span>
+                            </div>
                         </div>
                     </div>
 
@@ -210,17 +240,32 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Color:</span>
-                            <span
-                                className={cn(
-                                    "cursor-pointer rounded-md transition-colors text-right",
-                                    currentDoc.print_color !== "colored"
-                                        ? "text-foreground"
-                                        : "bg-foreground/10 px-2 py-0.5 hover:bg-foreground hover:text-background"
-                                )}
-                                onClick={togglePrintColor}
-                            >
-                                {currentDoc.print_color === "b/w" ? "Black & White" : "Colored"}
-                            </span>
+                            <div className="flex flex-row gap-2">
+                                <span
+                                    className={cn(
+                                        "rounded-md transition-colors text-right px-2 py-0.5",
+                                        currentDoc.print_color !== "b/w"
+                                            ? "text-foreground"
+                                            : "bg-foreground/10",
+                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                    )}
+                                    onClick={togglePrintColor}
+                                >
+                                    Black and White
+                                </span>
+                                <span
+                                    className={cn(
+                                        "rounded-md transition-colors text-right px-2 py-0.5",
+                                        currentDoc.print_color !== "colored"
+                                            ? "text-foreground"
+                                            : "bg-foreground/10",
+                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                    )}
+                                    onClick={togglePrintColor}
+                                >
+                                    Colored
+                                </span>
+                            </div>
                         </div>
                     </div>
 
@@ -243,19 +288,27 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Copies:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
-                                <LuMinus
-                                    className={cn("mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm", currentDoc.print_count <= 1 && "cursor-not-allowed pointer-events-none")}
-                                    size="24"
-                                    onClick={decrementPrintCount}
-                                />
+                                {
+                                    page_type === "user_history" && (
+                                        <LuMinus
+                                            className={cn("mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm", currentDoc.print_count <= 1 && "cursor-not-allowed pointer-events-none")}
+                                            size="24"
+                                            onClick={decrementPrintCount}
+                                        />
+                                    )
+                                }
                                 <span>
                                     {currentDoc.print_count}
                                 </span>
-                                <LuPlus
-                                    className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
-                                    size="24"
-                                    onClick={incrementPrintCount}
-                                />
+                                {
+                                    page_type === "user_history" && (
+                                        <LuPlus
+                                            className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
+                                            size="24"
+                                            onClick={incrementPrintCount}
+                                        />
+                                    )
+                                }
                             </span>
                         </div>
                     </div>
@@ -296,18 +349,91 @@ export const Details = ({ doc, onClose }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-4 gap-2 pt-3">
-                        <Button variant="destructive" className="w-auto" onClick={deleteHandler}>Delete</Button>
-                        <Button variant="outline" className="w-auto" onClick={onClose}>Close</Button>
+                    <div className="flex flex-row w-full gap-2 pt-3">
+                        {
+                            page_type !== "todays_queue" && (
+                                <Button
+                                    variant={
+                                        currentDoc.print_status === "pending"
+                                            ? "destructive"
+                                            : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                                ? "ghost"
+                                                : "default"
+                                    }
+                                    onClick={cancelHandler}
+                                    disabled={
+                                        currentDoc.print_status === "completed" ||
+                                        currentDoc.print_status === "cancelled"
+                                    }
+                                    className="grow"
+                                >
+                                    Cancel
+                                </Button>
+                            )
+                        }
+                        {
+                            (page_type !== "admin_page" && (page_type === "user_history" || page_type === "todays_queue")) && (
+                                <Button variant="outline" className="grow" onClick={onClose}>Close</Button>
+                            )
+                        }
+                        {
+                            page_type !== "todays_queue" && (
+                                <Button
+                                    variant={
+                                        currentDoc.print_status === "pending"
+                                            ? (
+                                                JSON.stringify(currentDoc) === JSON.stringify(doc) ? "ghost" : "default"
+                                            )
+                                            : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                                ? "ghost"
+                                                : "default"
+                                    }
+                                    onClick={updateHandler}
+                                    disabled={
+                                        JSON.stringify(currentDoc) === JSON.stringify(doc) ||
+                                        currentDoc.print_status === "completed" ||
+                                        currentDoc.print_status === "cancelled"
+                                    }
+                                    className="grow"
+                                >
+                                    Update
+                                </Button>
+                            )
+                        }
                         <Button
-                            variant={JSON.stringify(currentDoc) === JSON.stringify(doc) ? "ghost" : "default"}
-                            onClick={updateHandler}
-                            disabled={JSON.stringify(currentDoc) === JSON.stringify(doc)}
-                            className="w-auto"
+                            variant={
+                                currentDoc.print_status === "pending"
+                                    ? "default"
+                                    : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                        ? "ghost"
+                                        : "default"
+                            }
+                            disabled={
+                                currentDoc.print_status === "completed" ||
+                                currentDoc.print_status === "cancelled"
+                            }
+                            className="grow"
+                            onClick={viewHandler}
                         >
-                            Update
+                            View
                         </Button>
-                        <Button className="w-auto" onClick={downloadHandler}>Download</Button>
+                        {page_type === "admin_page" && (
+                            <Button
+                                className="grow"
+                                variant={
+                                    currentDoc.print_status === "pending"
+                                        ? "default"
+                                        : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                            ? "ghost"
+                                            : "default"
+                                }
+                                disabled={
+                                    currentDoc.print_status === "completed"
+                                } onClick={completeHandler}
+                            >
+                                Completed
+                            </Button>
+                        )}
                     </div>
                 </div>
             </div>

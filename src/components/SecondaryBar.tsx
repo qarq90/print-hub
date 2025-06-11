@@ -19,7 +19,7 @@ export const SecondaryBar = () => {
                                 href={link.href.toString()}
                                 className={cn(
                                     "list-none cursor-pointer overflow-hidden group",
-                                    pathname === link.href.toString()
+                                    pathname.includes(link.href.toString())
                                         ? "text-accent"
                                         : "text-foreground",
                                 )}

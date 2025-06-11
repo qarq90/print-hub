@@ -15,7 +15,7 @@ export const FAQSection = () => {
             <Text size="3xl" weight="bold">FAQs</Text>
             <div className="grid grid-cols-1 gap-4 mt-2 mb-12">
                 {AboutUsFAQs.map((faq, index) => (
-                    <React.Fragment key={index}>
+                    <div key={index}>
                         <Accordion
                             key={index}
                             className="rounded-md md:px-0 px-4"
@@ -38,7 +38,7 @@ export const FAQSection = () => {
                                 <Separator className="my-4" key={index + 1} />
                             )
                         }
-                    </React.Fragment>
+                    </div>
                 ))}
             </div>
         </>

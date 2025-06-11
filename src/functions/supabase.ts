@@ -82,6 +82,24 @@ export const fetchTodaysQueue = async () => {
     }
 };
 
+export const fetchAll = async () => {
+    try {
+        const { data: data } = await supabase
+            .from("prints")
+            .select("*")
+            .order("uploaded_at", { ascending: false });
+
+        return { data, error: null, status: true };
+    } catch (error) {
+        console.error("Error inserting to Supabase:", error);
+        return {
+            data: null,
+            error: error instanceof Error ? error : new Error(String(error)),
+            status: false,
+        };
+    }
+};
+
 export const homeDataRecords = async () => {
     try {
         const { data: pending } = await supabase
@@ -160,11 +178,11 @@ export const updateDocument = async (document: DocumentType) => {
     }
 };
 
-export const deleteDocument = async (document: DocumentType) => {
+export const cancelDocument = async (document: DocumentType) => {
     try {
         const { error } = await supabase
             .from("prints")
-            .delete()
+            .update({ print_status: "cancelled" })
             .eq("document_id", document.document_id)
             .select();
 
@@ -174,7 +192,31 @@ export const deleteDocument = async (document: DocumentType) => {
 
         return true;
     } catch (error) {
-        console.error("Error deleting document from Supabase:", error);
+        console.error("Error cancelling document in Supabase:", error);
+
+        return {
+            data: null,
+            error: error instanceof Error ? error : new Error(String(error)),
+            status: false,
+        };
+    }
+};
+
+export const completeDocument = async (document: DocumentType) => {
+    try {
+        const { error } = await supabase
+            .from("prints")
+            .update({ print_status: "completed" })
+            .eq("document_id", document.document_id)
+            .select();
+
+        if (error) {
+            throw error;
+        }
+
+        return true;
+    } catch (error) {
+        console.error("Error cancelling document in Supabase:", error);
 
         return {
             data: null,

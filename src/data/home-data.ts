@@ -1,15 +1,13 @@
 import {
     LuCloudLightning,
-    LuUsers,
     LuShieldEllipsis,
     LuList,
-    LuCheck,
-    LuClock,
     LuFileText,
     LuWorkflow,
     LuRefreshCw,
     LuCloud,
     LuSmartphone,
+    LuCheckCheck,
 } from "react-icons/lu";
 import { IconType } from "react-icons";
 
@@ -17,7 +15,6 @@ type featuresType = {
     icon: IconType;
     text: string;
     header: string;
-    columns: number;
 };
 
 export const printHubFeatures: featuresType[] = [
@@ -25,72 +22,45 @@ export const printHubFeatures: featuresType[] = [
         icon: LuSmartphone,
         header: "Mobile Ready",
         text: "Request and approve documents from any device.",
-        columns: 1,
     },
     {
         icon: LuShieldEllipsis,
         header: "Secure & Private",
-        text: "Your documents are encrypted and automatically deleted after printing. Complete privacy for sensitive materials.",
-        columns: 2,
+        text: "Encrypted documents with automatic deletion after printing.",
     },
     {
         icon: LuFileText,
         header: "Smart Request System",
-        text: "Intuitive forms with auto-fill and templates for common document types.",
-        columns: 1,
+        text: "Intuitive forms with auto-fill for common document types.",
     },
     {
         icon: LuWorkflow,
         header: "Automated Workflows",
-        text: "Routing logic that ensures documents reach the right approvers instantly.",
-        columns: 1,
+        text: "Documents routed instantly to the right approvers.",
     },
     {
         icon: LuRefreshCw,
-        header: "Real-Time Tracking",
-        text: "Live status updates from submission to printing to pickup.",
-        columns: 1,
+        header: "Print Tracking",
+        text: "Monitor status from submission to printing to pickup.",
     },
     {
         icon: LuCloud,
-        header: "Secure Cloud Storage",
-        text: "All documents securely stored with version history.",
-        columns: 1,
-    },
-    {
-        icon: LuSmartphone,
-        header: "Analytics Dashboard",
-        text: "Insights into printing volumes and process bottlenecks.",
-        columns: 1,
+        header: "Cloud Storage",
+        text: "Secure storage with version history for all documents.",
     },
     {
         icon: LuCloudLightning,
         header: "Lightning Fast",
-        text: "Get your college materials printed within 24 hours. Fast, convenient academic printing.",
-        columns: 1,
-    },
-    {
-        icon: LuUsers,
-        header: "Team Friendly",
-        text: "Built for campus life. Track your academic prints, share with classmates, and manage group project printing easily.",
-        columns: 1,
+        text: "Get your academic materials printed within 24 hours.",
     },
     {
         icon: LuList,
         header: "Track Everything",
-        text: "Monitor all your print jobs in real-time with our intuitive dashboard.",
-        columns: 1,
+        text: "Monitor all print jobs in real-time via dashboard.",
     },
     {
-        icon: LuCheck,
+        icon: LuCheckCheck,
         header: "Fast Turnaround",
-        text: "Get your college materials printed within 24 hours.",
-        columns: 1,
-    },
-    {
-        icon: LuClock,
-        header: "Team Friendly",
-        text: "Built for campus life. Share with classmates and manage group projects easily.",
-        columns: 1,
+        text: "College materials printed and ready within 24 hours.",
     },
 ];

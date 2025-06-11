@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
 import { Metadata } from "next";
-import Client from "./client";
+// import Client from "./client";
 import { LuUpload, LuUserPlus } from "react-icons/lu";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -30,15 +30,15 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="flex flex-col items-center justify-center gap-8 my-72">
-        <Text weight="bold" className="text-7xl">Why Choose PrintHub?</Text>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
+      <div className="flex flex-col gap-8 w-full justify-center items-center my-72">
+        <Text weight="bold" className="md:text-7xl text-5xl text-center">Why Choose PrintHub?</Text>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
           {printHubFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <div
                 key={index}
-                className={cn("flex flex-col gap-3 rounded-lg border border-foreground/10 justify-center items-center px-4 py-8 hover:shadow-md transition-all", feature.columns === 1 ? "col-span-1" : "col-span-2")}
+                className={cn("flex flex-col gap-3 rounded-lg border border-foreground/10 justify-center items-center px-4 py-8 hover:shadow-md transition-all")}
               >
                 <Icon size={36} />
                 <Text size="xl" weight="semibold">{feature.header}</Text>
@@ -51,10 +51,7 @@ export default function Page() {
         </div>
       </div>
 
-
-
-
-      <Client />
+      {/* <Client /> */}
     </MainLayout >
   );
 }

@@ -7,7 +7,7 @@ import { DocumentType } from "@/interfaces/Document";
 
 interface GridViewProps {
     documentResult: DocumentType[];
-    page_type: "user_history" | "todays_queue";
+    page_type: "user_history" | "todays_queue" | "admin_page";
 }
 
 export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type }) => {
@@ -120,6 +120,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                 <Details
                     doc={selectedDoc}
                     onClose={handleCloseDetails}
+                    page_type={page_type}
                 />
             )}
         </div>

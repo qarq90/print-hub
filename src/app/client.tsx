@@ -48,7 +48,7 @@ export default function Client() {
     return (
         <div className="flex flex-col gap-12 py-8">
             <div className="flex flex-col gap-6 w-full mx-auto my-72">
-                <Text weight="bold" className="text-3xl">Recent Print Activity</Text>
+                <Text weight="bold" className="md:text-7xl text-5xl text-center">Recent Print Activity</Text>
                 {loading ? (
                     <div className="flex items-center justify-center p-8">
                         <Text weight="medium">Loading print records...</Text>

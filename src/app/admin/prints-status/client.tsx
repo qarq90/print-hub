@@ -1,4 +1,4 @@
-"use client";
+"use client";;
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
@@ -7,19 +7,14 @@ import { TableView } from "@/components/pages/common/TableView";
 import { GridView } from "@/components/pages/common/GridView";
 import { ViewType } from "@/components/pages/common/ViewType";
 import { StatusType } from "@/components/pages/common/StatusType";
-import { UserProps } from "@/interfaces/User";
 import { DocumentType } from "@/interfaces/Document";
-import { fetchUserHistory } from "@/functions/supabase";
+import { fetchAll } from "@/functions/supabase";
 import { HalfLoader } from "@/components/ui/loader";
 
-interface ClientProps {
-    user: UserProps;
-}
-
-export default function Client({ user }: ClientProps) {
+export default function Client() {
     const [viewType, setViewType] = useState(false);
-    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
     const [prints, setPrints] = useState<DocumentType[] | null>(null);
+    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -27,7 +22,7 @@ export default function Client({ user }: ClientProps) {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const result = await fetchUserHistory(user);
+                const result = await fetchAll();
 
                 if (result.error) {
                     throw result.error;
@@ -43,10 +38,8 @@ export default function Client({ user }: ClientProps) {
             }
         };
 
-        if (user) {
-            fetchData();
-        }
-    }, [user]);
+        fetchData()
+    }, []);
 
     const filteredHistory = statusType === "all"
         ? prints || []
@@ -56,14 +49,14 @@ export default function Client({ user }: ClientProps) {
         return (
             <MainLayout>
                 <div className="mb-4 flex flex-col gap-2 text-left">
-                    <Text size="5xl" weight="bold">{user.fullName + "'s "}Print History</Text>
+                    <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
+
                 </div>
-                <div className="flex justify-between md:py-0 py-3 flex-row items-center">
+                <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
                     <ViewType setViewType={setViewType} viewType={viewType} />
-                    <StatusType setStatusType={setStatusType} statusType={statusType} />
                 </div>
                 <HalfLoader />
             </MainLayout>
@@ -89,7 +82,7 @@ export default function Client({ user }: ClientProps) {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory variant="history" />
+                <EmptyHistory variant="log" />
             </MainLayout>
         );
     }
@@ -97,19 +90,19 @@ export default function Client({ user }: ClientProps) {
     return (
         <MainLayout>
             <div className="mb-4 flex flex-col gap-2 text-left">
-                <Text size="5xl" weight="bold">Print History</Text>
+                <Text size="5xl" weight="bold">Prints</Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>
             </div>
-            <div className="flex justify-between md:py-0 py-3 flex-row items-center">
+            <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
                 <ViewType setViewType={setViewType} viewType={viewType} />
                 <StatusType setStatusType={setStatusType} statusType={statusType} />
             </div>
             {viewType ? (
-                <TableView documentResult={filteredHistory} page_type="user_history" />
+                <TableView documentResult={filteredHistory} page_type="admin_page" />
             ) : (
-                <GridView documentResult={filteredHistory} page_type="user_history" />
+                <GridView documentResult={filteredHistory} page_type="admin_page" />
             )}
         </MainLayout>
     );

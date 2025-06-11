@@ -190,37 +190,59 @@ export default function Client({ user }: ClientProps) {
                                                 </div>
 
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-foreground/70">Sided :</span>
-                                                    <span
-                                                        onClick={() => togglePrintType(index)}
-                                                        className={cn(
-                                                            "cursor-pointer rounded-md transition-colors text-right",
-                                                            file.print_type !== "single_side"
-                                                                ? "text-foreground"
-                                                                : "bg-foreground/10 px-2 py-0.5 hover:bg-foreground/20"
-                                                        )}
-                                                    >
-                                                        {file.print_type === "single_side"
-                                                            ? "Single Side"
-                                                            : "Double Side"}
-                                                    </span>
+                                                    <span className="text-foreground">Sided:</span>
+                                                    <div className="flex flex-row gap-2">
+                                                        <span
+                                                            className={cn(
+                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
+                                                                file.print_type !== "single_side"
+                                                                    ? "text-foreground"
+                                                                    : "bg-foreground/10",
+                                                            )}
+                                                            onClick={() => togglePrintType(index)}
+                                                        >
+                                                            Double Side
+                                                        </span>
+                                                        <span
+                                                            className={cn(
+                                                                "cursor-pointer rounded-md transition-colors px-2 py-0.5 text-right",
+                                                                file.print_type !== "double_side"
+                                                                    ? "text-foreground"
+                                                                    : "bg-foreground/10",
+                                                            )}
+                                                            onClick={() => togglePrintType(index)}
+                                                        >
+                                                            Single Side
+                                                        </span>
+                                                    </div>
                                                 </div>
 
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-foreground/70">Color :</span>
-                                                    <span
-                                                        onClick={() => togglePrintColor(index)}
-                                                        className={cn(
-                                                            "cursor-pointer rounded-md transition-colors text-right",
-                                                            file.print_color === "b/w"
-                                                                ? "text-foreground"
-                                                                : "bg-foreground/10 px-2 py-0.5 hover:bg-foreground/20"
-                                                        )}
-                                                    >
-                                                        {file.print_color === "b/w"
-                                                            ? "Black & White"
-                                                            : "Colored"}
-                                                    </span>
+                                                    <span className="text-foreground">Color:</span>
+                                                    <div className="flex flex-row gap-2">
+                                                        <span
+                                                            className={cn(
+                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
+                                                                file.print_color !== "b/w"
+                                                                    ? "text-foreground"
+                                                                    : "bg-foreground/10",
+                                                            )}
+                                                            onClick={() => togglePrintColor(index)}
+                                                        >
+                                                            Black and White
+                                                        </span>
+                                                        <span
+                                                            className={cn(
+                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
+                                                                file.print_color !== "colored"
+                                                                    ? "text-foreground"
+                                                                    : "bg-foreground/10",
+                                                            )}
+                                                            onClick={() => togglePrintColor(index)}
+                                                        >
+                                                            Colored
+                                                        </span>
+                                                    </div>
                                                 </div>
 
                                                 <div className="grid grid-cols-2 items-center">
@@ -253,7 +275,7 @@ export default function Client({ user }: ClientProps) {
                                 ))}
                             </div>
 
-                            <div className="w-full my-10 grid grid-cols-1 md:grid-cols-3 gap-3">
+                            <div className="w-full my-10 grid grid-cols-3 gap-3">
                                 <Button
                                     variant="destructive"
                                     onClick={() => setSelectedFiles([])}
@@ -268,8 +290,9 @@ export default function Client({ user }: ClientProps) {
                         </>
                     )}
                 </div>
-            </MainLayout>
-            {loading && <FullLoader />}
+            </MainLayout >
+            {loading && <FullLoader />
+            }
         </>
     );
 }

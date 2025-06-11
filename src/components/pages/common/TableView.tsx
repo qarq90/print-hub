@@ -7,7 +7,7 @@ import { DocumentType } from "@/interfaces/Document";
 
 interface TableViewProps {
     documentResult: DocumentType[];
-    page_type: "user_history" | "todays_queue"
+    page_type: "user_history" | "todays_queue" | "admin_page"
 }
 
 export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type }) => {
@@ -150,6 +150,7 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                 <Details
                     doc={selectedDoc}
                     onClose={handleCloseDetails}
+                    page_type={page_type}
                 />
             )}
         </div>

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function Page() {
     return (
         <MainLayout>
-            <div className="mb-8 text-left">
+            <div className="mb-8 text-left flex flex-col">
                 <Text size="5xl" weight="bold">Contact Us</Text>
                 <Text>
                     We&apos;d love to hear from you!
