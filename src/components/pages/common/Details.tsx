@@ -124,6 +124,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const viewHandler = async () => {
         setLoading(true)
         await viewFile(currentDoc)
+        setLoading(false)
     }
 
     const completeHandler = async () => {
