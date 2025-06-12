@@ -4,7 +4,6 @@ import {
     LuCalendarRange,
     LuPlus,
     LuUser,
-    LuHistory,
     LuFileText,
     LuShield,
     LuMail,
@@ -36,12 +35,6 @@ export const NavbarLinks: NavbarLink[] = [
         text: "Upload Files",
         icon: LuPlus,
         href: "/upload-files",
-        isPrimaryLink: true,
-    },
-    {
-        text: "History",
-        icon: LuHistory,
-        href: "/user/history",
         isPrimaryLink: true,
     },
     {
@@ -80,10 +73,4 @@ export const NavbarLinks: NavbarLink[] = [
         href: "/admin",
         isPrimaryLink: false,
     },
-    // {
-    //     text: "Login",
-    //     icon: LuLogIn,
-    //     href: "/authentication",
-    //     isPrimaryLink: true,
-    // },
 ];

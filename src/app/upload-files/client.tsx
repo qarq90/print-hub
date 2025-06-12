@@ -196,9 +196,9 @@ export default function Client({ user }: ClientProps) {
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
-                                                                file.print_type !== "single_side"
-                                                                    ? "text-foreground"
-                                                                    : "bg-foreground/10",
+                                                                file.print_type === "double_side"
+                                                                    ? "bg-foreground/10"
+                                                                    : "text-foreground",
                                                             )}
                                                             onClick={() => togglePrintType(index)}
                                                         >
@@ -207,9 +207,9 @@ export default function Client({ user }: ClientProps) {
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors px-2 py-0.5 text-right",
-                                                                file.print_type !== "double_side"
-                                                                    ? "text-foreground"
-                                                                    : "bg-foreground/10",
+                                                                file.print_type === "single_side"
+                                                                    ? "bg-foreground/10"
+                                                                    : "text-foreground",
                                                             )}
                                                             onClick={() => togglePrintType(index)}
                                                         >
@@ -224,9 +224,9 @@ export default function Client({ user }: ClientProps) {
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
-                                                                file.print_color !== "b/w"
-                                                                    ? "text-foreground"
-                                                                    : "bg-foreground/10",
+                                                                file.print_color === "b/w"
+                                                                    ? "bg-foreground/10"
+                                                                    : "text-foreground",
                                                             )}
                                                             onClick={() => togglePrintColor(index)}
                                                         >
@@ -235,9 +235,9 @@ export default function Client({ user }: ClientProps) {
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
-                                                                file.print_color !== "colored"
-                                                                    ? "text-foreground"
-                                                                    : "bg-foreground/10",
+                                                                file.print_color === "colored"
+                                                                    ? "bg-foreground/10"
+                                                                    : "text-foreground",
                                                             )}
                                                             onClick={() => togglePrintColor(index)}
                                                         >
@@ -310,21 +310,6 @@ export default function Client({ user }: ClientProps) {
                                 <p className="text-sm">
                                     Your {selectedFiles.length} file{selectedFiles.length !== 1 ? 's' : ''} have been queued for printing.
                                 </p>
-                                <div className="mt-4 border-t border-foreground/25 pt-4">
-                                    <h4 className="text-sm my-2 font-medium ">Print Summary</h4>
-                                    <ul className="mt-4 space-y-2 text-sm text-foreground/70">
-                                        {selectedFiles.map((file, index) => (
-                                            <li key={index} className="flex justify-between">
-                                                <span className="truncate max-w-[180px]">{file.file_name}</span>
-                                                <span>
-                                                    {file.print_count} copy{file.print_count !== 1 ? 'ies' : ''} ·
-                                                    {file.print_color === 'b/w' ? ' B/W' : ' Colored'} ·
-                                                    {file.print_type === 'single_side' ? ' Single' : ' Double'}
-                                                </span>
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
                             </div>
                         </div>
                         <div className="mt-5 grid grid-cols-2 gap-3">
@@ -340,7 +325,7 @@ export default function Client({ user }: ClientProps) {
                             <Button
                                 onClick={() => {
                                     setIsOpen(false);
-                                    router.push('/user/history');
+                                    router.push('/user');
                                 }}
                             >
                                 View Print History

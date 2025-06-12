@@ -3,6 +3,7 @@ import { NavbarLinks } from "@/data/navbar-data";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils"
+import { Theme } from "./Theme";
 
 export const PrimaryBar = () => {
     const pathname = usePathname();
@@ -31,6 +32,9 @@ export const PrimaryBar = () => {
                         </Link>
                     )
             )}
+            <div className="md:block hidden">
+                <Theme />
+            </div>
         </nav>
     );
 };

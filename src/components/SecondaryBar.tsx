@@ -4,7 +4,6 @@ import { NavbarLinks } from "@/data/navbar-data";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils"
-import { Theme } from "./Theme";
 
 export const SecondaryBar = () => {
     const pathname = usePathname();
@@ -35,9 +34,6 @@ export const SecondaryBar = () => {
                         )
                 )
             }
-            <div className="md:block hidden">
-                <Theme />
-            </div>
         </nav >
     );
 };

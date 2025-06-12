@@ -31,7 +31,7 @@ export const Theme = () => {
         <div
             onClick={handleThemeToggle}
             className={cn(
-                "flex justify-end text-2xl cursor-pointer group gap-2",
+                "flex flex-row-reverse justify-end text-2xl cursor-pointer group gap-2",
             )}
         >
             <span className="text-sm opacity-0 py-1 px-2 rounded-md group-hover:bg-foreground/10 group-hover:opacity-100 transition-opacity duration-200">

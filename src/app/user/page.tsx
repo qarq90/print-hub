@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
 import { auth, currentUser } from '@clerk/nextjs/server'
+import { UserProps } from "@/interfaces/User";
 import Image from "next/image";
 import { SignOutButton } from "@clerk/nextjs";
 import { NotLoggedIn } from "@/components/empty/NotLoggedIn";
@@ -21,6 +22,17 @@ export default async function Page() {
         return <NotLoggedIn />
     }
 
+    const userProps: UserProps = {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        fullName: user.fullName,
+        emailAddresses: user.emailAddresses.map(email => ({
+            emailAddress: email.emailAddress
+        })),
+        imageUrl: user.imageUrl
+    };
+
     return (
         <MainLayout>
             <div className="flex gap-4 flex-row justify-between items-center md:mt-4">
@@ -32,7 +44,7 @@ export default async function Page() {
                     <SignOutButton />
                 </div>
             </div>
-            <Client />
+            <Client user={userProps} />
         </MainLayout>
     );
 }
