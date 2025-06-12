@@ -1,12 +1,4 @@
 import { PDFDocument } from "pdf-lib";
-import {
-    LuFileText,
-    LuFile,
-    LuFileImage,
-    LuFileArchive,
-    LuFileInput,
-} from "react-icons/lu";
-import { DocumentType } from "@/interfaces/Document";
 
 export const getFileType = (mimeType: string): string => {
     const mimeToExtension: Record<string, string> = {
