@@ -1,4 +1,15 @@
 import { PDFDocument } from "pdf-lib";
+import {
+    LuX,
+    LuFileText,
+    LuCheck,
+    LuFile,
+    LuFileImage,
+    LuFileArchive,
+    LuFileInput,
+    LuClock,
+} from "react-icons/lu";
+import { DocumentType } from "@/interfaces/Document";
 
 export const getFileType = (mimeType: string): string => {
     const mimeToExtension: Record<string, string> = {
@@ -76,4 +87,31 @@ export const getPDFPageCount = async (file: File): Promise<number> => {
         console.error("Error estimating PDF page count:", e);
         return 1;
     }
+};
+
+export const getFileTypeIcon = (fileType: string) => {
+    switch (fileType.toLowerCase()) {
+        case "image":
+            return <LuFileImage />;
+        case "pdf":
+            return <LuFileText />;
+        case "word":
+            return <LuFileInput />;
+        case "archive":
+            return <LuFileArchive />;
+        default:
+            return <LuFile />;
+    }
+};
+
+export const formatFileType = (fileType: string) => {
+    return fileType.charAt(0).toUpperCase() + fileType.slice(1).toLowerCase();
+};
+
+export const calculateCost = (doc: DocumentType) => {
+    return (
+        doc.page_count *
+        doc.print_count *
+        (doc.print_color === "colored" ? 10 : 2)
+    );
 };

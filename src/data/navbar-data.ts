@@ -5,14 +5,12 @@ import {
     LuPlus,
     LuUser,
     LuHistory,
+    LuFileText,
+    LuShield,
     LuMail,
+    LuSettings,
 } from "react-icons/lu";
-import {
-    RiTerminalBoxLine,
-    RiShieldKeyholeLine,
-    RiInformationLine,
-} from "react-icons/ri";
-import { BiCog } from "react-icons/bi";
+import { RiInformationLine } from "react-icons/ri";
 
 type NavbarLink = {
     text: string;
@@ -66,19 +64,19 @@ export const NavbarLinks: NavbarLink[] = [
     },
     {
         text: "Terms Of Service",
-        icon: RiTerminalBoxLine,
+        icon: LuFileText,
         href: "/terms-of-service",
         isPrimaryLink: false,
     },
     {
         text: "Privacy Policy",
-        icon: RiShieldKeyholeLine,
+        icon: LuShield,
         href: "/privacy-policy",
         isPrimaryLink: false,
     },
     {
         text: "Admin",
-        icon: BiCog,
+        icon: LuSettings,
         href: "/admin",
         isPrimaryLink: false,
     },

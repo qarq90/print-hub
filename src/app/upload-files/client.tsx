@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { DocumentType } from "@/interfaces/Document";
 import { FileUpload } from "@/components/ui/file-input";
-import { LuMinus, LuPlus, LuTrash } from "react-icons/lu";
+import { LuCheckCheck, LuMinus, LuPlus, LuTrash } from "react-icons/lu";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { getPDFPageCount } from "@/functions/file";
 import { getFormatDate, getFileType, getFileSize } from "@/functions/file";
@@ -15,6 +15,7 @@ import { UserProps } from "@/interfaces/User";
 import { useRouter } from "next/navigation";
 import { FullLoader } from "@/components/ui/loader";
 import { PinataResult } from "@/interfaces/Pinata";
+import { Modal } from "@/components/Modal";
 
 interface ClientProps {
     user: UserProps;
@@ -23,6 +24,7 @@ interface ClientProps {
 export default function Client({ user }: ClientProps) {
     const [selectedFiles, setSelectedFiles] = useState<DocumentType[]>([]);
     const [loading, setLoading] = useState(false);
+    const [isOpen, setIsOpen] = useState(false)
     const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     const router = useRouter();
@@ -126,12 +128,11 @@ export default function Client({ user }: ClientProps) {
                     const supabaseResult = await insertSupabase(user, file, pinataResult);
                     if (supabaseResult.status) {
                         setLoading(false);
-                        router.push("/user/history");
+                        setIsOpen(true)
                     }
                 } catch (e) {
                     console.log("Something went wrong: ", e);
                 } finally {
-                    setSelectedFiles([]);
                     setLoading(false);
                 }
             })
@@ -291,8 +292,63 @@ export default function Client({ user }: ClientProps) {
                     )}
                 </div>
             </MainLayout >
-            {loading && <FullLoader />
-            }
+            {loading && <FullLoader />}
+            {isOpen && (
+                <Modal
+                    isOpen={isOpen}
+                    onClose={() => setIsOpen(false)}
+                    closeOnOutsideClick
+                    closeOnEsc
+                >
+                    <div className="p-6">
+                        <div className="flex flex-col justify-center items-center gap-4 text-center">
+                            <LuCheckCheck size={48} color="accent" />
+                            <h3 className="mt-2 text-lg text-center font-medium">
+                                Files Uploaded Successfully!
+                            </h3>
+                            <div className="">
+                                <p className="text-sm">
+                                    Your {selectedFiles.length} file{selectedFiles.length !== 1 ? 's' : ''} have been queued for printing.
+                                </p>
+                                <div className="mt-4 border-t border-foreground/25 pt-4">
+                                    <h4 className="text-sm my-2 font-medium ">Print Summary</h4>
+                                    <ul className="mt-4 space-y-2 text-sm text-foreground/70">
+                                        {selectedFiles.map((file, index) => (
+                                            <li key={index} className="flex justify-between">
+                                                <span className="truncate max-w-[180px]">{file.file_name}</span>
+                                                <span>
+                                                    {file.print_count} copy{file.print_count !== 1 ? 'ies' : ''} ·
+                                                    {file.print_color === 'b/w' ? ' B/W' : ' Colored'} ·
+                                                    {file.print_type === 'single_side' ? ' Single' : ' Double'}
+                                                </span>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="mt-5 grid grid-cols-2 gap-3">
+                            <Button
+                                variant="outline"
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    setSelectedFiles([]);
+                                }}
+                            >
+                                Upload More Files
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    router.push('/user/history');
+                                }}
+                            >
+                                View Print History
+                            </Button>
+                        </div>
+                    </div>
+                </Modal>
+            )}
         </>
     );
 }

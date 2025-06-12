@@ -24,7 +24,7 @@ export const insertSupabase = async (
                 file_name: file.file_name,
                 file_type: file.file_type,
                 print_count: file.print_count,
-                page_count: file.page_count + 1,
+                page_count: file.page_count,
                 print_type: file.print_type,
                 print_color: file.print_color,
                 print_status: "pending",
