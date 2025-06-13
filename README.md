@@ -8,7 +8,7 @@ A modern web app for queueing, uploading, and managing print jobs seamlessly.
 
 Explore the live site: **[https://print-hub-five.vercel.app/](https://print-hub-five.vercel.app/)**
 
---
+
 
 ## 📌 Features
 
@@ -20,7 +20,7 @@ Explore the live site: **[https://print-hub-five.vercel.app/](https://print-hub-
 - Update, complete, cancel, and view details of every job.
 - Theming support with light/dark toggle.
 
---
+
 
 ## 🔧 Tech Stack
 
@@ -31,7 +31,7 @@ Explore the live site: **[https://print-hub-five.vercel.app/](https://print-hub-
 - **PDF Handling**: `pdf-lib` to count pages in client uploads
 - **Deployment**: Vercel
 
---
+
 
 ## 🛠️ Local Setup
 
