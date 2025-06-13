@@ -9,7 +9,7 @@ export const SecondaryBar = () => {
     const pathname = usePathname();
 
     return (
-        <nav className="fixed bottom-0 right-1/2 transform bg-background md:bg-transparent translate-x-1/2 md:right-10 md:top-1/2 md:-translate-y-1/2 md:translate-x-0 py-4 px-0 rounded-lg flex md:flex-col flex-row gap-9 text-2xl z-30 hidden md:flex">
+        <nav className="hidden md:fixed md:right-4 md:top-1/2 md:-translate-y-1/2 p-4 bg-background md:bg-transparent h-fit md:translate-x-0 backdrop-blur-none rounded-lg flex-col gap-9 text-2xl z-30 md:flex">
             {
                 NavbarLinks.map(
                     (link, index) =>

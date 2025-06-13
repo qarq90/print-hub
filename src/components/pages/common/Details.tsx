@@ -66,7 +66,13 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const [loading, setLoading] = useState(false)
     const router = useRouter()
     const statusStyles = getStatusStyles(currentDoc.print_status);
-    const cost = (currentDoc.page_count * currentDoc.print_count) * (currentDoc.print_color === "colored" ? 10 : 2);
+
+    let costPerPage = currentDoc.print_color === "colored" ? 10 : 2;
+    if (currentDoc.print_type === "single_side") {
+        costPerPage *= 2;
+    }
+    const cost = costPerPage * currentDoc.page_count * currentDoc.print_count;
+
 
     const incrementPrintCount = () => {
         setCurrentDoc(prev => ({

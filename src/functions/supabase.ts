@@ -149,11 +149,6 @@ export const homeDataRecords = async () => {
 
 export const updateDocument = async (document: DocumentType) => {
     try {
-        if (document.print_type === "double_side") {
-            document.page_count = Math.ceil(document.page_count / 2);
-        } else {
-            document.page_count = Math.ceil(document.page_count * 2);
-        }
         const { error } = await supabase
             .from("prints")
             .update({

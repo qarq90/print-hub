@@ -95,7 +95,7 @@ export default function Client({ user }: ClientProps) {
     }
 
     return (
-        <MainLayout>
+        <>
             <div className="mb-4 flex flex-col gap-2 text-left">
                 <Text size="5xl" weight="bold">Print History</Text>
                 <Text size="base">
@@ -111,6 +111,6 @@ export default function Client({ user }: ClientProps) {
             ) : (
                 <GridView documentResult={filteredHistory} page_type="user_history" />
             )}
-        </MainLayout>
+        </>
     );
 }
