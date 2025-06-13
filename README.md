@@ -1,36 +1,50 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Print Hub
 
-## Getting Started
+A modern web app for queueing, uploading, and managing print jobs seamlessly.
 
-First, run the development server:
+[![Vercel](https://img.shields.io/badge/deployed-on-vercel-000000?logo=vercel)](https://print-hub-five.vercel.app/)
+
+## 🚀 Live Demo
+
+Explore the live site: **[https://print-hub-five.vercel.app/](https://print-hub-five.vercel.app/)**
+
+---
+
+## 📌 Features
+
+- Upload & preview PDFs and images before printing.
+- Configure print options: single/double side & color (B/W or colored).
+- Automatic page count detection for uploaded PDFs.
+- Job cost estimation based on pages, copies, color, and sidedness.
+- Print queue accessible to users and admins.
+- Update, complete, cancel, and view details of every job.
+- Theming support with light/dark toggle.
+
+---
+
+## 🔧 Tech Stack
+
+- **Frontend/Backend**: Next.js (App Router)
+- **UI Components**: Tailwind CSS, Radix UI, Heroicons, React Icons
+- **API**: Supabase (Postgres DB for docs)
+- **Pinata**: IPFS storage for uploaded files
+- **PDF Handling**: `pdf-lib` to count pages in client uploads
+- **Deployment**: Vercel
+
+---
+
+## 🛠️ Local Setup
 
 ```bash
+git clone https://github.com/<your-repo>/print-hub.git
+cd print-hub
+
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env
+# Add Supabase, Pinata API keys, NEXT_PUBLIC_URL, etc.
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Opens at http://localhost:3000
