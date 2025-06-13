@@ -1,6 +1,5 @@
 "use client";
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
-import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
 import { useEffect, useState } from "react";
 import { TableView } from "@/components/pages/common/TableView";
@@ -54,7 +53,7 @@ export default function Client({ user }: ClientProps) {
 
     if (loading) {
         return (
-            <MainLayout>
+            <>
                 <div className="mb-4 flex flex-col gap-2 text-left">
                     <Text size="5xl" weight="bold">{user.fullName + "'s "}Print History</Text>
                     <Text size="base">
@@ -66,23 +65,21 @@ export default function Client({ user }: ClientProps) {
                     <StatusType setStatusType={setStatusType} statusType={statusType} />
                 </div>
                 <HalfLoader />
-            </MainLayout>
+            </>
         );
     }
 
     if (error) {
         return (
-            <MainLayout>
-                <div className="flex justify-center items-center h-64">
-                    <Text color="error">{error}</Text>
-                </div>
-            </MainLayout>
+            <div className="flex justify-center items-center h-64">
+                <Text color="error">{error}</Text>
+            </div>
         );
     }
 
     if (!prints || prints.length === 0) {
         return (
-            <MainLayout>
+            <>
                 <div className="mb-4 flex flex-col gap-2 text-left">
                     <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
@@ -90,7 +87,7 @@ export default function Client({ user }: ClientProps) {
                     </Text>
                 </div>
                 <EmptyHistory variant="history" />
-            </MainLayout>
+            </>
         );
     }
 
