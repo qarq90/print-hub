@@ -27,7 +27,7 @@ export default function Client() {
                 <div className="flex max-w-md w-full flex-col gap-8  justify-center items-center my-48">
                     <Text weight="bold" className="text-7xl">Admin Login</Text>
                     <div className="flex w-64 flex-col gap-4 items-center justify-center">
-                        <Input value={password} onChange={(e) => setPassword(e.target.value)} className="w-full" placeholder="Enter admin password" type="text" />
+                        <Input value={password} onChange={(e) => setPassword(e.target.value)} className="w-full" placeholder="Enter admin password" type="password" />
                         <Button className="w-full" onClick={loginHandler}>Login</Button>
                     </div>
                 </div>

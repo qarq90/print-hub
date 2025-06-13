@@ -5,8 +5,6 @@ export async function DELETE(request: Request) {
     try {
         const { id } = await request.json();
 
-        console.log(id);
-
         if (!id) {
             return NextResponse.json(
                 { error: "File ID is required" },
@@ -19,8 +17,6 @@ export async function DELETE(request: Request) {
         });
 
         const deletedFiles = await pinata.files.public.delete([id]);
-
-        console.log(deletedFiles);
 
         return NextResponse.json(deletedFiles, { status: 200 });
     } catch (e) {

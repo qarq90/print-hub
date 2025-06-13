@@ -67,12 +67,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const router = useRouter()
     const statusStyles = getStatusStyles(currentDoc.print_status);
 
-    let costPerPage = currentDoc.print_color === "colored" ? 10 : 2;
-    if (currentDoc.print_type === "single_side") {
-        costPerPage *= 2;
-    }
-    const cost = costPerPage * currentDoc.page_count * currentDoc.print_count;
-
+    const calculateCost = (doc: DocumentType) => {
+        const costPerPage = doc.print_color === "colored" ? 10 : 2;
+        return costPerPage * doc.page_count * doc.print_count;
+    };
 
     const incrementPrintCount = () => {
         setCurrentDoc(prev => ({
@@ -89,7 +87,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const togglePrintType = () => {
-        if (page_type === "todays_queue") {
+        if (page_type === "todays_queue" || page_type === "admin_page") {
             return
         } else {
             setCurrentDoc(prev => ({
@@ -100,7 +98,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const togglePrintColor = () => {
-        if (page_type === "todays_queue") {
+        if (page_type === "todays_queue" || page_type === "admin_page") {
             return
         } else {
             setCurrentDoc(prev => ({
@@ -170,7 +168,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                 </div>
 
                 <div className="space-y-3">
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
                             <LuUser />
                         </span>
@@ -182,7 +180,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
                             {getFileTypeIcon(currentDoc.file_type)}
                         </span>
@@ -194,7 +192,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
                             <LuFile />
                         </span>
@@ -208,7 +206,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
                     {
                         currentDoc.file_type === ".pdf" && (
-                            <div className="flex justify-center items-center gap-3">
+                            <div className="flex justify-center items-center gap-3 my-3.5">
                                 <span className="text-foreground flex-shrink-0 mt-1">
                                     <LuBookOpen />
                                 </span>
@@ -217,10 +215,11 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                     <div className="flex flex-row gap-2">
                                         <span
                                             className={cn(
-                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
+                                                "rounded-md transition-colors text-right px-2 py-0.5",
                                                 currentDoc.print_type === "double_side"
                                                     ? "bg-foreground/10"
                                                     : "text-foreground",
+                                                page_type === "user_history" && "cursor-pointer"
                                             )}
                                             onClick={togglePrintType}
                                         >
@@ -228,10 +227,11 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         </span>
                                         <span
                                             className={cn(
-                                                "cursor-pointer rounded-md transition-colors px-2 py-0.5 text-right",
+                                                "rounded-md transition-colors px-2 py-0.5 text-right",
                                                 currentDoc.print_type === "single_side"
                                                     ? "bg-foreground/10"
                                                     : "text-foreground",
+                                                page_type === "user_history" && "cursor-pointer"
                                             )}
                                             onClick={togglePrintType}
                                         >
@@ -278,7 +278,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
                             <LuCopy />
                         </span>
@@ -290,7 +290,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
                             <LuCopy />
                         </span>
@@ -322,7 +322,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
                             {statusStyles.icon}
                         </span>
@@ -334,7 +334,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
                             <LuCalendar />
                         </span>
@@ -346,14 +346,14 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center gap-3">
+                    <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
                             <LuBadgeIndianRupee />
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Cost:</span>
                             <span className="font-medium text-right">
-                                ₹ {cost}.00
+                                ₹ {calculateCost(currentDoc)}.00
                             </span>
                         </div>
                     </div>
@@ -437,7 +437,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                             : "default"
                                 }
                                 disabled={
-                                    currentDoc.print_status === "completed"
+                                    currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled"
                                 } onClick={completeHandler}
                             >
                                 Completed

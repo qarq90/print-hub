@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LuEllipsisVertical, LuUser, LuCalendarDays } from "react-icons/lu";
+import { LuEllipsisVertical, LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
 import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
@@ -45,6 +45,11 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
 
     const groupEntries = Object.entries(groupedDocuments);
 
+    const calculateCost = (doc: DocumentType) => {
+        const costPerPage = doc.print_color === "colored" ? 10 : 2;
+        return costPerPage * doc.page_count * doc.print_count;
+    };
+
     return (
         <div className="mb-10 transition-colors">
             {groupEntries.map(([groupKey, docs], index) => (
@@ -57,6 +62,9 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                         {page_type === "user_history" ? <LuCalendarDays size="24" /> : <LuUser size="24" />}
                                     </span>
                                     {groupKey}
+                                    <span className="md:ml-80 ml-16 flex items-center gap-1">
+                                        Total : {docs.reduce((sum, doc) => sum + calculateCost(doc), 0)} <LuIndianRupee />
+                                    </span>
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="rounded-md border border-foreground/10 mb-6 mt-4">

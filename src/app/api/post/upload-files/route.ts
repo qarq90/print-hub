@@ -17,8 +17,6 @@ export async function POST(request: NextRequest) {
 
         const url = await pinata.gateways.public.convert(result.cid);
 
-        console.log(result);
-
         return NextResponse.json(
             {
                 id: result.id,

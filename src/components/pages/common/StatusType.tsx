@@ -27,7 +27,7 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     )}
                 />
                 <Text className={cn(
-                    "text-sm px-2 rounded-md hidden md:block",
+                    "text-sm pr-3 pl-1 rounded-md hidden md:block",
                     statusType === "all" && "text-blue-500 font-medium"
                 )}>
                     All
@@ -49,7 +49,7 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     )}
                 />
                 <Text className={cn(
-                    "text-sm px-2 rounded-md hidden md:block",
+                    "text-sm pr-3 pl-1 rounded-md hidden md:block",
                     statusType === "cancelled" && "text-red-500 font-medium"
                 )}>
                     Cancelled
@@ -71,7 +71,7 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     )}
                 />
                 <Text className={cn(
-                    "text-sm px-2 rounded-md hidden md:block",
+                    "text-sm pr-3 pl-1 rounded-md hidden md:block",
                     statusType === "completed" && "text-green-500 font-medium"
                 )}>
                     Completed
@@ -93,7 +93,7 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     )}
                 />
                 <Text className={cn(
-                    "text-sm px-2 rounded-md hidden md:block",
+                    "text-sm pr-3 pl-1 rounded-md hidden md:block",
                     statusType === "pending" && "text-yellow-500 font-medium"
                 )}>
                     Pending

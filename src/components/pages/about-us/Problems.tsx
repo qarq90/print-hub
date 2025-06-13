@@ -19,7 +19,7 @@ export const Problems = () => {
                             The Problem We Solve
                         </Text>
                         <br />
-                        <p>
+                        <p className="my-4">
                             Traditional document printing processes often
                             involve:
                         </p>
@@ -30,13 +30,13 @@ export const Problems = () => {
                             <li>- Status tracking difficulties</li>
                             <li>- Paper-based record keeping</li>
                         </ul>
-                        <Text className="mt-4">
+                        <p className="mt-4">
                             Print Hub eliminates these pain points through
                             automation and digital workflows.
-                        </Text>
+                        </p>
                     </div>
                 </div>
-            </section>
+            </section >
         </>
     )
 }

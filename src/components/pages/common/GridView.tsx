@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
-import { LuUser, LuCalendarDays } from "react-icons/lu";
+import { LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
 import { DocumentType } from "@/interfaces/Document";
 
 interface GridViewProps {
@@ -45,6 +45,11 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
 
     const groupEntries = Object.entries(groupedDocuments);
 
+    const calculateCost = (doc: DocumentType) => {
+        const costPerPage = doc.print_color === "colored" ? 10 : 2;
+        return costPerPage * doc.page_count * doc.print_count;
+    };
+
     return (
         <div className="mb-10 transition-colors">
             {groupEntries.map(([groupKey, docs], index) => (
@@ -61,6 +66,9 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                                         )}
                                     </span>
                                     {groupKey}
+                                    <span className="md:ml-80 ml-8 flex items-center gap-1">
+                                        Total : {docs.reduce((sum, doc) => sum + calculateCost(doc), 0)} <LuIndianRupee />
+                                    </span>
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 mt-4">

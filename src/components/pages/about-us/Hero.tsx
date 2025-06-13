@@ -10,7 +10,7 @@ export const Hero = () => {
                     <div>
                         <Text weight="bold" size="3xl">Our Vision</Text>
                         <br />
-                        <Text className="mb-4 text-justify">
+                        <p className="my-4 text-justify">
                             Founded by Abdurrahman, Print Hub was born from
                             a simple need: to make document printing
                             effortless for both requesters and
@@ -18,7 +18,7 @@ export const Hero = () => {
                             processes, we set out to build a modern solution
                             that leverages cutting-edge technologies to
                             streamline the entire workflow.
-                        </Text>
+                        </p>
                         <p className="text-justify">
                             Our platform eliminates paperwork
                             back-and-forth, reduces errors, and saves
