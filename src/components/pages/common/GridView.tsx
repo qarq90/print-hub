@@ -66,9 +66,16 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                                         )}
                                     </span>
                                     {groupKey}
-                                    <span className="md:ml-80 ml-8 flex items-center gap-1">
-                                        Total : {docs.reduce((sum, doc) => sum + calculateCost(doc), 0)} <LuIndianRupee />
-                                    </span>
+                                    {
+                                        page_type !== "todays_queue" && (
+                                            <span className="md:ml-72 flex items-center gap-1">
+                                                <div className="block md:hidden">
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </div>
+                                                Total : {docs.reduce((sum, doc) => sum + calculateCost(doc), 0)} <LuIndianRupee />
+                                            </span>
+                                        )
+                                    }
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 mt-4">

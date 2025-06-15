@@ -62,9 +62,16 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                         {page_type === "user_history" ? <LuCalendarDays size="24" /> : <LuUser size="24" />}
                                     </span>
                                     {groupKey}
-                                    <span className="md:ml-80 ml-16 flex items-center gap-1">
-                                        Total : {docs.reduce((sum, doc) => sum + calculateCost(doc), 0)} <LuIndianRupee />
-                                    </span>
+                                    {
+                                        page_type !== "todays_queue" && (
+                                            <span className="md:ml-72 flex items-center gap-1">
+                                                <div className="block md:hidden">
+                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </div>
+                                                Total : {docs.reduce((sum, doc) => sum + calculateCost(doc), 0)} <LuIndianRupee />
+                                            </span>
+                                        )
+                                    }
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="rounded-md border border-foreground/10 mb-6 mt-4">
