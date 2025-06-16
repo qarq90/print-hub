@@ -129,6 +129,7 @@ export default function Client({ user }: ClientProps) {
                     if (supabaseResult.status) {
                         setLoading(false);
                         setIsOpen(true)
+                        setSelectedFiles([])
                     }
                 } catch (e) {
                     console.log("Something went wrong: ", e);
