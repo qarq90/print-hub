@@ -21,7 +21,7 @@ export const insertSupabase = async (
                 document_id: pinataResult.id,
                 user_id: user.id,
                 user_name: user.fullName,
-                file_name: file.file_name,
+                file_name: file.file_name.substring(4, file.file_name.length),
                 file_type: file.file_type,
                 print_count: file.print_count,
                 page_count: file.page_count,

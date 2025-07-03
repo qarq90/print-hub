@@ -21,7 +21,7 @@ export const NotLoggedIn = () => {
     const randomImage = images[Math.floor(Math.random() * images.length)];
 
     return (
-        <div className="w-full h-[82vh] md:h-[85vh] md:w-full flex justify-center items-center flex-col gap-6 md:mt-0 text-center">
+        <div className="w-full h-[82vh] md:h-[85vh] md:w-full flex justify-center items-center flex-col gap-4 md:mt-0 text-center">
             <Image
                 src={randomImage}
                 alt="Decorative illustration"

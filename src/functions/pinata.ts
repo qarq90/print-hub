@@ -1,4 +1,5 @@
 import { DocumentType } from "@/interfaces/Document";
+import { pinata } from "@/lib/pinata/config";
 
 export const uploadToPinata = async (file: DocumentType) => {
     try {
@@ -12,8 +13,12 @@ export const uploadToPinata = async (file: DocumentType) => {
             return;
         }
 
+        const renamedFile = new File([file.original_file], file.file_name, {
+            type: file.original_file.type,
+        });
+
         const data = new FormData();
-        data.set("file", file.original_file);
+        data.set("file", renamedFile);
 
         const uploadRequest = await fetch("/api/post/upload-files", {
             method: "POST",
@@ -56,6 +61,37 @@ export const deleteFromPinata = async (file: DocumentType) => {
         const error = e instanceof Error ? e.message : "Connection failed";
         console.error("Deletion error:", error);
         return { success: false, error };
+    }
+};
+
+export const updateFromPinata = async (file: DocumentType) => {
+    try {
+        if (!file.document_id) {
+            throw new Error("Missing document ID");
+        }
+
+        const response = await fetch("/api/post/update-file", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: file.document_id,
+                file_name: file.file_name,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+                errorData.error || "Failed to update file in Pinata"
+            );
+        }
+
+        return await response.json();
+    } catch (e) {
+        console.error("Pinata update error:", e);
+        throw e;
     }
 };
 

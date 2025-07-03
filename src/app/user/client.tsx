@@ -53,8 +53,8 @@ export default function Client({ user }: ClientProps) {
 
     if (loading) {
         return (
-            <>
-                <div className="mb-4 flex flex-col gap-2 text-left">
+            <div className="mb-20">
+                <div className="mb-16 flex flex-col gap-2 text-left">
                     <Text size="5xl" weight="bold">{user.fullName + "'s "}Print History</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
@@ -65,7 +65,7 @@ export default function Client({ user }: ClientProps) {
                     <StatusType setStatusType={setStatusType} statusType={statusType} />
                 </div>
                 <HalfLoader />
-            </>
+            </div>
         );
     }
 
@@ -79,15 +79,15 @@ export default function Client({ user }: ClientProps) {
 
     if (!prints || prints.length === 0) {
         return (
-            <>
-                <div className="mb-4 flex flex-col gap-2 text-left">
+            <div className="mb-20">
+                <div className="mb-16 flex flex-col gap-2 text-left">
                     <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
                 <EmptyHistory variant="history" />
-            </>
+            </div>
         );
     }
 

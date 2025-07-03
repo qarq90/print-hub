@@ -48,8 +48,16 @@ export default function Client({ user }: ClientProps) {
                         break;
                 }
 
+                const printColor = "b/w";
+                const printType = "double_side";
+
+                const prefix = (fileType === ".pdf" || fileType === ".png" || fileType === ".jpeg" ||
+                    fileType === ".jpg" || fileType === ".gif" || fileType === ".webp")
+                    ? `${printColor === "b/w" ? "B" : "C"}_${printType === "double_side" ? "D" : "S"}`
+                    : "";
+
                 return {
-                    file_name: file.name,
+                    file_name: prefix ? `${prefix}_${file.name}` : file.name,
                     file_type: fileType,
                     print_count: 1,
                     page_count: pageCount,
@@ -84,28 +92,41 @@ export default function Client({ user }: ClientProps) {
 
     const togglePrintType = (index: number) => {
         setSelectedFiles((prevFiles) =>
-            prevFiles.map((file, i) =>
-                i === index
-                    ? {
+            prevFiles.map((file, i) => {
+                if (i === index) {
+                    const newPrintType = file.print_type === "single_side" ? "double_side" : "single_side";
+                    const prefix = `${file.print_color === "b/w" ? "B" : "C"}_${newPrintType === "single_side" ? "S" : "D"}`;
+
+                    const originalName = file.file_name.replace(/^(B|C)_(S|D)_/, '') || file.file_name;
+
+                    return {
                         ...file,
-                        print_type:
-                            file.print_type === "single_side" ? "double_side" : "single_side",
-                    }
-                    : file
-            )
+                        print_type: newPrintType,
+                        file_name: `${prefix}_${originalName}`
+                    };
+                }
+                return file;
+            })
         );
     };
 
     const togglePrintColor = (index: number) => {
         setSelectedFiles((prevFiles) =>
-            prevFiles.map((file, i) =>
-                i === index
-                    ? {
+            prevFiles.map((file, i) => {
+                if (i === index) {
+                    const newPrintColor = file.print_color === "b/w" ? "colored" : "b/w";
+                    const prefix = `${newPrintColor === "b/w" ? "B" : "C"}_${file.print_type === "single_side" ? "S" : "D"}`;
+
+                    const originalName = file.file_name.replace(/^(B|C)_(S|D)_/, '') || file.file_name;
+
+                    return {
                         ...file,
-                        print_color: file.print_color === "b/w" ? "colored" : "b/w",
-                    }
-                    : file
-            )
+                        print_color: newPrintColor,
+                        file_name: `${prefix}_${originalName}`
+                    };
+                }
+                return file;
+            })
         );
     };
 
@@ -161,7 +182,7 @@ export default function Client({ user }: ClientProps) {
                                     >
                                         <div className="p-4 flex flex-col space-y-3">
                                             <h3 className="text-lg font-medium text-foreground truncate flex-1">
-                                                {file.file_name}
+                                                {file.file_name.substring(4, file.file_name.length)}
                                             </h3>
                                             <div className="flex flex-row justify-between items-center">
                                                 <p className="text-sm text-foreground/70">
@@ -309,7 +330,7 @@ export default function Client({ user }: ClientProps) {
                             </h3>
                             <div className="">
                                 <p className="text-sm">
-                                    Your {selectedFiles.length} file{selectedFiles.length !== 1 ? 's' : ''} have been queued for printing.
+                                    Your files have been queued for printing.
                                 </p>
                             </div>
                         </div>

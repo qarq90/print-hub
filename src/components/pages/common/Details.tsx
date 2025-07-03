@@ -13,7 +13,7 @@ import { DocumentType } from "@/interfaces/Document";
 import { cn } from "@/lib/utils"
 import { cancelDocument, completeDocument, updateDocument } from "@/functions/supabase";
 import { useRouter } from "next/navigation";
-import { deleteFromPinata, viewFile } from "@/functions/pinata";
+import { deleteFromPinata, updateFromPinata, viewFile } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
 
 interface DetailsProps {
@@ -88,23 +88,39 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
     const togglePrintType = () => {
         if (page_type === "todays_queue" || page_type === "admin_page") {
-            return
+            return;
         } else {
-            setCurrentDoc(prev => ({
-                ...prev,
-                print_type: prev.print_type === "single_side" ? "double_side" : "single_side"
-            }));
+            setCurrentDoc(prev => {
+                const newPrintType = prev.print_type === "single_side" ? "double_side" : "single_side";
+                const newPrefix = `${prev.print_color === "b/w" ? "B" : "C"}_${newPrintType === "single_side" ? "S" : "D"}`;
+
+                const originalName = prev.file_name.replace(/^(B|C)_(S|D)_/, '') || prev.file_name;
+
+                return {
+                    ...prev,
+                    print_type: newPrintType,
+                    file_name: `${newPrefix}_${originalName}`
+                };
+            });
         }
     };
 
     const togglePrintColor = () => {
         if (page_type === "todays_queue" || page_type === "admin_page") {
-            return
+            return;
         } else {
-            setCurrentDoc(prev => ({
-                ...prev,
-                print_color: prev.print_color === "b/w" ? "colored" : "b/w"
-            }));
+            setCurrentDoc(prev => {
+                const newPrintColor = prev.print_color === "b/w" ? "colored" : "b/w";
+                const newPrefix = `${newPrintColor === "b/w" ? "B" : "C"}_${prev.print_type === "single_side" ? "S" : "D"}`;
+
+                const originalName = prev.file_name.replace(/^(B|C)_(S|D)_/, '') || prev.file_name;
+
+                return {
+                    ...prev,
+                    print_color: newPrintColor,
+                    file_name: `${newPrefix}_${originalName}`
+                };
+            });
         }
     };
 
@@ -119,6 +135,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
     const updateHandler = async () => {
         setLoading(true)
+        await updateFromPinata(currentDoc)
         await updateDocument(currentDoc)
         router.refresh()
         onClose();

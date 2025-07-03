@@ -41,7 +41,7 @@ export const EmptyHistory = ({ variant = "history" }: EmptyHistoryProps) => {
         : "No documents have been uploaded or scheduled for printouts yet";
 
     return (
-        <div className="w-full h-[82vh] md:h-[60vh] md:w-full flex justify-center items-center flex-col gap-6 md:mt-0 text-center">
+        <div className="w-full h-[82vh] md:h-[60vh] md:w-full flex justify-center items-center flex-col gap-4 md:mt-0 text-center">
             <Image
                 src={getImage()}
                 alt="Decorative illustration"

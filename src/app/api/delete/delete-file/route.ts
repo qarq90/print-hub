@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { PinataSDK } from "pinata";
+import { pinata } from "@/lib/pinata/config";
 
 export async function DELETE(request: Request) {
     try {
@@ -11,10 +11,6 @@ export async function DELETE(request: Request) {
                 { status: 400 }
             );
         }
-        const pinata = new PinataSDK({
-            pinataJwt: process.env.PINATA_JWT_TOKEN!,
-            pinataGateway: process.env.NEXT_PUBLIC_PINATA_GATEWAY_DOMAIN,
-        });
 
         const deletedFiles = await pinata.files.public.delete([id]);
 
