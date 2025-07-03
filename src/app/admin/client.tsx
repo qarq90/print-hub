@@ -15,7 +15,7 @@ export default function Client() {
             alert("Empty Password Field")
             return
         }
-        if (password === "iLoveGymMommies05") {
+        if (password === "012005") {
             router.push("/admin/prints-status")
         } else {
             alert("Invalid Admin Password")
