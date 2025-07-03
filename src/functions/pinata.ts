@@ -1,5 +1,4 @@
 import { DocumentType } from "@/interfaces/Document";
-import { pinata } from "@/lib/pinata/config";
 
 export const uploadToPinata = async (file: DocumentType) => {
     try {
