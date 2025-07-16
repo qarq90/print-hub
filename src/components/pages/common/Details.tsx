@@ -363,17 +363,20 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    <div className="flex justify-center items-center gap-3 my-3.5">
-                        <span className="text-foreground flex-shrink-0 mt-1">
-                            <LuBadgeIndianRupee />
-                        </span>
-                        <div className="flex-1 flex justify-between">
-                            <span className="text-foreground">Cost:</span>
-                            <span className="font-medium text-right">
-                                ₹ {calculateCost(currentDoc)}.00
+                    {
+                        page_type !== "todays_queue" && (<div className="flex justify-center items-center gap-3 my-3.5">
+                            <span className="text-foreground flex-shrink-0 mt-1">
+                                <LuBadgeIndianRupee />
                             </span>
+                            <div className="flex-1 flex justify-between">
+                                <span className="text-foreground">Cost:</span>
+                                <span className="font-medium text-right">
+                                    ₹ {calculateCost(currentDoc)}.00
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                        )
+                    }
 
                     <div className="flex flex-row w-full gap-2 pt-3">
                         {
