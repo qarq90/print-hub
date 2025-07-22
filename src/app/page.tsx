@@ -19,7 +19,7 @@ export default function Page() {
     <MainLayout>
       <div className="flex flex-col gap-8 w-full justify-center items-center my-72">
         <Text weight="bold" className="text-7xl">PrintHub</Text>
-        <Text className="text-xl">Your one stop for all printouts.</Text>
+        <Text className="text-xl">Nobody prints it better.</Text>
         <div className="flex flex-row gap-4 items-center justify-center">
           <Link href="/upload-files">
             <Button><LuUpload /> Schedule Prints</Button>
