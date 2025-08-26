@@ -40,8 +40,6 @@ export default function Client() {
                         user.primaryPhoneNumber?.phoneNumber || null,
                     ]);
 
-                    console.log(user)
-
                 } catch (error) {
                     console.error("Failed to sync user:", error);
                 } finally {
