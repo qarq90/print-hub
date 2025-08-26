@@ -49,11 +49,11 @@
     --radius: 0.625rem;
 
     /* Base colors */
-    --background: #ffffff;
+    --background: #eee;
     --foreground: #191919;
-    --accent: #e67383;
+    --accent: #f79817;
     --dark: #191919;
-    --light: #ffffff;
+    --light: #eee;
 
     /* Background shades */
     --background-50: #ffffff;
@@ -129,10 +129,10 @@
 .dark {
     /* Swap background and foreground */
     --background: #191919;
-    --foreground: #ffffff;
-    --accent: #e67383;
+    --foreground: #eee;
+    --accent: #f79817;
     --dark: #191919;
-    --light: #ffffff;
+    --light: #eee;
 
     /* Dark mode background shades */
     --background-50: #212121;

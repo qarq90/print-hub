@@ -7,8 +7,8 @@ import { TableView } from "@/components/pages/common/TableView";
 import { GridView } from "@/components/pages/common/GridView";
 import { ViewType } from "@/components/pages/common/ViewType";
 import { UserProps } from "@/interfaces/User";
-import { DocumentType } from "@/interfaces/Document";
-import { fetchTodaysQueue } from "@/functions/supabase";
+import { PrintRecord } from "@/interfaces/Document";
+import { fetchTodaysQueue } from "@/functions/neon";
 import { HalfLoader } from "@/components/ui/loader";
 
 interface ClientProps {
@@ -17,7 +17,7 @@ interface ClientProps {
 
 export default function Client({ user }: ClientProps) {
     const [viewType, setViewType] = useState(false);
-    const [prints, setPrints] = useState<DocumentType[] | null>(null);
+    const [prints, setPrints] = useState<PrintRecord[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -83,7 +83,7 @@ export default function Client({ user }: ClientProps) {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory variant="log" />
+                <EmptyHistory title="Empty History" description="No documents have been uploaded or scheduled for printouts yet" />
             </MainLayout>
         );
     }
@@ -100,9 +100,9 @@ export default function Client({ user }: ClientProps) {
                 <ViewType setViewType={setViewType} viewType={viewType} />
             </div>
             {viewType ? (
-                <TableView documentResult={prints} page_type="todays_queue" />
+                <TableView documentResult={prints} page_type="prints_queue" />
             ) : (
-                <GridView documentResult={prints} page_type="todays_queue" />
+                <GridView documentResult={prints} page_type="prints_queue" />
             )}
         </MainLayout>
     );

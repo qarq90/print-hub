@@ -1,7 +1,7 @@
 import { TermsSections } from "@/data/terms-of-service";
 import { Text } from "@/components/ui/text";
 
-export const Sections = () => {
+export const TermsOfServiceSections = () => {
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-8 mt-10">

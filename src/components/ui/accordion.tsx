@@ -14,12 +14,17 @@ function Accordion({
 
 function AccordionItem({
   className,
+  background,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Item>) {
+}: React.ComponentProps<typeof AccordionPrimitive.Item> & { background?: boolean }) {
   return (
     <AccordionPrimitive.Item
       data-slot="accordion-item"
-      className={cn("border-b last:border-b-0", className)}
+      className={cn(
+        "last:border-b-0 rounded-md",
+        background && "border bg-gray-500/5 border-foreground/10",
+        className
+      )}
       {...props}
     />
   )
@@ -28,10 +33,13 @@ function AccordionItem({
 function AccordionTrigger({
   className,
   children,
+  background,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger> & { background?: boolean }) {
   return (
-    <AccordionPrimitive.Header className="flex">
+    <AccordionPrimitive.Header
+      className={cn("flex items-center px-4 justify-between", background && "bg-gray-500/5")}
+    >
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
@@ -50,15 +58,26 @@ function AccordionTrigger({
 function AccordionContent({
   className,
   children,
+  background,
+  padding,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Content>) {
+}: React.ComponentProps<typeof AccordionPrimitive.Content> & { background?: boolean; padding?: boolean }) {
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
       className="data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden text-sm"
       {...props}
     >
-      <div className={cn("pt-0", className)}>{children}</div>
+      <div
+        className={cn(
+          "pt-0",
+          padding ? "pb-4 px-4" : "pb-0 px-0",
+          background && "bg-gray-500/5",
+          className
+        )}
+      >
+        {children}
+      </div>
     </AccordionPrimitive.Content>
   )
 }

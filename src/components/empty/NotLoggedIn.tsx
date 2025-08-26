@@ -1,20 +1,20 @@
-import Baseball from "../../../public/img/not-logged-in/Baseball.png";
-import Basketball from "../../../public/img/not-logged-in/Basketball.png";
-import Diving from "../../../public/img/not-logged-in/Diving.png";
-import Fitness from "../../../public/img/not-logged-in/Fitness.png";
-import Surfing from "../../../public/img/not-logged-in/Surfing.png";
-import Volleyball from "../../../public/img/not-logged-in/Volleyball.png";
+import Alien from "../../../public/img/animals/Alien.png";
+import Bunny from "../../../public/img/animals/Bunny.png";
+import Chicken from "../../../public/img/animals/Chicken.png";
+import Snow from "../../../public/img/animals/Snow.png";
+import Sun from "../../../public/img/animals/Sun.png";
+import Bottle from "../../../public/img/animals/Bottle.png";
 import Image from "next/image";
 import Link from "next/link";
 import { LuUserPlus } from "react-icons/lu";
 
 const images = [
-    Baseball,
-    Basketball,
-    Volleyball,
-    Diving,
-    Fitness,
-    Surfing
+    Alien,
+    Bunny,
+    Bottle,
+    Chicken,
+    Snow,
+    Sun
 ];
 
 export const NotLoggedIn = () => {

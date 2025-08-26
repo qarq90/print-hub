@@ -1,7 +1,7 @@
 import { PrivacySections } from "@/data/privacy-policy";
 import { Text } from "@/components/ui/text";
 
-export const Sections = () => {
+export const PrivacyPolicySections = () => {
     return (
         <>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-8 mt-10">

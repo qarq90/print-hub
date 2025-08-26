@@ -28,6 +28,22 @@ export const AboutUsFAQs: AboutUsFAQ[] = [
         answer: "Our standard printing rate is 2 RP (Rupees) per page for black and white. Color printing and specialty papers are available at different rates shown in our pricing calculator.",
     },
     {
+        question: "What is the cost for black & white printing?",
+        answer: "Black and white prints are charged at ₹2.5 per page.",
+    },
+    {
+        question: "What is the cost for color printing?",
+        answer: "Color prints are charged at ₹10 per page. Please note that color printing is available for single-sided pages only.",
+    },
+    {
+        question: "Is there an option for double-sided color printing?",
+        answer: "No, color printing is limited to single-sided only.",
+    },
+    {
+        question: "What is the cost of binding?",
+        answer: "Binding is charged at ₹35 per binding.",
+    },
+    {
         question: "How do I log in to the system?",
         answer: "You can authenticate using your Google account for single sign-on convenience, or create a dedicated account with your work email for additional security options.",
     },

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Text } from "@/components/ui/text";
 
-export const Footer = () => {
+export const PrivacyPolicyFooter = () => {
     return (
         <>
             <div className="my-6 pt-6 border-t border-foreground/25">

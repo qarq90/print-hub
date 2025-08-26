@@ -3,15 +3,16 @@ import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
 import { LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
-import { DocumentType } from "@/interfaces/Document";
+import { DocumentType, PrintRecord } from "@/interfaces/Document";
+import { cn } from '@/lib/utils';
 
 interface GridViewProps {
-    documentResult: DocumentType[];
-    page_type: "user_history" | "todays_queue" | "admin_page";
+    documentResult: PrintRecord[];
+    page_type: "user_history" | "prints_queue" | "admin_page";
 }
 
 export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type }) => {
-    const [selectedDoc, setSelectedDoc] = useState<DocumentType | null>(null);
+    const [selectedDoc, setSelectedDoc] = useState<PrintRecord | null>(null);
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -26,7 +27,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
         }
     };
 
-    const handleRowClick = (doc: DocumentType) => {
+    const handleRowClick = (doc: PrintRecord) => {
         setSelectedDoc(doc);
     };
 
@@ -35,19 +36,19 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
     };
 
     const groupedDocuments = documentResult.reduce((acc, doc) => {
-        const groupKey = page_type === "todays_queue" ? (doc.user_name ? doc.user_name : "") : (doc.uploaded_at ? doc.uploaded_at : "");
+        const groupKey = page_type === "prints_queue" ? (doc['user-name'] ? doc['user-name'] : "") : (doc['uploaded-at'] ? doc['uploaded-at'] : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
         }
         acc[groupKey].push(doc);
         return acc;
-    }, {} as Record<string, DocumentType[]>);
+    }, {} as Record<string, PrintRecord[]>);
 
     const groupEntries = Object.entries(groupedDocuments);
 
-    const calculateCost = (doc: DocumentType) => {
-        const costPerPage = doc.print_color === "colored" ? 10 : 2;
-        return costPerPage * doc.page_count * doc.print_count;
+    const calculateCost = (doc: PrintRecord) => {
+        const costPerPage = doc['print-color'] === "colored" ? 10 : 2;
+        return costPerPage * doc['page-count'] * doc['print-count'];
     };
 
     return (
@@ -59,15 +60,17 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                             <AccordionTrigger className="font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
                                 <div className="flex gap-2 items-center">
                                     <span>
-                                        {page_type === "user_history" ? (
-                                            <LuCalendarDays size={24} />
-                                        ) : (
-                                            <LuUser size={24} />
-                                        )}
+                                        {
+                                            page_type === "user_history" ? (
+                                                <LuCalendarDays size={24} />
+                                            ) : (
+                                                <LuUser size={24} />
+                                            )
+                                        }
                                     </span>
                                     {groupKey}
                                     {
-                                        page_type !== "todays_queue" && (
+                                        page_type !== "prints_queue" && (
                                             <span className="md:ml-72 flex items-center gap-1">
                                                 <div className="block md:hidden">
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -82,41 +85,41 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                                 {docs.map((item, itemIndex) => (
                                     <div
                                         key={`${groupKey}-${itemIndex}`}
-                                        className="hover:bg-foreground/10 cursor-pointer transition-colors rounded-lg border border-foreground/10 shadow-sm overflow-hidden hover:shadow-md"
+                                        className={cn("hover:bg-foreground/5 transition-colors rounded-lg border border-foreground/10 shadow-sm overflow-hidden hover:shadow-md", page_type !== "prints_queue" && "cursor-pointer")}
                                         onClick={() => handleRowClick(item)}
                                     >
                                         <div className="p-4">
                                             <div className="flex justify-between items-start gap-2">
                                                 <div className="truncate">
                                                     <h3 className="text-lg font-medium text-foreground truncate">
-                                                        {item.file_name}
+                                                        {item['file-name']}
                                                     </h3>
                                                     <p className="text-sm text-foreground/70">
-                                                        {item.file_type}
+                                                        {item['file-type']}
                                                     </p>
                                                 </div>
                                                 <span
-                                                    className={`h-3 w-3 mt-2 rounded-full flex-shrink-0 ${getStatusColor(item.print_status)}`}
-                                                    aria-label={item.print_status}
+                                                    className={`h-3 w-3 mt-2 rounded-full flex-shrink-0 ${getStatusColor(item['print-status'])}`}
+                                                    aria-label={item['print-status']}
                                                 />
                                             </div>
 
                                             <div className="mt-2 space-y-2">
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Pages :</span>
-                                                    <span className="text-foreground font-medium">{item.page_count}</span>
+                                                    <span className="text-foreground font-medium">{item['page-count']}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Copies :</span>
-                                                    <span className="text-foreground font-medium">{item.print_count}</span>
+                                                    <span className="text-foreground font-medium">{item['print-count']}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Color :</span>
-                                                    <span className="text-foreground font-medium">{item.print_color === "b/w" ? "Black & White" : "Colored"}</span>
+                                                    <span className="text-foreground font-medium">{item['print-color'] === "b/w" ? "Black & White" : "Colored"}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Sided :</span>
-                                                    <span className="text-foreground font-medium">{item.print_type === "double_side" ? "Double Side" : "Single Side"}</span>
+                                                    <span className="text-foreground font-medium">{item['print-type'] === "double_side" ? "Double Side" : "Single Side"}</span>
                                                 </div>
                                             </div>
                                         </div>

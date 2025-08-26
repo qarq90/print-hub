@@ -3,15 +3,16 @@ import { LuEllipsisVertical, LuUser, LuCalendarDays, LuIndianRupee } from "react
 import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
-import { DocumentType } from "@/interfaces/Document";
+import { PrintRecord } from "@/interfaces/Document";
+import { cn } from '@/lib/utils';
 
 interface TableViewProps {
-    documentResult: DocumentType[];
-    page_type: "user_history" | "todays_queue" | "admin_page"
+    documentResult: PrintRecord[];
+    page_type: "user_history" | "prints_queue" | "admin_page"
 }
 
 export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type }) => {
-    const [selectedDoc, setSelectedDoc] = useState<DocumentType | null>(null);
+    const [selectedDoc, setSelectedDoc] = useState<PrintRecord | null>(null);
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -26,7 +27,7 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
         }
     };
 
-    const handleRowClick = (doc: DocumentType) => {
+    const handleRowClick = (doc: PrintRecord) => {
         setSelectedDoc(doc);
     };
 
@@ -35,19 +36,19 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
     };
 
     const groupedDocuments = documentResult.reduce((acc, doc) => {
-        const groupKey = page_type === "todays_queue" ? (doc.user_name ? doc.user_name : "") : (doc.uploaded_at ? doc.uploaded_at : "");
+        const groupKey = page_type === "prints_queue" ? (doc['user-name'] ? doc['user-name'] : "") : (doc['uploaded-at'] ? doc['uploaded-at'] : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
         }
         acc[groupKey].push(doc);
         return acc;
-    }, {} as Record<string, DocumentType[]>);
+    }, {} as Record<string, PrintRecord[]>);
 
     const groupEntries = Object.entries(groupedDocuments);
 
-    const calculateCost = (doc: DocumentType) => {
-        const costPerPage = doc.print_color === "colored" ? 10 : 2;
-        return costPerPage * doc.page_count * doc.print_count;
+    const calculateCost = (doc: PrintRecord) => {
+        const costPerPage = doc['print-color'] === "colored" ? 10 : 2;
+        return costPerPage * doc['page-count'] * doc['print-count'];
     };
 
     return (
@@ -63,7 +64,7 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                     </span>
                                     {groupKey}
                                     {
-                                        page_type !== "todays_queue" && (
+                                        page_type !== "prints_queue" && (
                                             <span className="md:ml-72 flex items-center gap-1">
                                                 <div className="block md:hidden">
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -112,38 +113,38 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                         {docs.map((item, index) => (
                                             <tr
                                                 key={index}
-                                                className="border-b border-foreground/10 transition-colors cursor-pointer hover:bg-foreground/10"
+                                                className={cn("border-b border-foreground/10 transition-colors hover:bg-foreground/10", page_type !== "prints_queue" && "cursor-pointer")}
                                                 onClick={() => handleRowClick(item)}
                                             >
                                                 {page_type === "user_history" && (
                                                     <td className="p-4 align-middle">
                                                         <div className="flex flex-col">
-                                                            <div className="font-medium text-foreground">{item.user_name}</div>
+                                                            <div className="font-medium text-foreground">{item['user-name']}</div>
                                                         </div>
                                                     </td>
                                                 )}
                                                 <td className="p-4 align-middle text-foreground">
-                                                    {item.file_name}
+                                                    {item['file-name']}
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
                                                     <span className="rounded-full px-2 py-1">
-                                                        {item.file_type}
+                                                        {item['file-type']}
                                                     </span>
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
-                                                    {item.page_count}
+                                                    {item['page-count']}
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
-                                                    {item.print_count}
+                                                    {item['print-count']}
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
-                                                    <div className={`inline-block h-3 w-3 rounded-full ${getStatusColor(item.print_status)}`} />
+                                                    <div className={`inline-block h-3 w-3 rounded-full ${getStatusColor(item['print-status'])}`} />
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
-                                                    {item.print_color === "b/w" ? "B/W" : "Colored"}
+                                                    {item['print-color'] === "b/w" ? "B/W" : "Colored"}
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
-                                                    {item.print_type === "double_side" ? "Double" : "Single"}
+                                                    {item['print-type'] === "double_side" ? "Double" : "Single"}
                                                 </td>
                                                 <td className="p-4 align-middle text-foreground cursor-pointer">
                                                     <LuEllipsisVertical />

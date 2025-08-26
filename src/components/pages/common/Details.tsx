@@ -9,17 +9,17 @@ import {
     LuPaintbrush,
     LuBookOpen
 } from "react-icons/lu";
-import { DocumentType } from "@/interfaces/Document";
+import { PrintRecord } from "@/interfaces/Document";
 import { cn } from "@/lib/utils"
-import { cancelDocument, completeDocument, updateDocument } from "@/functions/supabase";
-import { useRouter } from "next/navigation";
-import { deleteFromPinata, updateFromPinata, viewFile } from "@/functions/pinata";
+import { usePathname, useRouter } from "next/navigation";
+import { deleteFromPinata, updateFromPinata } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
+import { cancelDocument, completeDocument, updateDocument } from "@/functions/neon";
 
 interface DetailsProps {
-    doc: DocumentType;
+    doc: PrintRecord;
     onClose: () => void;
-    page_type: "user_history" | "todays_queue" | "admin_page";
+    page_type: "user_history" | "prints_queue" | "admin_page";
 }
 
 const getStatusStyles = (status: string) => {
@@ -64,61 +64,54 @@ const formatFileType = (fileType: string) => {
 export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const [currentDoc, setCurrentDoc] = useState(doc);
     const [loading, setLoading] = useState(false)
-    const router = useRouter()
-    const statusStyles = getStatusStyles(currentDoc.print_status);
 
-    const calculateCost = (doc: DocumentType) => {
-        const costPerPage = doc.print_color === "colored" ? 10 : 2;
-        return costPerPage * doc.page_count * doc.print_count;
+    const router = useRouter()
+    const pathname = usePathname()
+
+    const statusStyles = getStatusStyles(currentDoc["print-status"]);
+
+    const calculateCost = (doc: PrintRecord) => {
+        const costPerPage = doc["print-color"] === "colored" ? 10 : 2;
+        return costPerPage * doc["page-count"] * doc["print-count"];
     };
 
     const incrementPrintCount = () => {
         setCurrentDoc(prev => ({
             ...prev,
-            print_count: prev.print_count + 1,
+            "print-count": Number(prev["print-count"]) + 1,
         }));
     };
 
     const decrementPrintCount = () => {
         setCurrentDoc(prev => ({
             ...prev,
-            print_count: Math.max(1, prev.print_count - 1)
+            "print-count": Math.max(1, prev["print-count"] - 1)
         }));
     };
 
     const togglePrintType = () => {
-        if (page_type === "todays_queue" || page_type === "admin_page") {
+        if (page_type === "prints_queue" || page_type === "admin_page") {
             return;
         } else {
             setCurrentDoc(prev => {
-                const newPrintType = prev.print_type === "single_side" ? "double_side" : "single_side";
-                const newPrefix = `${prev.print_color === "b/w" ? "B" : "C"}_${newPrintType === "single_side" ? "S" : "D"}`;
-
-                const originalName = prev.file_name.replace(/^(B|C)_(S|D)_/, '') || prev.file_name;
-
+                const newPrintType = prev["print-type"] === "single_side" ? "double_side" : "single_side";
                 return {
                     ...prev,
-                    print_type: newPrintType,
-                    file_name: `${newPrefix}_${originalName}`
+                    "print-type": newPrintType,
                 };
             });
         }
     };
 
     const togglePrintColor = () => {
-        if (page_type === "todays_queue" || page_type === "admin_page") {
+        if (page_type === "prints_queue" || page_type === "admin_page") {
             return;
         } else {
             setCurrentDoc(prev => {
-                const newPrintColor = prev.print_color === "b/w" ? "colored" : "b/w";
-                const newPrefix = `${newPrintColor === "b/w" ? "B" : "C"}_${prev.print_type === "single_side" ? "S" : "D"}`;
-
-                const originalName = prev.file_name.replace(/^(B|C)_(S|D)_/, '') || prev.file_name;
-
+                const newPrintColor = prev["print-color"] === "b/w" ? "colored" : "b/w";
                 return {
                     ...prev,
-                    print_color: newPrintColor,
-                    file_name: `${newPrefix}_${originalName}`
+                    "print-color": newPrintColor,
                 };
             });
         }
@@ -144,7 +137,8 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
     const viewHandler = async () => {
         setLoading(true)
-        await viewFile(currentDoc)
+        const openLink = currentDoc["ipfs-link"]?.toString();
+        window.open(openLink);
         setLoading(false)
     }
 
@@ -155,6 +149,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
         router.refresh()
         onClose();
         setLoading(false)
+    }
+
+    if (pathname.includes("/prints-queue")) {
+        return null
     }
 
     return (
@@ -191,20 +189,35 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Owner:</span>
-                            <span className="font-medium text-right">
-                                {currentDoc.user_name}
+                            <span
+                                className="font-medium text-right"
+                                title={currentDoc["user-name"] ?? ""}
+                            >
+                                {(currentDoc["user-name"] ?? "").length > 30
+                                    ? `${(currentDoc["user-name"] ?? "").slice(0, 30)}...`
+                                    : (currentDoc["user-name"] ?? "")}
                             </span>
                         </div>
                     </div>
 
                     <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
-                            {getFileTypeIcon(currentDoc.file_type)}
+                            {getFileTypeIcon(currentDoc["file-type"])}
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">File Name:</span>
                             <span className="font-medium text-right truncate">
-                                {currentDoc.file_name}
+                                {(() => {
+                                    const fileName = currentDoc["file-name"] ?? "";
+                                    const nameWithoutExt = fileName.includes(".")
+                                        ? fileName.substring(0, fileName.lastIndexOf("."))
+                                        : fileName;
+
+                                    return nameWithoutExt.length > 30
+                                        ? `${nameWithoutExt.slice(0, 30)}...`
+                                        : nameWithoutExt;
+                                })()}
+
                             </span>
                         </div>
                     </div>
@@ -216,13 +229,13 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">File Type:</span>
                             <span className="font-medium text-right">
-                                {formatFileType(currentDoc.file_type)}
+                                {formatFileType(currentDoc["file-type"])}
                             </span>
                         </div>
                     </div>
 
                     {
-                        currentDoc.file_type === ".pdf" && (
+                        currentDoc["file-type"] === ".pdf" && (
                             <div className="flex justify-center items-center gap-3 my-3.5">
                                 <span className="text-foreground flex-shrink-0 mt-1">
                                     <LuBookOpen />
@@ -233,10 +246,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         <span
                                             className={cn(
                                                 "rounded-md transition-colors text-right px-2 py-0.5",
-                                                currentDoc.print_type === "double_side"
+                                                currentDoc["print-type"] === "double_side"
                                                     ? "bg-foreground/10"
                                                     : "text-foreground",
-                                                page_type === "user_history" && "cursor-pointer"
+                                                page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
                                             )}
                                             onClick={togglePrintType}
                                         >
@@ -245,10 +258,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         <span
                                             className={cn(
                                                 "rounded-md transition-colors px-2 py-0.5 text-right",
-                                                currentDoc.print_type === "single_side"
+                                                currentDoc["print-type"] === "single_side"
                                                     ? "bg-foreground/10"
                                                     : "text-foreground",
-                                                page_type === "user_history" && "cursor-pointer"
+                                                page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
                                             )}
                                             onClick={togglePrintType}
                                         >
@@ -270,7 +283,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 <span
                                     className={cn(
                                         "rounded-md transition-colors text-right px-2 py-0.5",
-                                        currentDoc.print_color !== "b/w"
+                                        currentDoc["print-color"] !== "b/w"
                                             ? "text-foreground"
                                             : "bg-foreground/10",
                                         page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
@@ -282,7 +295,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 <span
                                     className={cn(
                                         "rounded-md transition-colors text-right px-2 py-0.5",
-                                        currentDoc.print_color !== "colored"
+                                        currentDoc["print-color"] !== "colored"
                                             ? "text-foreground"
                                             : "bg-foreground/10",
                                         page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
@@ -302,7 +315,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Pages:</span>
                             <span className="font-medium text-right">
-                                {currentDoc.page_count}
+                                {currentDoc["page-count"]}
                             </span>
                         </div>
                     </div>
@@ -317,14 +330,14 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 {
                                     page_type === "user_history" && (
                                         <LuMinus
-                                            className={cn("mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm", currentDoc.print_count <= 1 && "cursor-not-allowed pointer-events-none")}
+                                            className={cn("mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm", currentDoc["print-count"] <= 1 && "cursor-not-allowed pointer-events-none")}
                                             size="24"
                                             onClick={decrementPrintCount}
                                         />
                                     )
                                 }
                                 <span>
-                                    {currentDoc.print_count}
+                                    {currentDoc["print-count"]}
                                 </span>
                                 {
                                     page_type === "user_history" && (
@@ -346,7 +359,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Status:</span>
                             <span className={`font-medium text-right ${statusStyles.text}`}>
-                                {currentDoc.print_status}
+                                {currentDoc["print-status"]}
                             </span>
                         </div>
                     </div>
@@ -358,13 +371,13 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Uploaded:</span>
                             <span className="font-medium text-right">
-                                {currentDoc.uploaded_at}
+                                {currentDoc["uploaded-at"]}
                             </span>
                         </div>
                     </div>
 
                     {
-                        page_type !== "todays_queue" && (<div className="flex justify-center items-center gap-3 my-3.5">
+                        page_type !== "prints_queue" && (<div className="flex justify-center items-center gap-3 my-3.5">
                             <span className="text-foreground flex-shrink-0 mt-1">
                                 <LuBadgeIndianRupee />
                             </span>
@@ -380,19 +393,19 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
                     <div className="flex flex-row w-full gap-2 pt-3">
                         {
-                            page_type !== "todays_queue" && (
+                            page_type !== "prints_queue" && (
                                 <Button
                                     variant={
-                                        currentDoc.print_status === "pending"
+                                        currentDoc["print-status"] === "pending"
                                             ? "destructive"
-                                            : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                            : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
                                                 ? "ghost"
                                                 : "default"
                                     }
                                     onClick={cancelHandler}
                                     disabled={
-                                        currentDoc.print_status === "completed" ||
-                                        currentDoc.print_status === "cancelled"
+                                        currentDoc["print-status"] === "completed" ||
+                                        currentDoc["print-status"] === "cancelled"
                                     }
                                     className="grow"
                                 >
@@ -401,27 +414,27 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             )
                         }
                         {
-                            (page_type !== "admin_page" && (page_type === "user_history" || page_type === "todays_queue")) && (
+                            (page_type !== "admin_page" && (page_type === "user_history" || page_type === "prints_queue")) && (
                                 <Button variant="outline" className="grow" onClick={onClose}>Close</Button>
                             )
                         }
                         {
-                            page_type !== "todays_queue" && (
+                            page_type !== "prints_queue" && (
                                 <Button
                                     variant={
-                                        currentDoc.print_status === "pending"
+                                        currentDoc["print-status"] === "pending"
                                             ? (
                                                 JSON.stringify(currentDoc) === JSON.stringify(doc) ? "ghost" : "default"
                                             )
-                                            : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                            : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
                                                 ? "ghost"
                                                 : "default"
                                     }
                                     onClick={updateHandler}
                                     disabled={
                                         JSON.stringify(currentDoc) === JSON.stringify(doc) ||
-                                        currentDoc.print_status === "completed" ||
-                                        currentDoc.print_status === "cancelled"
+                                        currentDoc["print-status"] === "completed" ||
+                                        currentDoc["print-status"] === "cancelled"
                                     }
                                     className="grow"
                                 >
@@ -431,15 +444,15 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         }
                         <Button
                             variant={
-                                currentDoc.print_status === "pending"
+                                currentDoc["print-status"] === "pending"
                                     ? "default"
-                                    : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                    : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
                                         ? "ghost"
                                         : "default"
                             }
                             disabled={
-                                currentDoc.print_status === "completed" ||
-                                currentDoc.print_status === "cancelled"
+                                currentDoc["print-status"] === "completed" ||
+                                currentDoc["print-status"] === "cancelled"
                             }
                             className="grow"
                             onClick={viewHandler}
@@ -450,14 +463,14 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             <Button
                                 className="grow"
                                 variant={
-                                    currentDoc.print_status === "pending"
+                                    currentDoc["print-status"] === "pending"
                                         ? "default"
-                                        : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                        : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
                                             ? "ghost"
                                             : "default"
                                 }
                                 disabled={
-                                    currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled"
+                                    currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled"
                                 } onClick={completeHandler}
                             >
                                 Completed

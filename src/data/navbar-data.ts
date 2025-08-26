@@ -1,13 +1,13 @@
 import { IconType } from "react-icons";
+import { FiPackage } from "react-icons/fi";
 import {
     LuHouse,
-    LuCalendarRange,
-    LuPlus,
     LuUser,
     LuFileText,
-    LuShield,
     LuMail,
-    LuSettings,
+    LuPlus,
+    LuCalendarDays,
+    LuUserCog,
 } from "react-icons/lu";
 import { RiInformationLine } from "react-icons/ri";
 
@@ -27,20 +27,26 @@ export const NavbarLinks: NavbarLink[] = [
     },
     {
         text: "Prints Queue",
-        icon: LuCalendarRange,
+        icon: LuCalendarDays,
         href: "/prints-queue",
         isPrimaryLink: true,
     },
     {
-        text: "Upload Files",
+        text: "Orders",
+        icon: FiPackage,
+        href: "/orders",
+        isPrimaryLink: true,
+    },
+    {
+        text: "New",
         icon: LuPlus,
-        href: "/upload-files",
+        href: "/new/print",
         isPrimaryLink: true,
     },
     {
         text: "Profile",
         icon: LuUser,
-        href: "/user",
+        href: "/user/prints",
         isPrimaryLink: true,
     },
     {
@@ -56,21 +62,15 @@ export const NavbarLinks: NavbarLink[] = [
         isPrimaryLink: false,
     },
     {
-        text: "Terms Of Service",
+        text: "Policies",
         icon: LuFileText,
-        href: "/terms-of-service",
+        href: "/policies",
         isPrimaryLink: false,
     },
     {
-        text: "Privacy Policy",
-        icon: LuShield,
-        href: "/privacy-policy",
-        isPrimaryLink: false,
-    },
-    {
-        text: "Admin",
-        icon: LuSettings,
-        href: "/admin",
+        text: "Users",
+        icon: LuUserCog,
+        href: "/users",
         isPrimaryLink: false,
     },
 ];

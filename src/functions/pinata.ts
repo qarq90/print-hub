@@ -1,4 +1,4 @@
-import { DocumentType } from "@/interfaces/Document";
+import { DocumentType, PrintRecord } from "@/interfaces/Document";
 
 export const uploadToPinata = async (file: DocumentType) => {
     try {
@@ -35,14 +35,14 @@ export const uploadToPinata = async (file: DocumentType) => {
     }
 };
 
-export const deleteFromPinata = async (file: DocumentType) => {
+export const deleteFromPinata = async (file: PrintRecord) => {
     try {
         const response = await fetch("/api/delete/delete-file", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id: file.document_id }),
+            body: JSON.stringify({ id: file["print-id"] }),
         });
 
         const data = await response.json();
@@ -63,9 +63,9 @@ export const deleteFromPinata = async (file: DocumentType) => {
     }
 };
 
-export const updateFromPinata = async (file: DocumentType) => {
+export const updateFromPinata = async (file: PrintRecord) => {
     try {
-        if (!file.document_id) {
+        if (!file["print-id"]) {
             throw new Error("Missing document ID");
         }
 
@@ -75,8 +75,8 @@ export const updateFromPinata = async (file: DocumentType) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                id: file.document_id,
-                file_name: file.file_name,
+                id: file["print-id"],
+                file_name: file["file-name"],
             }),
         });
 
@@ -91,14 +91,5 @@ export const updateFromPinata = async (file: DocumentType) => {
     } catch (e) {
         console.error("Pinata update error:", e);
         throw e;
-    }
-};
-
-export const viewFile = async (file: DocumentType) => {
-    try {
-        const downloadUrl = file.ipfs_cid?.toString();
-        window.open(downloadUrl);
-    } catch (error) {
-        console.error("Download failed:", error);
     }
 };

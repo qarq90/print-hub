@@ -50,7 +50,7 @@ export const fetchUserHistory = async (user: UserProps) => {
             .from("prints")
             .select("*")
             .or(`user_id.eq.${user.id}`)
-            .order("uploaded_at", { ascending: false });
+            .order("uploaded_at", { ascending: true });
 
         return { data, error: null, status: true };
     } catch (error) {
@@ -87,7 +87,7 @@ export const fetchAll = async () => {
         const { data: data } = await supabase
             .from("prints")
             .select("*")
-            .order("uploaded_at", { ascending: false });
+            .order("uploaded_at", { ascending: true });
 
         return { data, error: null, status: true };
     } catch (error) {
