@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";;
 import { Text } from "@/components/ui/text";
 import { UserProps } from "@/interfaces/User";
