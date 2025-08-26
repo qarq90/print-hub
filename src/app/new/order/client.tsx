@@ -1,6 +1,5 @@
 "use client";;
 import { Text } from "@/components/ui/text";
-import { MainLayout } from "@/components/layouts/MainLayout";
 import { UserProps } from "@/interfaces/User";
 import { OrderItems } from "@/data/order-data";
 import Image from "next/image";
@@ -10,7 +9,8 @@ interface ClientProps {
     user: UserProps;
 }
 
-export default function Client({ user }: ClientProps) {
+export default function Client({ user: _user }: ClientProps) {
+
     return (
         <section key="stationary" title="Stationary" className="mb-12">
             <div className="flex flex-col gap-6">

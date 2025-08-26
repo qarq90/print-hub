@@ -1,20 +1,18 @@
 "use client";;
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
-import { useState } from "react";
 import { UserProps } from "@/interfaces/User";
-import { DocumentType } from "@/interfaces/Document";
 import { UnderConstructions } from "@/components/empty/UnderConstructions";
 
 interface ClientProps {
     user: UserProps;
 }
 
-export default function Client({ user }: ClientProps) {
-    const [viewType, setViewType] = useState(false);
-    const [prints, setPrints] = useState<DocumentType[] | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+export default function Client({ user: _user }: ClientProps) {
+    // const [viewType, setViewType] = useState(false);
+    // const [prints, setPrints] = useState<DocumentType[] | null>(null);
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState<string | null>(null);
 
     // useEffect(() => {
     //     const fetchData = async () => {

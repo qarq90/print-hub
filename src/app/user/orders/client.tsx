@@ -1,56 +1,47 @@
-"use client";
-import { EmptyHistory } from "@/components/empty/EmptyHistory";
+"use client";;
 import { Text } from "@/components/ui/text";
-import { useEffect, useState } from "react";
-import { TableView } from "@/components/pages/common/TableView";
-import { GridView } from "@/components/pages/common/GridView";
-import { ViewType } from "@/components/pages/common/ViewType";
-import { StatusType } from "@/components/pages/common/StatusType";
 import { UserProps } from "@/interfaces/User";
-import { PrintRecord } from "@/interfaces/Document";
-import { fetchUserHistory } from "@/functions/neon";
-import { HalfLoader } from "@/components/ui/loader";
 import { UnderConstructions } from "@/components/empty/UnderConstructions";
 
 interface ClientProps {
     user: UserProps;
 }
 
-export default function Client({ user }: ClientProps) {
-    const [viewType, setViewType] = useState(false);
-    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
-    const [prints, setPrints] = useState<PrintRecord[] | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+export default function Client({ user: _user }: ClientProps) {
+    // const [viewType, setViewType] = useState(false);
+    // const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
+    // const [prints, setPrints] = useState<PrintRecord[] | null>(null);
+    // const [loading, setLoading] = useState(true);
+    // const [error, setError] = useState<string | null>(null);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                setLoading(true);
-                const result = await fetchUserHistory(user);
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const result = await fetchUserHistory(user);
 
-                if (result.error) {
-                    throw result.error;
-                }
+    //             if (result.error) {
+    //                 throw result.error;
+    //             }
 
-                setPrints(result.data || []);
-            } catch (error) {
-                console.error("Error fetching user history:", error);
-                setError(error instanceof Error ? error.message : "Failed to fetch history");
-                setPrints([]);
-            } finally {
-                setLoading(false);
-            }
-        };
+    //             setPrints(result.data || []);
+    //         } catch (error) {
+    //             console.error("Error fetching user history:", error);
+    //             setError(error instanceof Error ? error.message : "Failed to fetch history");
+    //             setPrints([]);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
 
-        if (user) {
-            fetchData();
-        }
-    }, [user]);
+    //     if (user) {
+    //         fetchData();
+    //     }
+    // }, [user]);
 
-    const filteredHistory = statusType === "all"
-        ? prints || []
-        : (prints || []).filter(item => item["print-status"] === statusType);
+    // const filteredHistory = statusType === "all"
+    //     ? prints || []
+    //     : (prints || []).filter(item => item["print-status"] === statusType);
 
     return (
         <div className="mb-20  mt-4">

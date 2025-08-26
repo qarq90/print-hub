@@ -10,7 +10,7 @@ export const insertNeon = async (
     pinataResult: PinataResult
 ) => {
     try {
-        let pageCount =
+        const pageCount =
             file.print_type === "double_side"
                 ? file.page_count
                 : file.page_count * 2;

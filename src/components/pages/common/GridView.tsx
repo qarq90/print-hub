@@ -3,7 +3,7 @@ import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
 import { LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
-import { DocumentType, PrintRecord } from "@/interfaces/Document";
+import { PrintRecord } from "@/interfaces/Document";
 import { cn } from '@/lib/utils';
 
 interface GridViewProps {
