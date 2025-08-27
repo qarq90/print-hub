@@ -1,15 +1,17 @@
-"use client";;
+"use client";
 import { NavbarLinks } from "@/data/navbar-data";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { useUser } from "@clerk/nextjs";
+import { LuUser } from "react-icons/lu";
 
 export const PrimaryBar = () => {
     const pathname = usePathname();
-
+    const { isSignedIn, user } = useUser();
 
     if (pathname.includes("/sign-in")) {
-        return null
+        return null;
     }
 
     const isActive = (href: string) => {
@@ -21,7 +23,6 @@ export const PrimaryBar = () => {
         }
         return pathname === href;
     };
-
 
     return (
         <nav className="fixed bottom-0 left-1/2 -translate-x-1/2 md:bottom-auto md:top-1/2 md:right-auto md:left-4 md:-translate-y-1/2 md:translate-x-0 transform p-4 bg-accent md:text-foreground text-background md:bg-transparent h-fit w-screen md:w-fit flex justify-around flex-row md:flex-col gap-12 md:gap-9 text-2xl z-30">
@@ -47,6 +48,37 @@ export const PrimaryBar = () => {
                         </Link>
                     )
             )}
+            <Link
+                href="/user/prints"
+                className={cn(
+                    "list-none cursor-pointer overflow-hidden group",
+                    isActive("/user/prints")
+                        ? "text-foreground md:text-accent"
+                        : "text-background md:text-foreground",
+                )}
+            >
+                <div className="flex items-center gap-2">
+                    {isSignedIn ? (
+                        <>
+                            <img
+                                src={user.imageUrl}
+                                alt="Profile"
+                                className="w-6 h-6 rounded-full"
+                            />
+                            <span className="md:block text-foreground hidden text-sm opacity-0 py-1 px-2 rounded-md group-hover:bg-foreground/10 group-hover:opacity-100 transition-opacity duration-200">
+                                {user.firstName || "Profile"}
+                            </span>
+                        </>
+                    ) : (
+                        <>
+                            <LuUser />
+                            <span className="md:block text-foreground hidden text-sm opacity-0 py-1 px-2 rounded-md group-hover:bg-foreground/10 group-hover:opacity-100 transition-opacity duration-200">
+                                Profile
+                            </span>
+                        </>
+                    )}
+                </div>
+            </Link>
         </nav>
     );
 };

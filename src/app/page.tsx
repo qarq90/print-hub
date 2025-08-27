@@ -38,8 +38,7 @@ export default function Page() {
           <Text weight="bold" className="text-7xl">Why choose&nbsp;</Text>
           <Text weight="bold" className="text-7xl">Print</Text>
           {/* <Text weight="bold" className="text-7xl p-1.5 rounded-md text-black bg-[#f79817]">Print</Text> */}
-          <Text weight="bold" className="text-7xl">hub</Text>
-          <Text weight="bold" className="text-7xl">&nbsp;?</Text>
+          <Text weight="bold" className="text-7xl">hub?</Text>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full mt-4">
           {printHubFeatures.map((feature, index) => {

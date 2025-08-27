@@ -40,7 +40,7 @@ export const NotLoggedIn = () => {
                     href="/authentication"
                     className="flex w-full cursor-pointer bg-accent text-black items-center justify-center gap-2 rounded-md py-2 px-3 shadow-lg transition-all duration-200 hover:opacity-75"
                 >
-                    <LuUserPlus /> Log In
+                    <LuUserPlus className="mt-1" /> Log In
                 </Link>
             </div>
         </div>

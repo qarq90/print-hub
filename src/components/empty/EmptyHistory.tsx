@@ -41,8 +41,8 @@ const images = [
 
 export const EmptyHistory = ({ title, description }: EmptyHistoryProps) => {
     const [randomImage] = useState(
-            () => images[Math.floor(Math.random() * images.length)]
-        );
+        () => images[Math.floor(Math.random() * images.length)]
+    );
 
     return (
         <div className="w-full h-[82vh] md:h-[60vh] md:w-full flex justify-center items-center flex-col gap-4 md:mt-0 text-center">
@@ -62,7 +62,7 @@ export const EmptyHistory = ({ title, description }: EmptyHistoryProps) => {
                     href={title.includes("History") ? "/new/print" : "/new/order"}
                     className="flex w-full cursor-pointer bg-accent text-black items-center justify-center rounded-md gap-2 py-2 px-3 shadow-lg transition-all duration-200 hover:opacity-75"
                 >
-                    <LuUpload /> Schedule
+                    <LuUpload className="mt-1" /> Schedule
                 </Link>
             </div>
         </div>

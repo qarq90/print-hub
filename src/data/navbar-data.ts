@@ -2,7 +2,6 @@ import { IconType } from "react-icons";
 import { FiPackage } from "react-icons/fi";
 import {
     LuHouse,
-    LuUser,
     LuFileText,
     LuMail,
     LuPlus,
@@ -43,12 +42,12 @@ export const NavbarLinks: NavbarLink[] = [
         href: "/new/print",
         isPrimaryLink: true,
     },
-    {
-        text: "Profile",
-        icon: LuUser,
-        href: "/user/prints",
-        isPrimaryLink: true,
-    },
+    // {
+    //     text: "Profile",
+    //     icon: LuUser,
+    //     href: "/user/prints",
+    //     isPrimaryLink: true,
+    // },
     {
         text: "About Us",
         icon: RiInformationLine,

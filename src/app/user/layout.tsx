@@ -20,6 +20,6 @@ export default function NewLayout({
                 <Link href="/user/orders" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/user/orders") && "bg-accent text-black")}>Your Orders</Link>
             </section>
             {children}
-        </MainLayout >
+        </MainLayout>
     )
 }

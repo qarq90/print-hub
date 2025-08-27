@@ -43,15 +43,13 @@ export default function Client({ user: _user }: ClientProps) {
 
     return (
         <MainLayout>
-            <div className="mb-20  mt-4">
-                <div className="mb-16 flex flex-col gap-2 text-left">
-                    <Text size="5xl" weight="bold">Orders</Text>
-                    <Text size="base">
-                        Last updated: {new Date().toLocaleDateString()}
-                    </Text>
-                </div>
-                <UnderConstructions />
+            <div className="mb-4 flex flex-col gap-2 text-left">
+                <Text size="5xl" weight="bold">Orders</Text>
+                <Text size="base">
+                    Last updated: {new Date().toLocaleDateString()}
+                </Text>
             </div>
+            <UnderConstructions />
         </MainLayout>
     )
 
