@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 interface GridViewProps {
     documentResult: PrintRecord[];
-    page_type: "user_history" | "prints_queue" | "admin_page";
+    page_type: "user_history" | "prints_queue" | "admin_page" | "shopkeeper_page";
 }
 
 export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type }) => {

@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 
 interface TableViewProps {
     documentResult: PrintRecord[];
-    page_type: "user_history" | "prints_queue" | "admin_page"
+    page_type: "user_history" | "prints_queue" | "admin_page" | "shopkeeper_page"
 }
 
 export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type }) => {

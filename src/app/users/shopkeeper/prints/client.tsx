@@ -100,9 +100,9 @@ export default function Client() {
                 <StatusType setStatusType={setStatusType} statusType={statusType} />
             </div>
             {viewType ? (
-                <TableView documentResult={filteredHistory} page_type="admin_page" />
+                <TableView documentResult={filteredHistory} page_type="shopkeeper_page" />
             ) : (
-                <GridView documentResult={filteredHistory} page_type="admin_page" />
+                <GridView documentResult={filteredHistory} page_type="shopkeeper_page" />
             )}
         </MainLayout>
     );

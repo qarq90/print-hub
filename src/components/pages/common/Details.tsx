@@ -19,7 +19,7 @@ import { cancelDocument, completeDocument, updateDocument } from "@/functions/ne
 interface DetailsProps {
     doc: PrintRecord;
     onClose: () => void;
-    page_type: "user_history" | "prints_queue" | "admin_page";
+    page_type: "user_history" | "prints_queue" | "admin_page" | "shopkeeper_page";
 }
 
 const getStatusStyles = (status: string) => {
