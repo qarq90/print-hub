@@ -7,7 +7,7 @@ import { GridView } from "@/components/pages/common/GridView";
 import { ViewType } from "@/components/pages/common/ViewType";
 import { StatusType } from "@/components/pages/common/StatusType";
 import { UserProps } from "@/interfaces/User";
-import { PrintRecord } from "@/interfaces/Document";
+import { PrintRecord } from "@/interfaces/Print";
 import { fetchUserHistory } from "@/functions/neon";
 import { HalfLoader } from "@/components/ui/loader";
 

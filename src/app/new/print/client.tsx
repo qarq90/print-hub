@@ -1,7 +1,7 @@
 "use client";;
 import React, { useState } from "react";
 import { Text } from "@/components/ui/text";
-import { DocumentType } from "@/interfaces/Document";
+import { PrintType } from "@/interfaces/Print";
 import { FileUpload } from "@/components/ui/file-input";
 import { LuCheckCheck, LuMinus, LuPlus, LuTrash } from "react-icons/lu";
 import { getPDFPageCount } from "@/functions/file";
@@ -22,7 +22,7 @@ interface ClientProps {
 
 export default function Client({ user }: ClientProps) {
 
-    const [selectedFiles, setSelectedFiles] = useState<DocumentType[]>([]);
+    const [selectedFiles, setSelectedFiles] = useState<PrintType[]>([]);
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false)
     const fileInputRef = React.useRef<HTMLInputElement>(null);
@@ -31,7 +31,7 @@ export default function Client({ user }: ClientProps) {
 
     const handleFiles = async (files: File[]) => {
         const processedFiles = await Promise.all(
-            files.map(async (file): Promise<DocumentType> => {
+            files.map(async (file): Promise<PrintType> => {
                 const fileType = getFileType(file.type);
                 let pageCount = 1;
 
@@ -305,7 +305,7 @@ export default function Client({ user }: ClientProps) {
                                 >
                                     Clear all
                                 </Button>
-                                <Button variant="outline" onClick={triggerFileInput}>
+                                <Button variant="foreground" onClick={triggerFileInput}>
                                     Add more files
                                 </Button>
                                 <Button onClick={submitHandler}>Submit</Button>

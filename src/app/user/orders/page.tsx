@@ -8,7 +8,7 @@ import { NotLoggedIn } from "@/components/empty/NotLoggedIn";
 
 export const metadata: Metadata = {
     title: "Print Hub | User | Orders",
-    description: "View your order history",
+    description: "Manage your active orders and view past order history in Print Hub.",
 };
 
 export default async function Page() {

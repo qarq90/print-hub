@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { OrderItems } from "@/data/order-data";
+import { OrderItems } from "@/data/item-data";
 import { Button } from "@/components/ui/button";
 
 type Props = {

@@ -1,17 +1,24 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-"use client";;
+"use client";
 import { Text } from "@/components/ui/text";
 import { UserProps } from "@/interfaces/User";
-import { OrderItems } from "@/data/order-data";
+import { Items } from "@/data/item-data";
 import Image from "next/image";
 import Link from "next/link";
+import { OrderType } from "@/components/pages/common/OrderType";
+import { useState } from "react";
 
 interface ClientProps {
     user: UserProps;
 }
 
 export default function Client({ user: _user }: ClientProps) {
+    const [orderType, setOrderType] = useState<"Paper" | "Writing" | "Art" | "Accessories" | "all">("all");
+
+    const filteredItems = orderType === "all"
+        ? Items || []
+        : (Items || []).filter(item => item.category === orderType);
 
     return (
         <section key="stationary" title="Stationary" className="mb-12">
@@ -21,33 +28,35 @@ export default function Client({ user: _user }: ClientProps) {
                     <Text size="base" className="text-foreground/60">Last updated: {new Date().toLocaleDateString()}</Text>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {OrderItems.map((item, index) => (
+                <OrderType orderType={orderType} setOrderType={setOrderType} />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 -mt-8">
+                    {filteredItems.map((item) => (
                         <Link
                             href={`/new/order/${item.id}`}
-                            key={`${item.title}-${index}`}
+                            key={item.id}
                             className="flex flex-col group transition-all hover:-translate-y-1 rounded-lg border border-foreground/10 overflow-hidden hover:shadow-lg h-full bg-background"
                         >
                             <div className="relative aspect-square overflow-hidden">
                                 <Image
-                                    alt={item.title}
-                                    src={item.img}
+                                    alt={item.name}
+                                    src={item.image}
                                     fill
                                     className="object-cover transition-transform group-hover:scale-105"
                                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                     quality={80}
-                                    priority={index < 6}
+                                    priority={Items.indexOf(item) < 6}
                                 />
                             </div>
 
                             <div className="p-4 flex flex-col gap-3 flex-grow">
                                 <div className="flex justify-between items-start gap-2">
-                                    <Text weight="bold" className="text-lg line-clamp-2">{item.title}</Text>
+                                    <Text weight="bold" className="text-lg line-clamp-2">{item.name}</Text>
                                     <Text weight="bold" className="text-primary whitespace-nowrap pl-2">
-                                        {item.price}
+                                        ${item.price}
                                     </Text>
                                 </div>
-                                <Text className="text-foreground/80 line-clamp-3">{item.content}</Text>
+                                <Text className="text-foreground/80 line-clamp-3">{item.short_description}</Text>
                             </div>
                         </Link>
                     ))}

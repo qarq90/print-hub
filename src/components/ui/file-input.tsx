@@ -19,7 +19,7 @@ const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
         };
 
         return (
-            <div className="flex items-center justify-center mb-4 w-full bg-foreground/5 rounded-md">
+            <div className="flex items-center justify-center mb-4 w-full rounded-lg border border-foreground/5 bg-foreground/5">
                 <label
                     htmlFor={props.id}
                     className={cn(

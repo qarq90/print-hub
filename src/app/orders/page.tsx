@@ -5,8 +5,8 @@ import { UserProps } from "@/interfaces/User";
 import { NotLoggedIn } from "@/components/empty/NotLoggedIn";
 
 export const metadata: Metadata = {
-    title: "Print Hub | Orders",
-    description: "Access your Cart",
+    title: "Print Hub | Today's Queue",
+    description: "View all orders scheduled for today in Print Hub.",
 };
 
 export default async function Page() {

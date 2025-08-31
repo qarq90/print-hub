@@ -1,4 +1,4 @@
-export interface DocumentType {
+export interface PrintType {
     document_id?: string;
     user_id?: string;
     user_name?: string;
@@ -16,15 +16,15 @@ export interface DocumentType {
 
 export interface PrintRecord {
     "print-id": string;
+    "user-id": string;
+    "user-name": string;
+    "file-name": string;
+    "file-type": string;
+    "print-count": number;
     "page-count": number;
     "print-type": "single_side" | "double_side";
     "print-color": "colored" | "b/w";
-    "print-count": number;
     "print-status": "pending" | "completed" | "cancelled";
     "ipfs-link": string;
-    "file-name": string;
-    "file-type": string;
-    "user-name": string;
-    "user-id": string;
     "uploaded-at": string;
 }

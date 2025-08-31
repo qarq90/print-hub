@@ -7,10 +7,9 @@ import { Metadata } from "next";
 import { PrivacyPolicySections } from "@/components/pages/privacy-policy/PrivacyPolicySections";
 import { PrivacyPolicyFooter } from "@/components/pages/privacy-policy/PrivacyPolicyFooter";
 
-
 export const metadata: Metadata = {
     title: "Print Hub | Terms of Service",
-    description: "Our terms and conditions",
+    description: "Official terms and conditions for using Print Hub.",
 };
 
 export default function Page() {

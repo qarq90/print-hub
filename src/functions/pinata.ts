@@ -1,6 +1,6 @@
-import { DocumentType, PrintRecord } from "@/interfaces/Document";
+import { PrintType, PrintRecord } from "@/interfaces/Print";
 
-export const uploadToPinata = async (file: DocumentType) => {
+export const uploadToPinata = async (file: PrintType) => {
     try {
         if (!file) {
             alert("No file selected");

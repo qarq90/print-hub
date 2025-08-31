@@ -7,7 +7,7 @@ import { TableView } from "@/components/pages/common/TableView";
 import { GridView } from "@/components/pages/common/GridView";
 import { ViewType } from "@/components/pages/common/ViewType";
 import { UserProps } from "@/interfaces/User";
-import { PrintRecord } from "@/interfaces/Document";
+import { PrintRecord } from "@/interfaces/Print";
 import { fetchTodaysQueue } from "@/functions/neon";
 import { HalfLoader } from "@/components/ui/loader";
 
@@ -33,7 +33,7 @@ export default function Client({ user }: ClientProps) {
 
                 setPrints(result.data || []);
             } catch (error) {
-                console.error("Error fetching user history:", error);
+                console.error("Error fetching prints queue:", error);
                 setError(error instanceof Error ? error.message : "Failed to fetch history");
                 setPrints([]);
             } finally {

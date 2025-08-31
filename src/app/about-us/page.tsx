@@ -8,7 +8,7 @@ import { Features } from "@/components/pages/about-us/Features";
 
 export const metadata: Metadata = {
     title: "Print Hub | About Us",
-    description: "Modern document printing solutions powered by technology",
+    description: "Learn about Print Hub’s mission to deliver fast, reliable, and modern document printing solutions.",
 };
 
 export default function Page() {

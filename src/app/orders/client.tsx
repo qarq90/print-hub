@@ -12,7 +12,7 @@ interface ClientProps {
 
 export default function Client({ user: _user }: ClientProps) {
     // const [viewType, setViewType] = useState(false);
-    // const [prints, setPrints] = useState<DocumentType[] | null>(null);
+    // const [prints, setPrints] = useState<PrintType[] | null>(null);
     // const [loading, setLoading] = useState(true);
     // const [error, setError] = useState<string | null>(null);
 

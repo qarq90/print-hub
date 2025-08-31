@@ -7,7 +7,7 @@ import { Mail } from "@/components/pages/contact-us/Mail";
 
 export const metadata: Metadata = {
     title: "Print Hub | Contact Us",
-    description: "Get in touch with Print Hub",
+    description: "Get in touch with Print Hub for support, inquiries, or service requests.",
 };
 
 export default function Page() {

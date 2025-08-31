@@ -4,8 +4,8 @@ import { auth, currentUser } from '@clerk/nextjs/server';
 import { UserProps } from "@/interfaces/User";
 
 export const metadata: Metadata = {
-    title: "Print Hub | Upload Files",
-    description: "Submit files to be printed",
+    title: "Print Hub | New Order | Item",
+    description: "Review item details and add it to your new order in Print Hub.",
 };
 
 export default async function Page() {

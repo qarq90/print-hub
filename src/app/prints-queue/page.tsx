@@ -6,7 +6,7 @@ import { NotLoggedIn } from "@/components/empty/NotLoggedIn";
 
 export const metadata: Metadata = {
     title: "Print Hub | Today's Queue",
-    description: "Prints tasked for today",
+    description: "View all print jobs scheduled for today in Print Hub.",
 };
 
 export default async function Page() {

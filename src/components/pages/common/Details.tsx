@@ -9,7 +9,7 @@ import {
     LuPaintbrush,
     LuBookOpen
 } from "react-icons/lu";
-import { PrintRecord } from "@/interfaces/Document";
+import { PrintRecord } from "@/interfaces/Print";
 import { cn } from "@/lib/utils"
 import { usePathname, useRouter } from "next/navigation";
 import { deleteFromPinata, updateFromPinata } from "@/functions/pinata";
@@ -393,7 +393,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
                     <div className="flex flex-row w-full gap-2 pt-3">
                         {
-                            page_type !== "prints_queue" && (
+                            (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
                                 <Button
                                     variant={
                                         currentDoc["print-status"] === "pending"
@@ -414,12 +414,12 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             )
                         }
                         {
-                            (page_type !== "admin_page" && (page_type === "user_history" || page_type === "prints_queue")) && (
+                            (page_type !== "admin_page" && (page_type === "user_history" || page_type === "prints_queue" || page_type === "shopkeeper_page")) && (
                                 <Button variant="outline" className="grow" onClick={onClose}>Close</Button>
                             )
                         }
                         {
-                            page_type !== "prints_queue" && (
+                            (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
                                 <Button
                                     variant={
                                         currentDoc["print-status"] === "pending"

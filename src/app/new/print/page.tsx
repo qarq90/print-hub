@@ -5,7 +5,7 @@ import { UserProps } from "@/interfaces/User";
 
 export const metadata: Metadata = {
     title: "Print Hub | Upload Files",
-    description: "Submit files to be printed",
+    description: "Submit documents and files to create new print requests in Print Hub.",
 };
 
 export default async function Page() {

@@ -3,7 +3,7 @@ import { LuEllipsisVertical, LuUser, LuCalendarDays, LuIndianRupee } from "react
 import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
-import { PrintRecord } from "@/interfaces/Document";
+import { PrintRecord } from "@/interfaces/Print";
 import { cn } from '@/lib/utils';
 
 interface TableViewProps {

@@ -1,4 +1,4 @@
-import { DocumentType, PrintRecord } from "@/interfaces/Document";
+import { PrintType, PrintRecord } from "@/interfaces/Print";
 import { PinataResult } from "@/interfaces/Pinata";
 import { UserProps } from "@/interfaces/User";
 import pool from "@/lib/neon/config";
@@ -6,7 +6,7 @@ import { getFormatDate } from "./file";
 
 export const insertNeon = async (
     user: UserProps,
-    file: DocumentType,
+    file: PrintType,
     pinataResult: PinataResult
 ) => {
     try {
