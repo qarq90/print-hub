@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { Items } from "@/data/item-data";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Text } from "@/components/ui/text";
 import { ItemType } from "@/data/item-data";
 import { LuShoppingCart, LuTruck, LuUpload } from "react-icons/lu";
