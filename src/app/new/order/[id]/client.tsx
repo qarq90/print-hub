@@ -5,7 +5,7 @@ import { Items } from "@/data/item-data";
 import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { ItemType } from "@/data/item-data";
-import { LuShoppingCart, LuTruck, LuUpload } from "react-icons/lu";
+import { LuShoppingCart, LuTruck } from "react-icons/lu";
 
 type Props = {
     id: string;
