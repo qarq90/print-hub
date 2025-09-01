@@ -1,15 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { OrderItems } from "@/data/item-data";
+import { Items } from "@/data/item-data";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { Text } from "@/components/ui/text";
+import { ItemType } from "@/data/item-data";
+import { LuShoppingCart, LuTruck, LuUpload } from "react-icons/lu";
 
 type Props = {
     id: string;
 };
 
 export default function Client({ id }: Props) {
-    const item = OrderItems.find((product) => product.id === id);
+    const item = Items.find((product) => product.id === id);
 
     if (!item) {
         return (
@@ -20,106 +24,113 @@ export default function Client({ id }: Props) {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 my-10">
-            <div className="flex justify-center items-start">
-                <Image
-                    src={item.img}
-                    alt={item.title}
-                    height={400}
-                    className="rounded-xl w-full shadow-lg"
-                />
-            </div>
+        <section className="w-full">
+            <div className="mx-auto max-w-5xl py-5">
+                <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                    {/* Image */}
+                    <div className="flex flex-col gap-2">
+                        <div className="relative md:h-[485px] w-full overflow-hidden rounded-md">
+                            <Image
+                                src={
+                                    item.image
+                                        ? item.image
+                                        : "/placeholder.svg?height=600&width=800&query=Product Image"
+                                }
+                                alt={item.name}
+                                fill
+                                className="object-cover"
+                                sizes="(min-width: 768px) 50vw, 100vw"
+                                priority
+                            />
+                        </div>
 
-            <div className="flex flex-col space-y-6">
-                <div>
-                    <h1 className="text-3xl font-bold">{item.title}</h1>
-                </div>
-
-                <div className="space-x-3">
-                    <span className="text-2xl font-semibold text-green-700">
-                        {item.price}
-                    </span>
-                    <span className="line-through">{item.mrp}</span>
-                    {item.discount && (
-                        <span className="text-red-600 font-semibold">
-                            {item.discount}% OFF
-                        </span>
-                    )}
-                </div>
-
-                <p
-                    className={`font-medium ${item.isAvailable ? "text-green-600" : "text-red-600"
-                        }`}
-                >
-                    {item.isAvailable
-                        ? `In Stock (${item.stock} available)`
-                        : "Currently Unavailable"}
-                </p>
-
-                <p className="text-yellow-500">
-                    ⭐ {item.rating.toFixed(1)} / 5
-                </p>
-
-                <div className="w-full rounded-md bg-foreground/5 p-4">
-                    <h2 className="text-xl font-semibold mb-3">Product Details</h2>
-                    <ul className="space-y-2">
-                        {item.details.map((detail, index) => (
-                            <li key={index} className="flex justify-between">
-                                <span className="font-medium">{detail.factor}:</span>
-                                <span>{detail.value}</span>
-                            </li>
-                        ))}
-                        {item.weight && (
-                            <li className="flex justify-between">
-                                <span className="font-medium">Weight:</span>
-                                <span>{item.weight}</span>
-                            </li>
-                        )}
-                        {item.dimensions && (
-                            <li className="flex justify-between">
-                                <span className="font-medium">Dimensions:</span>
-                                <span>{item.dimensions}</span>
-                            </li>
-                        )}
-                        {item.warranty && (
-                            <li className="flex justify-between">
-                                <span className="font-medium">Warranty:</span>
-                                <span>{item.warranty}</span>
-                            </li>
-                        )}
-                        {item.origin && (
-                            <li className="flex justify-between">
-                                <span className="font-medium">Origin:</span>
-                                <span>{item.origin}</span>
-                            </li>
-                        )}
-                    </ul>
-                </div>
-
-                <div className="space-y-3">
-                    <h2 className="text-xl font-semibold">About this item</h2>
-                    <ul className="list-disc list-inside space-y-1">
-                        {item.about.map((point, index) => (
-                            <li key={index}>{point}</li>
-                        ))}
-                    </ul>
-                </div>
-
-                {item.tags && (
-                    <div className="flex flex-wrap gap-2">
-                        {item.tags.map((tag, idx) => (
-                            <span
-                                key={idx}
-                                className="px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-xs"
-                            >
-                                #{tag}
-                            </span>
-                        ))}
+                        {/* Weight + Dimensions */}
+                        <div className="mt-3 grid grid-cols-2 gap-3">
+                            <div className="rounded-md flex flex-col border border-foreground/10 bg-foreground/5 p-3">
+                                <Text className="text-foreground/70">Weight :</Text>
+                                <Text weight="semibold">{item.weight || "—"}</Text>
+                            </div>
+                            <div className="rounded-md flex flex-col border border-foreground/10 bg-foreground/5 p-3">
+                                <Text className="text-foreground/70">Dimensions :</Text>
+                                <Text weight="semibold">{item.dimensions || "—"}</Text>
+                            </div>
+                        </div>
                     </div>
-                )}
 
-                <Button>Add to Cart</Button>
-            </div>
-        </div >
+                    {/* Details */}
+                    <div className="flex flex-col gap-5">
+                        <div className="flex flex-col gap-2">
+                            <Text size="4xl" weight="bold" className="text-balance">
+                                {item.name}
+                            </Text>
+                            <Text className="text-foreground/70">{item.category}</Text>
+
+                            {item.types.length > 0 && (
+                                <div className="mt-1 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                    {item.types.map((t: ItemType, i: number) => (
+                                        <div
+                                            key={`${t.factor}-${i}`}
+                                            className="flex items-center justify-between rounded-md border border-foreground/10 bg-background/60 px-3 py-2"
+                                        >
+                                            <span className="text-foreground/70">{t.factor}</span>
+                                            <span className="font-medium text-foreground">{t.value}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {item.short_description && <Text className="text-foreground/80">{item.short_description}</Text>}
+
+                        {item.long_description.length > 0 && (
+                            <div className="rounded-lg border border-foreground/10 bg-foreground/5 p-4">
+                                <Text size="lg" weight="semibold">
+                                    About this item :
+                                </Text>
+                                <ul className="mt-3 list-disc space-y-2 pl-5">
+                                    {item.long_description.map((line: string, i: number) => (
+                                        <li key={i} className="text-foreground/80">
+                                            {line}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
+                        <div className="rounded-lg">
+                            <div className="flex flex-col gap-3">
+                                <div className="flex flex-row items-center gap-2">
+                                    <Text size="xl" className="text-foreground/70">Price :</Text>
+                                    <Text size="xl" weight="semibold">
+                                        {"$"}
+                                        {typeof item.price === "number" ? item.price.toFixed(2) : item.price}
+                                    </Text>
+                                </div>
+                                <div className="flex items-center gap-2">
+                                    <Button variant="outline"><LuShoppingCart /> Add to Cart</Button>
+                                    <Button><LuTruck /> Order Now</Button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Mobile CTA */}
+                        <div className="sticky bottom-4 z-10 mt-2 block md:hidden">
+                            <div className="rounded-lg border border-foreground/10 bg-background/90 p-3 backdrop-blur">
+                                <div className="flex items-center justify-between">
+                                    <Text weight="semibold">
+                                        {"$"}
+                                        {typeof item.price === "number" ? item.price.toFixed(2) : item.price}
+                                    </Text>
+                                    <div className="flex items-center gap-2">
+                                        <Button variant="outline"><LuShoppingCart /> Add to Cart</Button>
+                                        <Button><LuTruck /> Order Now</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div >
+        </section >
     );
 }

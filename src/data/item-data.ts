@@ -141,7 +141,7 @@ export const Items: Item[] = [
     },
     {
         id: "whiteboard-marker-4",
-        name: "Whiteboard Marker (Pack of 4)",
+        name: "Whiteboard Marker",
         category: "Writing",
         price: 2.99,
         types: [
@@ -155,7 +155,7 @@ export const Items: Item[] = [
             },
         ],
         short_description:
-            "Set of 4 vibrant whiteboard markers for presentations and teaching.",
+            "(Pack of 4 or single) vibrant whiteboard markers for presentations and teaching.",
         long_description: [
             "Quick-drying ink that erases easily without ghosting or staining.",
             "Low-odor formula suitable for classrooms and office environments.",
@@ -167,7 +167,7 @@ export const Items: Item[] = [
     },
     {
         id: "permanent-markers",
-        name: "Permanent Markers",
+        name: "Permanent Marker",
         category: "Writing",
         price: 3.99,
         types: [
@@ -181,7 +181,7 @@ export const Items: Item[] = [
             },
         ],
         short_description:
-            "Permanent ink markers for writing on various surfaces.",
+            "(Pack of 4 or single) Permanent ink markers for writing on various surfaces.",
         long_description: [
             "Water-resistant ink that won't smudge or fade.",
             "Works on paper, plastic, metal, glass and more.",
@@ -193,7 +193,7 @@ export const Items: Item[] = [
     },
     {
         id: "highlighters-pack-4",
-        name: "Highlighters (Pack of 4)",
+        name: "Highlighter",
         category: "Writing",
         price: 3.49,
         types: [
@@ -207,7 +207,7 @@ export const Items: Item[] = [
             },
         ],
         short_description:
-            "Vibrant highlighters for emphasizing important text.",
+            " (Pack of 4 or single) Vibrant highlighters for emphasizing important text.",
         long_description: [
             "Quick-drying ink that doesn't bleed through most paper types.",
             "Transparent color allows text to remain readable underneath.",
@@ -269,7 +269,7 @@ export const Items: Item[] = [
     },
     {
         id: "crayons-24",
-        name: "Crayons (Pack of 24)",
+        name: "Crayons",
         category: "Art",
         price: 3.99,
         types: [
@@ -283,7 +283,7 @@ export const Items: Item[] = [
             },
         ],
         short_description:
-            "Vibrant non-toxic crayons for children's art projects.",
+            "(Pack of 24) Vibrant non-toxic crayons for children's art projects.",
         long_description: [
             "Bright, bold colors that glide smoothly on paper.",
             "Round shape designed for small hands with easy grip.",
@@ -295,7 +295,7 @@ export const Items: Item[] = [
     },
     {
         id: "water-colors-24",
-        name: "Water Colors (24 colors)",
+        name: "Water Colors ",
         category: "Art",
         price: 6.99,
         types: [
@@ -308,7 +308,8 @@ export const Items: Item[] = [
                 value: "Cake format",
             },
         ],
-        short_description: "Complete watercolor set with 24 pigmented colors.",
+        short_description:
+            "(Pack of 24 colors) Complete watercolor set with 24 pigmented colors.",
         long_description: [
             "Richly pigmented colors that blend beautifully with water.",
             "Includes brush and mixing palette for immediate use.",
@@ -320,7 +321,7 @@ export const Items: Item[] = [
     },
     {
         id: "oil-pastels-24",
-        name: "Oil Pastels (24 colors)",
+        name: "Oil Pastels",
         category: "Art",
         price: 7.99,
         types: [
@@ -333,7 +334,8 @@ export const Items: Item[] = [
                 value: "Non-toxic",
             },
         ],
-        short_description: "Creamy oil pastels for rich, blendable artwork.",
+        short_description:
+            "(24 colors) Creamy oil pastels for rich, blendable artwork.",
         long_description: [
             "Smooth application without crumbling or breaking.",
             "Blends easily for creating gradients and mixed colors.",
@@ -721,10 +723,6 @@ export const Items: Item[] = [
                 factor: "Size",
                 value: "Standard",
             },
-            {
-                factor: "Pack Quantity",
-                value: "100 pieces",
-            },
         ],
         short_description:
             "Metal paper clips for temporarily binding documents.",
@@ -771,10 +769,6 @@ export const Items: Item[] = [
             {
                 factor: "Size",
                 value: "Standard 26/6",
-            },
-            {
-                factor: "Quantity",
-                value: "1000 pins",
             },
         ],
         short_description: "Refill staples for staplers.",
@@ -943,7 +937,7 @@ export const Items: Item[] = [
         types: [
             {
                 factor: "Pack Size",
-                value: "Pack of 100 sheets",
+                value: "Pack of 500 sheets",
             },
             {
                 factor: "Paper Weight",
@@ -994,7 +988,11 @@ export const Items: Item[] = [
         price: 6.99,
         types: [
             {
-                factor: "Page Count",
+                factor: "Single",
+                value: "100 pages",
+            },
+            {
+                factor: "Double",
                 value: "200 pages",
             },
             {
