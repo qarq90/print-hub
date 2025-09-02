@@ -9,6 +9,8 @@ export interface PrintType {
     print_type: "single_side" | "double_side";
     print_color: "colored" | "b/w";
     print_status: "pending" | "completed" | "cancelled";
+    binding_type: "no" | "bind";
+    instructions: string;
     ipfs_cid?: string;
     uploaded_at: string;
     original_file?: File;
@@ -25,6 +27,8 @@ export interface PrintRecord {
     "print-type": "single_side" | "double_side";
     "print-color": "colored" | "b/w";
     "print-status": "pending" | "completed" | "cancelled";
+    "binding-type": "no" | "bind";
+    instructions: string;
     "ipfs-link": string;
     "uploaded-at": string;
 }

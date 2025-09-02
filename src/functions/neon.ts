@@ -28,8 +28,10 @@ export const insertNeon = async (
             "file-type",
             "user-name",
             "user-id",
-            "uploaded-at"
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12)
+            "uploaded-at",
+            "binding-type",
+            "instructions"
+        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
         RETURNING *;
     `;
 
@@ -46,6 +48,8 @@ export const insertNeon = async (
             user.fullName,
             user.id,
             getFormatDate(new Date()),
+            file.binding_type,
+            file.instructions,
         ];
 
         const result = await pool.query(query, values);
@@ -143,8 +147,10 @@ export const updateDocument = async (document: PrintRecord) => {
         "page-count" = $1,
         "print-count" = $2,
         "print-type" = $3,
-        "print-color" = $4
-      WHERE "print-id" = $5
+        "print-color" = $4,
+        "binding-type" = $5,
+        "instructions" = $6
+      WHERE "print-id" = $7
       RETURNING *;
     `;
 
@@ -153,6 +159,8 @@ export const updateDocument = async (document: PrintRecord) => {
             document["print-count"],
             document["print-type"],
             document["print-color"],
+            document["binding-type"],
+            document["instructions"],
             document["print-id"],
         ];
 

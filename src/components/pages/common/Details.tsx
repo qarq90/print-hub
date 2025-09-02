@@ -1,13 +1,24 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import {
-    LuX, LuFileText, LuCheck, LuUser, LuFile,
-    LuFileImage, LuFileArchive, LuBadgeIndianRupee,
-    LuFileInput, LuCalendar, LuCopy, LuClock,
+    LuX,
+    LuFileText,
+    LuCheck,
+    LuUser,
+    LuFile,
+    LuFileImage,
+    LuFileArchive,
+    LuBadgeIndianRupee,
+    LuFileInput,
+    LuCalendar,
+    LuCopy,
+    LuClock,
     LuMinus,
     LuPlus,
     LuPaintbrush,
-    LuBookOpen
+    LuBookOpen,
+    LuNotebook,
+    LuClipboardList,
 } from "react-icons/lu";
 import { PrintRecord } from "@/interfaces/Print";
 import { cn } from "@/lib/utils"
@@ -15,6 +26,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { deleteFromPinata, updateFromPinata } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
 import { cancelDocument, completeDocument, updateDocument } from "@/functions/neon";
+import { Textarea } from "@/components/ui/textarea";
 
 interface DetailsProps {
     doc: PrintRecord;
@@ -72,7 +84,13 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
     const calculateCost = (doc: PrintRecord) => {
         const costPerPage = doc["print-color"] === "colored" ? 10 : 2.5;
-        return costPerPage * doc["page-count"] * doc["print-count"];
+        let total = costPerPage * doc["page-count"] * doc["print-count"];
+
+        if (doc["binding-type"] && doc["binding-type"] === "bind") {
+            total += 35;
+        }
+
+        return total;
     };
 
     const incrementPrintCount = () => {
@@ -105,6 +123,16 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                 const newPrintColor =
                     prev["print-color"] === "b/w" ? "colored" : "b/w";
                 return { ...prev, "print-color": newPrintColor };
+            });
+        }
+    };
+
+    const toggleBinding = () => {
+        if (page_type === "user_history") {
+            setCurrentDoc(prev => {
+                const newBindType =
+                    prev["binding-type"] === "no" ? "bind" : "no";
+                return { ...prev, "binding-type": newBindType };
             });
         }
     };
@@ -282,7 +310,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                     )}
                                     onClick={togglePrintColor}
                                 >
-                                    Black and White
+                                    Black & White
                                 </span>
                                 <span
                                     className={cn(
@@ -295,6 +323,41 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                     onClick={togglePrintColor}
                                 >
                                     Colored
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-center items-center gap-3">
+                        <span className="text-foreground flex-shrink-0 mt-1">
+                            <LuNotebook />
+                        </span>
+                        <div className="flex-1 flex justify-between">
+                            <span className="text-foreground">Binding:</span>
+                            <div className="flex flex-row gap-2">
+                                <span
+                                    className={cn(
+                                        "rounded-md transition-colors text-right px-2 py-0.5",
+                                        currentDoc["binding-type"] === "no"
+                                            ? "bg-accent text-black"
+                                            : "text-foreground",
+                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                    )}
+                                    onClick={toggleBinding}
+                                >
+                                    No
+                                </span>
+                                <span
+                                    className={cn(
+                                        "rounded-md transition-colors text-right px-2 py-0.5",
+                                        currentDoc["binding-type"] === "bind"
+                                            ? "bg-accent text-black"
+                                            : "text-foreground",
+                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                    )}
+                                    onClick={toggleBinding}
+                                >
+                                    Bind
                                 </span>
                             </div>
                         </div>
@@ -365,6 +428,27 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             <span className="font-medium text-right">
                                 {currentDoc["uploaded-at"]}
                             </span>
+                        </div>
+                    </div>
+
+                    <div className="flex justify-center items-center gap-3 my-3.5">
+                        <span className="text-foreground/70"><LuClipboardList /> </span>
+                        <span className="text-foreground">Instructions:</span>
+                        <div className="flex justify-end gap-2 items-center w-full ml-10">
+                            <Textarea
+                                onChange={(e) => {
+                                    if (page_type === "user_history") {
+                                        const newValue = e.target.value;
+                                        setCurrentDoc((prev) => ({
+                                            ...prev,
+                                            instructions: newValue,
+                                        }));
+                                    }
+                                }}
+                                disabled={page_type !== "user_history"}
+                                value={currentDoc["instructions"] || ""}
+                                placeholder="Specifics..."
+                            />
                         </div>
                     </div>
 

@@ -15,6 +15,7 @@ import { FullLoader } from "@/components/ui/loader";
 import { PinataResult } from "@/interfaces/Pinata";
 import { Modal } from "@/components/Modal";
 import { insertNeon } from "@/functions/neon";
+import { Textarea } from "@/components/ui/textarea";
 
 interface ClientProps {
     user: UserProps;
@@ -64,6 +65,8 @@ export default function Client({ user }: ClientProps) {
                     print_type: "double_side",
                     print_color: "b/w",
                     print_status: "pending",
+                    binding_type: "no",
+                    instructions: "",
                     uploaded_at: getFormatDate(new Date()),
                     original_file: file,
                 };
@@ -123,6 +126,21 @@ export default function Client({ user }: ClientProps) {
                         ...file,
                         print_color: newPrintColor,
                         file_name: `${prefix}_${originalName}`
+                    };
+                }
+                return file;
+            })
+        );
+    };
+
+    const toggleBinding = (index: number) => {
+        setSelectedFiles((prevFiles) =>
+            prevFiles.map((file, i) => {
+                if (i === index) {
+                    const newBinding = file.binding_type === "no" ? "bind" : "no";
+                    return {
+                        ...file,
+                        binding_type: newBinding,
                     };
                 }
                 return file;
@@ -252,7 +270,7 @@ export default function Client({ user }: ClientProps) {
                                                             )}
                                                             onClick={() => togglePrintColor(index)}
                                                         >
-                                                            Black and White
+                                                            Black & White
                                                         </span>
                                                         <span
                                                             className={cn(
@@ -264,6 +282,34 @@ export default function Client({ user }: ClientProps) {
                                                             onClick={() => togglePrintColor(index)}
                                                         >
                                                             Colored
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                <div className="flex items-center justify-between">
+                                                    <span className="text-foreground">Binding:</span>
+                                                    <div className="flex flex-row gap-2">
+                                                        <span
+                                                            className={cn(
+                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5 hover:bg-foreground hover:text-background",
+                                                                file.binding_type === "no"
+                                                                    ? "bg-accent text-black"
+                                                                    : "text-foreground",
+                                                            )}
+                                                            onClick={() => toggleBinding(index)}
+                                                        >
+                                                            No
+                                                        </span>
+                                                        <span
+                                                            className={cn(
+                                                                "cursor-pointer rounded-md transition-colors px-2 py-0.5 hover:bg-foreground hover:text-background text-right",
+                                                                file.binding_type === "bind"
+                                                                    ? "bg-accent text-black"
+                                                                    : "text-foreground",
+                                                            )}
+                                                            onClick={() => toggleBinding(index)}
+                                                        >
+                                                            Bind
                                                         </span>
                                                     </div>
                                                 </div>
@@ -292,6 +338,25 @@ export default function Client({ user }: ClientProps) {
                                                         />
                                                     </div>
                                                 </div>
+
+                                                <div className="grid grid-cols-2">
+                                                    <span className="text-foreground/70">Instructions:</span>
+                                                    <div className="flex justify-end gap-2 items-center w-full">
+                                                        <Textarea
+                                                            onChange={(e) => {
+                                                                const newValue = e.target.value;
+                                                                setSelectedFiles((prevFiles) =>
+                                                                    prevFiles.map((f, i) =>
+                                                                        i === index ? { ...f, instructions: newValue } : f
+                                                                    )
+                                                                );
+                                                            }}
+                                                            value={file.instructions || ""}
+                                                            placeholder="Specifics..."
+                                                        />
+                                                    </div>
+                                                </div>
+
                                             </div>
                                         </div>
                                     </div>
