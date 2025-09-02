@@ -5,12 +5,12 @@ import BrownPaper from "../../public/img/schedule-order/brown-paper.png";
 import CraftPaper from "../../public/img/schedule-order/craft-paper.png";
 import Crayons from "../../public/img/schedule-order/crayons.png";
 import DrawingBook from "../../public/img/schedule-order/drawing-book.png";
-import GlueStick from "../../public/img/schedule-order/glue-stick.jpg";
+import GlueStick from "../../public/img/schedule-order/glue-stick.png";
 import GraphsPaper from "../../public/img/schedule-order/graphs-paper.png";
 import IndiaGeography from "../../public/img/schedule-order/india-geography.jpg";
 import IndiaPolitics from "../../public/img/schedule-order/india-politics.jpg";
 import LongBook from "../../public/img/schedule-order/longbook.png";
-import ColorPencils from "../../public/img/schedule-order/color-pencils.jpeg";
+import ColorPencils from "../../public/img/schedule-order/color-pencils.png";
 import PencilLead from "../../public/img/schedule-order/pencil-lead.png";
 import PenPencil from "../../public/img/schedule-order/pen-pencil.png";
 import Roller from "../../public/img/schedule-order/roller.png";
@@ -18,9 +18,9 @@ import Stapler from "../../public/img/schedule-order/stapler.png";
 import Tape from "../../public/img/schedule-order/tape.png";
 import WaterColor from "../../public/img/schedule-order/water-color.png";
 import A4Sheets from "../../public/img/schedule-order/a4-sheets.png";
-import PaperClips from "../../public/img/schedule-order/paper-clips.jpg";
-import Scissor from "../../public/img/schedule-order/scissor.jpg";
-import Chalk from "../../public/img/schedule-order/chalk.jpg";
+import PaperClips from "../../public/img/schedule-order/paper-clips.png";
+import Scissor from "../../public/img/schedule-order/scissor.png";
+import Chalk from "../../public/img/schedule-order/chalk.png";
 import WhiteboardMarker from "../../public/img/schedule-order/white-board-marker.png";
 import TransparentPouch from "../../public/img/schedule-order/transparent-pouch.png";
 
@@ -48,7 +48,7 @@ export const Items: Item[] = [
         id: "pencil-pack-10",
         name: "Pencil",
         category: "Writing",
-        price: 1.99,
+        price: 121, // Based on Doms Superio Pencil 10 Pcs Tin Pack[26][35]
         types: [
             {
                 factor: "Pack Size",
@@ -70,7 +70,7 @@ export const Items: Item[] = [
         id: "pen-pencil",
         name: "Pen Pencil",
         category: "Writing",
-        price: 2.49,
+        price: 20, // Based on Cello Smarty Mechanical Pencil 0.7 mm Pack of 5[36] (₹20 for 5 pcs = ₹4 per piece, adjusting to single price)
         types: [],
         short_description: "A mechanical pencil with a sleek, pen-like design.",
         long_description: [
@@ -86,7 +86,7 @@ export const Items: Item[] = [
         id: "ball-pen",
         name: "Ball Pen",
         category: "Writing",
-        price: 1.49,
+        price: 10, // Based on Cello Gripper Ball Pen pack pricing[42] (₹50 for 5 = ₹10 per pen)
         types: [],
         short_description: "A reliable ballpoint pen for everyday writing.",
         long_description: [
@@ -102,7 +102,7 @@ export const Items: Item[] = [
         id: "gel-pen",
         name: "Gel Pen",
         category: "Writing",
-        price: 2.29,
+        price: 10, // Based on Classmate Octane Gel Pen Blue[38]
         types: [],
         short_description: "A smooth-writing gel ink pen for vibrant lines.",
         long_description: [
@@ -118,7 +118,7 @@ export const Items: Item[] = [
         id: "fountain-pen",
         name: "Fountain Pen",
         category: "Writing",
-        price: 8.99,
+        price: 142, // Based on Parker Beta Neo Fountain Pen[39]
         types: [
             {
                 factor: "Nib Size",
@@ -143,7 +143,7 @@ export const Items: Item[] = [
         id: "whiteboard-marker-4",
         name: "Whiteboard Marker",
         category: "Writing",
-        price: 2.99,
+        price: 109,
         types: [
             {
                 factor: "Colors",
@@ -169,7 +169,7 @@ export const Items: Item[] = [
         id: "permanent-markers",
         name: "Permanent Marker",
         category: "Writing",
-        price: 3.99,
+        price: 109,
         types: [
             {
                 factor: "Colors",
@@ -195,7 +195,7 @@ export const Items: Item[] = [
         id: "highlighters-pack-4",
         name: "Highlighter",
         category: "Writing",
-        price: 3.49,
+        price: 109,
         types: [
             {
                 factor: "Colors",
@@ -221,7 +221,7 @@ export const Items: Item[] = [
         id: "chalk",
         name: "Chalk",
         category: "Writing",
-        price: 0.99,
+        price: 225, // Based on Apsara Dustless Chalk White[41]
         types: [
             {
                 factor: "Colors",
@@ -243,13 +243,12 @@ export const Items: Item[] = [
         dimensions: "8 x 8 x 1 cm",
         image: Chalk,
     },
-
     // Art category
     {
         id: "color-pencils-24",
         name: "Color Pencils",
         category: "Art",
-        price: 5.99,
+        price: 109, // Based on Camlin Colour Pencils Assorted Pack Of 24 Shades[34]
         types: [
             {
                 factor: "Pack Size",
@@ -269,9 +268,9 @@ export const Items: Item[] = [
     },
     {
         id: "crayons-24",
-        name: "Crayons",
+        name: "Crayons (Pack of 24)",
         category: "Art",
-        price: 3.99,
+        price: 120, // Estimated based on similar art supplies
         types: [
             {
                 factor: "Colors",
@@ -283,7 +282,7 @@ export const Items: Item[] = [
             },
         ],
         short_description:
-            "(Pack of 24) Vibrant non-toxic crayons for children's art projects.",
+            "Vibrant non-toxic crayons for children's art projects.",
         long_description: [
             "Bright, bold colors that glide smoothly on paper.",
             "Round shape designed for small hands with easy grip.",
@@ -295,9 +294,9 @@ export const Items: Item[] = [
     },
     {
         id: "water-colors-24",
-        name: "Water Colors ",
+        name: "Water Colors (24 colors)",
         category: "Art",
-        price: 6.99,
+        price: 116, // Based on Doms Water Color Cakes 24 Shades[27]
         types: [
             {
                 factor: "Colors",
@@ -308,8 +307,7 @@ export const Items: Item[] = [
                 value: "Cake format",
             },
         ],
-        short_description:
-            "(Pack of 24 colors) Complete watercolor set with 24 pigmented colors.",
+        short_description: "Complete watercolor set with 24 pigmented colors.",
         long_description: [
             "Richly pigmented colors that blend beautifully with water.",
             "Includes brush and mixing palette for immediate use.",
@@ -321,9 +319,9 @@ export const Items: Item[] = [
     },
     {
         id: "oil-pastels-24",
-        name: "Oil Pastels",
+        name: "Oil Pastels (24 colors)",
         category: "Art",
-        price: 7.99,
+        price: 186, // Based on Apsara Oil Pastels 50 Shades[34] adjusted for 24 colors
         types: [
             {
                 factor: "Colors",
@@ -334,8 +332,7 @@ export const Items: Item[] = [
                 value: "Non-toxic",
             },
         ],
-        short_description:
-            "(24 colors) Creamy oil pastels for rich, blendable artwork.",
+        short_description: "Creamy oil pastels for rich, blendable artwork.",
         long_description: [
             "Smooth application without crumbling or breaking.",
             "Blends easily for creating gradients and mixed colors.",
@@ -349,7 +346,7 @@ export const Items: Item[] = [
         id: "paint-brushes-set",
         name: "Paint Brushes Set",
         category: "Art",
-        price: 5.99,
+        price: 150, // Estimated based on art supply pricing
         types: [
             {
                 factor: "Brushes",
@@ -374,7 +371,7 @@ export const Items: Item[] = [
         id: "craft-paper",
         name: "Craft Paper",
         category: "Art",
-        price: 2.99,
+        price: 80, // Estimated based on paper products
         types: [
             {
                 factor: "Pack Size",
@@ -399,7 +396,7 @@ export const Items: Item[] = [
         id: "scrap-book",
         name: "Scrap Book",
         category: "Art",
-        price: 8.99,
+        price: 250, // Estimated based on notebook pricing
         types: [
             {
                 factor: "Page Count",
@@ -421,13 +418,12 @@ export const Items: Item[] = [
         dimensions: "30 x 30 x 2.5 cm",
         image: DrawingBook,
     },
-
     // Accessories category
     {
         id: "eraser",
         name: "Eraser",
         category: "Accessories",
-        price: 0.49,
+        price: 14, // Based on Apsara Non Dust Eraser[41]
         types: [],
         short_description:
             "A soft rubber eraser for cleanly removing pencil marks.",
@@ -444,7 +440,7 @@ export const Items: Item[] = [
         id: "sharpner",
         name: "Sharpner",
         category: "Accessories",
-        price: 0.79,
+        price: 63, // Based on Apsara Absolute Sharpener[41]
         types: [],
         short_description: "A compact metal sharpener for pencils.",
         long_description: [
@@ -460,7 +456,7 @@ export const Items: Item[] = [
         id: "pen-pencil-leads",
         name: "Pen Pencil Leads",
         category: "Accessories",
-        price: 1.29,
+        price: 25, // Estimated based on mechanical pencil accessories
         types: [
             {
                 factor: "Lead Diameter",
@@ -485,7 +481,7 @@ export const Items: Item[] = [
         id: "glue-stick",
         name: "Glue Stick",
         category: "Accessories",
-        price: 1.49,
+        price: 35, // Estimated based on office supplies
         types: [
             {
                 factor: "Size",
@@ -511,7 +507,7 @@ export const Items: Item[] = [
         id: "scissors",
         name: "Scissors",
         category: "Accessories",
-        price: 3.99,
+        price: 80, // Estimated based on office supplies pricing
         types: [
             {
                 factor: "Size",
@@ -537,7 +533,7 @@ export const Items: Item[] = [
         id: "transparent-tape",
         name: "Transparent Tape",
         category: "Accessories",
-        price: 1.49,
+        price: 40, // Estimated based on office supplies
         types: [
             {
                 factor: "Width",
@@ -562,7 +558,7 @@ export const Items: Item[] = [
         id: "paper-tape",
         name: "Paper Tape",
         category: "Accessories",
-        price: 1.99,
+        price: 50, // Estimated based on specialty tape pricing
         types: [
             {
                 factor: "Width",
@@ -588,7 +584,7 @@ export const Items: Item[] = [
         id: "double-sided-tape",
         name: "Double Sided Tape",
         category: "Accessories",
-        price: 2.49,
+        price: 60, // Estimated based on specialty tape pricing
         types: [
             {
                 factor: "Width",
@@ -614,7 +610,7 @@ export const Items: Item[] = [
         id: "correction-tape",
         name: "Correction Tape",
         category: "Accessories",
-        price: 2.29,
+        price: 45, // Estimated based on office supplies
         types: [
             {
                 factor: "Width",
@@ -639,7 +635,7 @@ export const Items: Item[] = [
         id: "scale-15cm",
         name: "Scale (15 cm)",
         category: "Accessories",
-        price: 1.29,
+        price: 25, // Estimated based on school supplies
         types: [
             {
                 factor: "Length",
@@ -665,7 +661,7 @@ export const Items: Item[] = [
         id: "scale-30cm",
         name: "Scale (30 cm)",
         category: "Accessories",
-        price: 2.29,
+        price: 40, // Estimated based on school supplies
         types: [
             {
                 factor: "Length",
@@ -691,7 +687,7 @@ export const Items: Item[] = [
         id: "roller-scale",
         name: "Roller Scale",
         category: "Accessories",
-        price: 4.99,
+        price: 150, // Estimated for measuring tools
         types: [
             {
                 factor: "Measurement Range",
@@ -717,11 +713,15 @@ export const Items: Item[] = [
         id: "paper-clips",
         name: "Paper Clips",
         category: "Accessories",
-        price: 0.99,
+        price: 20, // Estimated based on office supplies
         types: [
             {
                 factor: "Size",
                 value: "Standard",
+            },
+            {
+                factor: "Pack Quantity",
+                value: "100 pieces",
             },
         ],
         short_description:
@@ -739,7 +739,7 @@ export const Items: Item[] = [
         id: "stapler",
         name: "Stapler",
         category: "Accessories",
-        price: 5.99,
+        price: 120, // Estimated based on office equipment
         types: [
             {
                 factor: "Capacity",
@@ -764,11 +764,15 @@ export const Items: Item[] = [
         id: "stapler-pins",
         name: "Stapler Pins",
         category: "Accessories",
-        price: 0.99,
+        price: 25, // Estimated based on office supplies
         types: [
             {
                 factor: "Size",
                 value: "Standard 26/6",
+            },
+            {
+                factor: "Quantity",
+                value: "1000 pins",
             },
         ],
         short_description: "Refill staples for staplers.",
@@ -785,7 +789,7 @@ export const Items: Item[] = [
         id: "punch-machine",
         name: "Punch Machine",
         category: "Accessories",
-        price: 6.99,
+        price: 180, // Estimated based on office equipment
         types: [
             {
                 factor: "Hole Capacity",
@@ -810,7 +814,7 @@ export const Items: Item[] = [
         id: "transparent-pouch",
         name: "Transparent Pouch",
         category: "Accessories",
-        price: 1.99,
+        price: 50, // Estimated based on file organizers
         types: [
             {
                 factor: "Size",
@@ -836,7 +840,7 @@ export const Items: Item[] = [
         id: "geometry-box",
         name: "Geometry Box",
         category: "Accessories",
-        price: 8.99,
+        price: 200, // Estimated based on educational supplies
         types: [
             {
                 factor: "Contents",
@@ -857,39 +861,12 @@ export const Items: Item[] = [
         dimensions: "20 x 15 x 3 cm",
         image: TransparentPouch,
     },
-    {
-        id: "transparent-file",
-        name: "Transparent File",
-        category: "Accessories",
-        price: 2.99,
-        types: [
-            {
-                factor: "Size",
-                value: "A4",
-            },
-            {
-                factor: "Closure",
-                value: "Button flap",
-            },
-        ],
-        short_description:
-            "Clear plastic file for document protection and organization.",
-        long_description: [
-            "Made from durable transparent PVC for easy content visibility.",
-            "Button and string closure keeps documents secure and prevents slipping.",
-            "Ideal for carrying important papers, assignments, and reports.",
-        ],
-        weight: "0.1 kg",
-        dimensions: "32 x 24 x 0.2 cm",
-        image: TransparentPouch,
-    },
-
     // Paper category
     {
         id: "a4-single-sided",
         name: "A4 Single Sided Sheets",
         category: "Paper",
-        price: 3.99,
+        price: 300, // Estimated based on paper market pricing
         types: [
             {
                 factor: "Paper Weight",
@@ -911,7 +888,7 @@ export const Items: Item[] = [
         id: "a4-double-sided",
         name: "A4 Double Sided Sheets",
         category: "Paper",
-        price: 5.99,
+        price: 350, // Estimated for premium paper
         types: [
             {
                 factor: "Paper Weight",
@@ -933,11 +910,11 @@ export const Items: Item[] = [
         id: "a4-blank-sheets",
         name: "A4 Blank Sheets",
         category: "Paper",
-        price: 4.99,
+        price: 120, // Estimated for smaller pack
         types: [
             {
                 factor: "Pack Size",
-                value: "Pack of 500 sheets",
+                value: "Pack of 100 sheets",
             },
             {
                 factor: "Paper Weight",
@@ -959,7 +936,7 @@ export const Items: Item[] = [
         id: "brown-paper",
         name: "Brown Paper",
         category: "Paper",
-        price: 3.49,
+        price: 90, // Estimated for craft paper
         types: [
             {
                 factor: "Sheet Size",
@@ -985,14 +962,10 @@ export const Items: Item[] = [
         id: "long-book",
         name: "Long Book",
         category: "Paper",
-        price: 6.99,
+        price: 120, // Estimated based on notebook pricing
         types: [
             {
-                factor: "Single",
-                value: "100 pages",
-            },
-            {
-                factor: "Double",
+                factor: "Page Count",
                 value: "200 pages",
             },
             {
@@ -1015,7 +988,7 @@ export const Items: Item[] = [
         id: "notebook-short",
         name: "Notebook (short book)",
         category: "Paper",
-        price: 4.49,
+        price: 80, // Estimated based on smaller notebooks
         types: [
             {
                 factor: "Page Count",
@@ -1041,7 +1014,7 @@ export const Items: Item[] = [
         id: "single-side-interleaf-book",
         name: "Single Side Interleaf Book",
         category: "Paper",
-        price: 7.99,
+        price: 150, // Estimated for specialty notebooks
         types: [
             {
                 factor: "Page Count",
@@ -1067,7 +1040,7 @@ export const Items: Item[] = [
         id: "graph-paper",
         name: "Graph Paper",
         category: "Paper",
-        price: 2.99,
+        price: 70, // Estimated for specialty paper
         types: [
             {
                 factor: "Grid Size",
@@ -1093,7 +1066,7 @@ export const Items: Item[] = [
         id: "indian-political-map",
         name: "Indian Political Map",
         category: "Paper",
-        price: 4.99,
+        price: 120, // Estimated for educational materials
         types: [
             {
                 factor: "Size",
@@ -1119,7 +1092,7 @@ export const Items: Item[] = [
         id: "indian-geography-map",
         name: "Indian Geography Map",
         category: "Paper",
-        price: 4.99,
+        price: 120, // Estimated for educational materials
         types: [
             {
                 factor: "Size",

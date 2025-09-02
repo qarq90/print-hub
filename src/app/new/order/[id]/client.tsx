@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Text } from "@/components/ui/text";
 import { ItemType } from "@/data/item-data";
 import { LuShoppingCart, LuTruck } from "react-icons/lu";
+import { images } from "@/data/background-images";
 
 type Props = {
     id: string;
@@ -13,6 +14,7 @@ type Props = {
 
 export default function Client({ id }: Props) {
     const item = Items.find((product) => product.id === id);
+    const randomImage = images[Math.floor(Math.random() * images.length)];
 
     if (!item) {
         return (
@@ -26,24 +28,26 @@ export default function Client({ id }: Props) {
         <section className="w-full">
             <div className="mx-auto max-w-5xl py-5">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    {/* Image */}
                     <div className="flex flex-col gap-2">
-                        <div className="relative md:h-[485px] w-full overflow-hidden rounded-md">
+                        <div className="relative aspect-square overflow-hidden rounded-md">
                             <Image
-                                src={
-                                    item.image
-                                        ? item.image
-                                        : "/placeholder.svg?height=600&width=800&query=Product Image"
-                                }
-                                alt={item.name}
+                                src={randomImage}
+                                alt="Background"
                                 fill
                                 className="object-cover"
-                                sizes="(min-width: 768px) 50vw, 100vw"
-                                priority
+                                priority={false}
+                            />
+                            <Image
+                                alt={item.name}
+                                src={item.image}
+                                fill
+                                className="object-contain transition-transform group-hover:scale-105"
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                quality={80}
+                                priority={Items.indexOf(item) < 6}
                             />
                         </div>
 
-                        {/* Weight + Dimensions */}
                         <div className="mt-3 grid grid-cols-2 gap-3">
                             <div className="rounded-md flex flex-col border border-foreground/10 bg-foreground/5 p-3">
                                 <Text className="text-foreground/70">Weight :</Text>
@@ -56,7 +60,6 @@ export default function Client({ id }: Props) {
                         </div>
                     </div>
 
-                    {/* Details */}
                     <div className="flex flex-col gap-5">
                         <div className="flex flex-col gap-2">
                             <Text size="4xl" weight="bold" className="text-balance">
@@ -101,7 +104,7 @@ export default function Client({ id }: Props) {
                                 <div className="flex flex-row items-center gap-2">
                                     <Text size="xl" className="text-foreground/70">Price :</Text>
                                     <Text size="xl" weight="semibold">
-                                        {"$"}
+                                        {"₹"}
                                         {typeof item.price === "number" ? item.price.toFixed(2) : item.price}
                                     </Text>
                                 </div>
@@ -112,12 +115,11 @@ export default function Client({ id }: Props) {
                             </div>
                         </div>
 
-                        {/* Mobile CTA */}
                         <div className="sticky bottom-4 z-10 mt-2 block md:hidden">
                             <div className="rounded-lg border border-foreground/10 bg-background/90 p-3 backdrop-blur">
                                 <div className="flex items-center justify-between">
                                     <Text weight="semibold">
-                                        {"$"}
+                                        {"₹"}
                                         {typeof item.price === "number" ? item.price.toFixed(2) : item.price}
                                     </Text>
                                     <div className="flex items-center gap-2">

@@ -1,23 +1,13 @@
 import { useState } from "react";
-import ConstructionCrane from "../../../public/img/development/ConstructionCrane.png";
-import ConstructionWall from "../../../public/img/development/ConstructionWall.png";
-import ConstructionWorker from "../../../public/img/development/ConstructionWorker.png";
-import UnderConstruction from "../../../public/img/development/UnderConstructions.png";
 import Image from "next/image";
 import Link from "next/link";
 import { LuHouse } from "react-icons/lu";
-
-const images = [
-    ConstructionCrane,
-    ConstructionWall,
-    UnderConstruction,
-    ConstructionWorker,
-];
+import { UnderDevelopmentImages } from "@/data/empty-svgs";
 
 export const UnderConstructions = () => {
 
     const [randomImage] = useState(
-        () => images[Math.floor(Math.random() * images.length)]
+        () => UnderDevelopmentImages[Math.floor(Math.random() * UnderDevelopmentImages.length)]
     );
 
     return (

@@ -1,47 +1,18 @@
 import Image from "next/image";
-import Astronaut from "../../../public/img/humans/Astronaut.png";
-import Banker from "../../../public/img/humans/Banker.png";
-import Baseball from "../../../public/img/humans/Baseball.png";
-import Basketball from "../../../public/img/humans/Basketball.png";
-import Bikini from "../../../public/img/humans/Bikini.png";
-import Diving from "../../../public/img/humans/Diving.png";
-import Fitness from "../../../public/img/humans/Fitness.png";
-import Relaxing from "../../../public/img/humans/Relaxing.png";
-import Surfing from "../../../public/img/humans/Surfing.png";
-import Swimming from "../../../public/img/humans/Swimming.png";
-import Teacher from "../../../public/img/humans/Teacher.png";
-import Tennis from "../../../public/img/humans/Tennis.png";
-import Volleyball from "../../../public/img/humans/Volleyball.png";
-import Yoga from "../../../public/img/humans/Yoga.png";
 import Link from "next/link";
 import { LuUpload } from "react-icons/lu";
 import { useState } from "react";
+import { EmptyHistoryImages } from "@/data/empty-svgs";
 
 interface EmptyHistoryProps {
     title: string;
     description: string;
 }
 
-const images = [
-    Astronaut,
-    Banker,
-    Baseball,
-    Basketball,
-    Bikini,
-    Diving,
-    Fitness,
-    Relaxing,
-    Surfing,
-    Swimming,
-    Teacher,
-    Tennis,
-    Volleyball,
-    Yoga,
-];
 
 export const EmptyHistory = ({ title, description }: EmptyHistoryProps) => {
     const [randomImage] = useState(
-        () => images[Math.floor(Math.random() * images.length)]
+        () => EmptyHistoryImages[Math.floor(Math.random() * EmptyHistoryImages.length)]
     );
 
     return (

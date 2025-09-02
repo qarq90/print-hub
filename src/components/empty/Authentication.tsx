@@ -1,24 +1,10 @@
-import Apple from "../../../public/img/authentication/Apple.png";
-import Banana from "../../../public/img/authentication/Banana.png";
-import Breakfast from "../../../public/img/authentication/Breakfast.png";
-import Cake from "../../../public/img/authentication/Cake.png";
-import Cocktail from "../../../public/img/authentication/Cocktail.png";
-import Dessert from "../../../public/img/authentication/Dessert.png";
+import { AuthenticationImages } from "@/data/empty-svgs";
 import Image from "next/image";
 import { useState } from "react";
 
-const images = [
-    Apple,
-    Banana,
-    Breakfast,
-    Cake,
-    Cocktail,
-    Dessert,
-];
-
 export const Authentication = () => {
     const [randomImage] = useState(
-        () => images[Math.floor(Math.random() * images.length)]
+        () => AuthenticationImages[Math.floor(Math.random() * AuthenticationImages.length)]
     );
 
     return (

@@ -1,24 +1,10 @@
-import Alien from "../../../public/img/animals/Alien.png";
-import Bunny from "../../../public/img/animals/Bunny.png";
-import Chicken from "../../../public/img/animals/Chicken.png";
-import Snow from "../../../public/img/animals/Snow.png";
-import Sun from "../../../public/img/animals/Sun.png";
-import Bottle from "../../../public/img/animals/Bottle.png";
+import { NotLoggedInImages } from "@/data/empty-svgs";
 import Image from "next/image";
 import Link from "next/link";
 import { LuUserPlus } from "react-icons/lu";
 
-const images = [
-    Alien,
-    Bunny,
-    Bottle,
-    Chicken,
-    Snow,
-    Sun
-];
-
 export const NotLoggedIn = () => {
-    const randomImage = images[Math.floor(Math.random() * images.length)];
+    const randomImage = NotLoggedInImages[Math.floor(Math.random() * NotLoggedInImages.length)];
 
     return (
         <div className="w-full h-[82vh] md:h-[85vh] md:w-full flex justify-center items-center flex-col gap-4 md:mt-0 text-center">
