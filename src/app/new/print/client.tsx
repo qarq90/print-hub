@@ -217,7 +217,7 @@ export default function Client({ user }: ClientProps) {
                                                     <div className="flex flex-row gap-2">
                                                         <span
                                                             className={cn(
-                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
+                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5 hover:bg-foreground hover:text-background",
                                                                 file.print_type === "double_side"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
@@ -228,7 +228,7 @@ export default function Client({ user }: ClientProps) {
                                                         </span>
                                                         <span
                                                             className={cn(
-                                                                "cursor-pointer rounded-md transition-colors px-2 py-0.5 text-right",
+                                                                "cursor-pointer rounded-md transition-colors px-2 py-0.5 hover:bg-foreground hover:text-background text-right",
                                                                 file.print_type === "single_side"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
@@ -245,7 +245,7 @@ export default function Client({ user }: ClientProps) {
                                                     <div className="flex flex-row gap-2">
                                                         <span
                                                             className={cn(
-                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
+                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5 hover:bg-foreground hover:text-background",
                                                                 file.print_color === "b/w"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
@@ -256,7 +256,7 @@ export default function Client({ user }: ClientProps) {
                                                         </span>
                                                         <span
                                                             className={cn(
-                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5",
+                                                                "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5 hover:bg-foreground hover:text-background",
                                                                 file.print_color === "colored"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",

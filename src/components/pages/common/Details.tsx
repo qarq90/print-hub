@@ -247,7 +247,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                             className={cn(
                                                 "rounded-md transition-colors text-right px-2 py-0.5",
                                                 currentDoc["print-type"] === "double_side"
-                                                    ? "bg-foreground/10"
+                                                    ? "bg-accent text-black"
                                                     : "text-foreground",
                                                 page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
                                             )}
@@ -259,7 +259,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                             className={cn(
                                                 "rounded-md transition-colors px-2 py-0.5 text-right",
                                                 currentDoc["print-type"] === "single_side"
-                                                    ? "bg-foreground/10"
+                                                    ? "bg-accent text-black"
                                                     : "text-foreground",
                                                 page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
                                             )}
@@ -283,9 +283,9 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 <span
                                     className={cn(
                                         "rounded-md transition-colors text-right px-2 py-0.5",
-                                        currentDoc["print-color"] !== "b/w"
-                                            ? "text-foreground"
-                                            : "bg-foreground/10",
+                                        currentDoc["print-color"] === "b/w"
+                                            ? "bg-accent text-black"
+                                            : "text-foreground",
                                         page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={togglePrintColor}
@@ -295,9 +295,9 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 <span
                                     className={cn(
                                         "rounded-md transition-colors text-right px-2 py-0.5",
-                                        currentDoc["print-color"] !== "colored"
-                                            ? "text-foreground"
-                                            : "bg-foreground/10",
+                                        currentDoc["print-color"] === "colored"
+                                            ? "bg-accent text-black"
+                                            : "text-foreground",
                                         page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={togglePrintColor}

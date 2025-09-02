@@ -36,7 +36,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
     };
 
     const groupedDocuments = documentResult.reduce((acc, doc) => {
-        const groupKey = page_type === "prints_queue" ? (doc['user-name'] ? doc['user-name'] : "") : (doc['uploaded-at'] ? doc['uploaded-at'] : "");
+        const groupKey = (page_type === "prints_queue" || page_type === "shopkeeper_page") ? (doc['user-name'] ? doc['user-name'] : "") : (doc['uploaded-at'] ? doc['uploaded-at'] : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
         }
@@ -44,7 +44,15 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
         return acc;
     }, {} as Record<string, PrintRecord[]>);
 
-    const groupEntries = Object.entries(groupedDocuments);
+    let groupEntries = Object.entries(groupedDocuments);
+
+    if (page_type === "user_history") {
+        groupEntries = groupEntries.sort(([a], [b]) => {
+            const dateA = new Date(a);
+            const dateB = new Date(b);
+            return dateB.getTime() - dateA.getTime();
+        });
+    }
 
     const calculateCost = (doc: PrintRecord) => {
         const costPerPage = doc['print-color'] === "colored" ? 10 : 2;

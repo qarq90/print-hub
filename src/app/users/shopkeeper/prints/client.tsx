@@ -6,15 +6,13 @@ import { useEffect, useState } from "react";
 import { TableView } from "@/components/pages/common/TableView";
 import { GridView } from "@/components/pages/common/GridView";
 import { ViewType } from "@/components/pages/common/ViewType";
-import { StatusType } from "@/components/pages/common/StatusType";
 import { PrintRecord } from "@/interfaces/Print";
-import { fetchAllPrints } from "@/functions/neon";
+import { fetchTodaysQueue } from "@/functions/neon";
 import { HalfLoader } from "@/components/ui/loader";
 
 export default function Client() {
     const [viewType, setViewType] = useState(false);
     const [prints, setPrints] = useState<PrintRecord[] | null>(null);
-    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -22,7 +20,7 @@ export default function Client() {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const result = await fetchAllPrints();
+                const result = await fetchTodaysQueue();
 
                 if (result.error) {
                     throw result.error;
@@ -40,10 +38,6 @@ export default function Client() {
 
         fetchData()
     }, []);
-
-    const filteredHistory = statusType === "all"
-        ? prints || []
-        : (prints || []).filter(item => item["print-status"] === statusType);
 
     if (loading) {
         return (
@@ -97,12 +91,11 @@ export default function Client() {
             </div>
             <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
                 <ViewType setViewType={setViewType} viewType={viewType} />
-                <StatusType setStatusType={setStatusType} statusType={statusType} />
             </div>
             {viewType ? (
-                <TableView documentResult={filteredHistory} page_type="shopkeeper_page" />
+                <TableView documentResult={prints} page_type="shopkeeper_page" />
             ) : (
-                <GridView documentResult={filteredHistory} page_type="shopkeeper_page" />
+                <GridView documentResult={prints} page_type="shopkeeper_page" />
             )}
         </MainLayout>
     );

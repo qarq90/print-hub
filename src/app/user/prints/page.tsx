@@ -33,7 +33,7 @@ export default async function Page() {
 
     return (
         <>
-            <div className="flex gap-4 flex-row justify-between items-center md:mt-4">
+            <div className="flex gap-4 flex-row justify-between items-center">
                 <div className="flex flex-row items-center gap-4">
                     {/* <Image src={user?.imageUrl ? user?.imageUrl : ""} className="rounded-full" width={100} height={100} alt="pfp" /> */}
                     <Text size="5xl" weight="bold">{user.fullName + "'s "}Print History</Text>

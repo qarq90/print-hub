@@ -33,7 +33,7 @@ export default async function Page() {
 
     return (
         <>
-            <div className="flex gap-4 flex-row justify-between items-center md:mt-4">
+            <div className="flex gap-4 flex-row justify-between items-center">
                 <div className="flex flex-row items-center gap-4">
                     <Text size="5xl" weight="bold">{user.fullName + "'s "}Order History</Text>
                 </div>
