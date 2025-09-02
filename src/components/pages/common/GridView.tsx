@@ -54,9 +54,14 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
     }
 
     const calculateCost = (doc: PrintRecord) => {
-        const costPerPage = doc['print-color'] === "colored" ? 10 : 2;
-        return costPerPage * doc['page-count'] * doc['print-count'];
+        if (doc['print-status'] === "cancelled") {
+            return 0;
+        }
+
+        const costPerPage = doc["print-color"] === "colored" ? 10 : 2;
+        return costPerPage * doc["page-count"] * doc["print-count"];
     };
+
 
     return (
         <div className="mb-10 transition-colors">

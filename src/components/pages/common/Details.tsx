@@ -183,7 +183,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                 aria-hidden="true"
             />
             <div
-                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background p-6 rounded-lg shadow-xl z-50 w-full max-w-md"
+                className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-background p-6 rounded-lg shadow-xl z-50 w-full md:max-w-[625px]"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-title"
@@ -434,7 +434,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                     <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground/70"><LuClipboardList /> </span>
                         <span className="text-foreground">Instructions:</span>
-                        <div className="flex justify-end gap-2 items-center w-full ml-10">
+                        <div className="flex justify-end gap-2 items-center w-full ml-32">
                             <Textarea
                                 onChange={(e) => {
                                     if (page_type === "user_history") {
