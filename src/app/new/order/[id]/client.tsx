@@ -7,6 +7,7 @@ import { Text } from "@/components/ui/text";
 import { ItemType } from "@/data/item-data";
 import { LuShoppingCart, LuTruck } from "react-icons/lu";
 import { images } from "@/data/background-images";
+import { useConsistentRandom } from "@/hooks/use-consistent-random";
 
 type Props = {
     id: string;
@@ -14,7 +15,7 @@ type Props = {
 
 export default function Client({ id }: Props) {
     const item = Items.find((product) => product.id === id);
-    const randomImage = images[Math.floor(Math.random() * images.length)];
+    const backgroundImage = useConsistentRandom(images, id);
 
     if (!item) {
         return (
@@ -31,7 +32,7 @@ export default function Client({ id }: Props) {
                     <div className="flex flex-col gap-2">
                         <div className="relative aspect-square overflow-hidden rounded-md">
                             <Image
-                                src={randomImage}
+                                src={backgroundImage}
                                 alt="Background"
                                 fill
                                 className="object-cover"

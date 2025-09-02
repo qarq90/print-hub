@@ -60,7 +60,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
 
     return (
         <div className="mb-10 transition-colors">
-            {groupEntries.map(([groupKey, docs], index) => (
+            {groupEntries.map(([groupKey, docs]) => (
                 <div className="flex flex-col" key={groupKey}>
                     <Accordion type="single" className="md:px-0 px-2" collapsible>
                         <AccordionItem value="groupKey">

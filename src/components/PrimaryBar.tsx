@@ -5,6 +5,7 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useUser } from "@clerk/nextjs";
 import { LuUser } from "react-icons/lu";
+import Image from "next/image";
 
 export const PrimaryBar = () => {
     const pathname = usePathname();
@@ -60,7 +61,9 @@ export const PrimaryBar = () => {
                 <div className="flex items-center gap-2">
                     {isSignedIn ? (
                         <>
-                            <img
+                            <Image
+                                width={24}
+                                height={24}
                                 src={user.imageUrl}
                                 alt="Profile"
                                 className="w-6 h-6 rounded-full"

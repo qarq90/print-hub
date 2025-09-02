@@ -1,14 +1,5 @@
 "use client";;
-import { EmptyHistory } from "@/components/empty/EmptyHistory";
 import { Text } from "@/components/ui/text";
-import { useEffect, useState } from "react";
-import { TableView } from "@/components/pages/common/TableView";
-import { GridView } from "@/components/pages/common/GridView";
-import { ViewType } from "@/components/pages/common/ViewType";
-import { StatusType } from "@/components/pages/common/StatusType";
-import { PrintRecord } from "@/interfaces/Print";
-import { fetchAllPrints } from "@/functions/neon";
-import { HalfLoader } from "@/components/ui/loader";
 import { UnderConstructions } from "@/components/empty/UnderConstructions";
 
 export default function Client() {
