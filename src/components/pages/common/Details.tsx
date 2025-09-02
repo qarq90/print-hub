@@ -71,7 +71,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const statusStyles = getStatusStyles(currentDoc["print-status"]);
 
     const calculateCost = (doc: PrintRecord) => {
-        const costPerPage = doc["print-color"] === "colored" ? 10 : 2;
+        const costPerPage = doc["print-color"] === "colored" ? 10 : 2.5;
         return costPerPage * doc["page-count"] * doc["print-count"];
     };
 
@@ -90,29 +90,21 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const togglePrintType = () => {
-        if (page_type === "prints_queue" || page_type === "admin_page") {
-            return;
-        } else {
+        if (page_type === "user_history") {
             setCurrentDoc(prev => {
-                const newPrintType = prev["print-type"] === "single_side" ? "double_side" : "single_side";
-                return {
-                    ...prev,
-                    "print-type": newPrintType,
-                };
+                const newPrintType =
+                    prev["print-type"] === "single_side" ? "double_side" : "single_side";
+                return { ...prev, "print-type": newPrintType };
             });
         }
     };
 
     const togglePrintColor = () => {
-        if (page_type === "prints_queue" || page_type === "admin_page") {
-            return;
-        } else {
+        if (page_type === "user_history") {
             setCurrentDoc(prev => {
-                const newPrintColor = prev["print-color"] === "b/w" ? "colored" : "b/w";
-                return {
-                    ...prev,
-                    "print-color": newPrintColor,
-                };
+                const newPrintColor =
+                    prev["print-color"] === "b/w" ? "colored" : "b/w";
+                return { ...prev, "print-color": newPrintColor };
             });
         }
     };
@@ -377,14 +369,14 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                     </div>
 
                     {
-                        page_type !== "prints_queue" && (<div className="flex justify-center items-center gap-3 my-3.5">
+                        (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (<div className="flex justify-center items-center gap-3 my-3.5">
                             <span className="text-foreground flex-shrink-0 mt-1">
                                 <LuBadgeIndianRupee />
                             </span>
                             <div className="flex-1 flex justify-between">
                                 <span className="text-foreground">Cost:</span>
                                 <span className="font-medium text-right">
-                                    ₹ {calculateCost(currentDoc)}.00
+                                    ₹ {calculateCost(currentDoc)}
                                 </span>
                             </div>
                         </div>
@@ -400,7 +392,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                             ? "destructive"
                                             : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
                                                 ? "ghost"
-                                                : "default"
+                                                : "foreground"
                                     }
                                     onClick={cancelHandler}
                                     disabled={
@@ -419,16 +411,16 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             )
                         }
                         {
-                            (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
+                            (page_type === "user_history") && (
                                 <Button
                                     variant={
                                         currentDoc["print-status"] === "pending"
                                             ? (
-                                                JSON.stringify(currentDoc) === JSON.stringify(doc) ? "ghost" : "default"
+                                                JSON.stringify(currentDoc) === JSON.stringify(doc) ? "ghost" : "foreground"
                                             )
                                             : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
                                                 ? "ghost"
-                                                : "default"
+                                                : "foreground"
                                     }
                                     onClick={updateHandler}
                                     disabled={
@@ -445,10 +437,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <Button
                             variant={
                                 currentDoc["print-status"] === "pending"
-                                    ? "default"
+                                    ? "foreground"
                                     : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
                                         ? "ghost"
-                                        : "default"
+                                        : "foreground"
                             }
                             disabled={
                                 currentDoc["print-status"] === "completed" ||
@@ -464,10 +456,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 className="grow"
                                 variant={
                                     currentDoc["print-status"] === "pending"
-                                        ? "default"
+                                        ? "foreground"
                                         : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
                                             ? "ghost"
-                                            : "default"
+                                            : "foreground"
                                 }
                                 disabled={
                                     currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled"

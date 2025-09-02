@@ -1,6 +1,5 @@
 "use client";;
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
-import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
 import { useEffect, useState } from "react";
 import { TableView } from "@/components/pages/common/TableView";
@@ -41,7 +40,7 @@ export default function Client() {
 
     if (loading) {
         return (
-            <MainLayout>
+            <>
                 <div className="mb-4 flex flex-col gap-2 text-left">
                     <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
@@ -53,23 +52,23 @@ export default function Client() {
                     <ViewType setViewType={setViewType} viewType={viewType} />
                 </div>
                 <HalfLoader />
-            </MainLayout>
+            </>
         );
     }
 
     if (error) {
         return (
-            <MainLayout>
+            <>
                 <div className="flex justify-center items-center h-64">
                     <Text color="error">{error}</Text>
                 </div>
-            </MainLayout>
+            </>
         );
     }
 
     if (!prints || prints.length === 0) {
         return (
-            <MainLayout>
+            <>
                 <div className="mb-4 flex flex-col gap-2 text-left">
                     <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
@@ -77,12 +76,12 @@ export default function Client() {
                     </Text>
                 </div>
                 <EmptyHistory description="No users have scheduled any prints." title="Empty Schedule" />
-            </MainLayout>
+            </>
         );
     }
 
     return (
-        <MainLayout>
+        <>
             <div className="mb-4 flex flex-col gap-2 text-left">
                 <Text size="5xl" weight="bold">Prints</Text>
                 <Text size="base">
@@ -97,6 +96,6 @@ export default function Client() {
             ) : (
                 <GridView documentResult={prints} page_type="shopkeeper_page" />
             )}
-        </MainLayout>
+        </>
     );
 }

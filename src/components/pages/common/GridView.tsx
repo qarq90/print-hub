@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { Separator } from '@/components/ui/separator';
 import { LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
 import { PrintRecord } from "@/interfaces/Print";
 import { cn } from '@/lib/utils';
@@ -46,7 +45,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
 
     let groupEntries = Object.entries(groupedDocuments);
 
-    if (page_type === "user_history") {
+    if (page_type !== "prints_queue") {
         groupEntries = groupEntries.sort(([a], [b]) => {
             const dateA = new Date(a);
             const dateB = new Date(b);
@@ -62,34 +61,30 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
     return (
         <div className="mb-10 transition-colors">
             {groupEntries.map(([groupKey, docs], index) => (
-                <div className="flex flex-col gap-4" key={groupKey}>
+                <div className="flex flex-col" key={groupKey}>
                     <Accordion type="single" className="md:px-0 px-2" collapsible>
                         <AccordionItem value="groupKey">
-                            <AccordionTrigger className="font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
-                                <div className="flex gap-2 items-center">
-                                    <span>
-                                        {
-                                            page_type === "user_history" ? (
+                            <AccordionTrigger className="border border-gray-400/10 rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
+                                <div className="grid grid-cols-3 items-center w-full">
+                                    <div className="flex gap-2 items-center">
+                                        <span>
+                                            {page_type === "user_history" ? (
                                                 <LuCalendarDays size={24} />
                                             ) : (
                                                 <LuUser size={24} />
-                                            )
-                                        }
-                                    </span>
-                                    {groupKey}
-                                    {
-                                        page_type !== "prints_queue" && (
-                                            <span className="md:ml-72 flex items-center gap-1">
-                                                <div className="block md:hidden">
-                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                </div>
-                                                Total : {docs.reduce((sum, doc) => sum + calculateCost(doc), 0)} <LuIndianRupee />
-                                            </span>
-                                        )
-                                    }
+                                            )}
+                                        </span>
+                                        {groupKey}
+                                    </div>
+                                    {(page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
+                                        <div className="flex justify-center items-center gap-1">
+                                            Total: {docs.reduce((sum, doc) => sum + calculateCost(doc), 0)} <LuIndianRupee />
+                                        </div>
+                                    )}
+                                    <div></div>
                                 </div>
                             </AccordionTrigger>
-                            <AccordionContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-6 mt-4">
+                            <AccordionContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
                                 {docs.map((item, itemIndex) => (
                                     <div
                                         key={`${groupKey}-${itemIndex}`}
@@ -136,9 +131,6 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                             </AccordionContent>
                         </AccordionItem>
                     </Accordion>
-                    {index < groupEntries.length - 1 && (
-                        <Separator className="mb-4" />
-                    )}
                 </div>
             ))}
 

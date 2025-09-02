@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 function Accordion({
   ...props
 }: React.ComponentProps<typeof AccordionPrimitive.Root>) {
-  return <AccordionPrimitive.Root data-slot="accordion" {...props} />
+  return <AccordionPrimitive.Root className="my-2" data-slot="accordion" {...props} />
 }
 
 function AccordionItem({
@@ -22,7 +22,7 @@ function AccordionItem({
       data-slot="accordion-item"
       className={cn(
         "last:border-b-0 rounded-md",
-        background && "border bg-gray-500/5 border-foreground/10",
+        background && "border border-foreground/10 first:rounded-t-md last:rounded-b-md bg-gray-500/5",
         className
       )}
       {...props}
@@ -38,12 +38,12 @@ function AccordionTrigger({
 }: React.ComponentProps<typeof AccordionPrimitive.Trigger> & { background?: boolean }) {
   return (
     <AccordionPrimitive.Header
-      className={cn("flex items-center px-4 justify-between", background && "bg-gray-500/5")}
+      className={cn("flex mb-4 items-center justify-between", background ? "bg-gray-500/5" : "rounded-md bg-gray-500/5")}
     >
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
-          "focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
+          "focus-visible:border-ring px-4 focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-2.5 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-180",
           className
         )}
         {...props}
