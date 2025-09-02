@@ -1,5 +1,6 @@
 import { Text } from "@/components/ui/text";
-import { LuCalendar, LuGrid3X3, LuTable2, LuUsers } from "react-icons/lu";
+// import { LuCalendar, LuGrid3X3, LuTable2, LuUsers } from "react-icons/lu";
+import { LuGrid3X3, LuTable2 } from "react-icons/lu";
 import { cn } from "@/lib/utils";
 
 interface ViewTypeProps {
