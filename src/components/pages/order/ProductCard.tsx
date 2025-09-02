@@ -5,9 +5,10 @@ import Link from "next/link";
 import { Text } from "@/components/ui/text";
 import { useConsistentRandom } from "@/hooks/use-consistent-random";
 import { images } from "@/data/background-images";
+import { Item } from "@/data/item-data";
 
 interface ProductCardProps {
-    item: any;
+    item: Item;
 }
 
 export const ProductCard = ({ item }: ProductCardProps) => {
