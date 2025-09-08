@@ -22,7 +22,7 @@ export const FAQSection = () => {
                         index % 2 == 1 && (
                             <React.Fragment key={index}>
                                 <AccordionItem value={`item-${index}`} className="rounded-md cursor-pointer mb-3" background={true}>
-                                    <AccordionTrigger className="hover:no-underline cursor-pointer" background={true}>
+                                    <AccordionTrigger className="hover:no-underline cursor-pointer">
                                         <Text size="base" className="cursor-pointer">
                                             {faq.question}
                                         </Text>
@@ -44,7 +44,7 @@ export const FAQSection = () => {
                         index % 2 == 0 && (
                             <React.Fragment key={index}>
                                 <AccordionItem value={`item-${index}`} className="rounded-md cursor-pointer mb-3" background={true}>
-                                    <AccordionTrigger className="hover:no-underline cursor-pointer" background={true}>
+                                    <AccordionTrigger className="hover:no-underline cursor-pointer">
                                         <Text size="base" className="cursor-pointer">
                                             {faq.question}
                                         </Text>
