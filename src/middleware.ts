@@ -3,6 +3,14 @@ import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPublicRoute = createRouteMatcher([
     "/",
+    "/policies",
+    "/about-us",
+    "/contact-us",
+    "/users",
+    "/users/admin/prints",
+    "/users/admin/orders",
+    "/users/shopkeeper/prints",
+    "/users/shopkeeper/orders",
     "/sso-callback(.*)",
     "/authentication(.*)", // Keep Clerk's default auth routes
     "/sign-in(.*)", // Custom auth routes

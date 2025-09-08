@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 export default function Page() {
     return (
         <MainLayout>
-
             <>
                 <div className="-mb-4 flex flex-col text-left">
                     <Text size="5xl" weight="bold">Privacy Policy</Text>
