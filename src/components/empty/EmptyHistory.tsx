@@ -31,7 +31,7 @@ export const EmptyHistory = ({ title, description }: EmptyHistoryProps) => {
                 </p>
                 <Link
                     href={title.includes("History") ? "/new/print" : "/new/order"}
-                    className="flex w-full cursor-pointer bg-accent text-black items-center justify-center rounded-md gap-2 py-2 px-3 shadow-lg transition-all duration-200 hover:opacity-75"
+                    className="flex w-full cursor-pointer bg-accent text-black items-center justify-center rounded-md gap-2 py-2 px-3 shadow-md transition-all duration-200 hover:opacity-75"
                 >
                     <LuUpload className="mt-1" /> Schedule
                 </Link>

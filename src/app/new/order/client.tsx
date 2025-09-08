@@ -22,7 +22,7 @@ export default function Client({ user: _user }: ClientProps) {
     return (
         <section key="stationary" title="Stationary" className="mb-12">
             <div className="flex flex-col gap-6">
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col">
                     <Text size="5xl" weight="bold" className="text-foreground">Stationery</Text>
                     <Text size="base" className="text-foreground/60">Last updated: {new Date().toLocaleDateString()}</Text>
                 </div>

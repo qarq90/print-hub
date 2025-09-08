@@ -41,7 +41,7 @@ export default function Client() {
     if (loading) {
         return (
             <>
-                <div className="mb-4 flex flex-col gap-2 text-left">
+                <div className="mb-4 flex flex-col text-left">
                     <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
@@ -69,7 +69,7 @@ export default function Client() {
     if (!prints || prints.length === 0) {
         return (
             <>
-                <div className="mb-4 flex flex-col gap-2 text-left">
+                <div className="mb-4 flex flex-col text-left">
                     <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
@@ -82,7 +82,7 @@ export default function Client() {
 
     return (
         <>
-            <div className="mb-4 flex flex-col gap-2 text-left">
+            <div className="mb-4 flex flex-col text-left">
                 <Text size="5xl" weight="bold">Prints</Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}

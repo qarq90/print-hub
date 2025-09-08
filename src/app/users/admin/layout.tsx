@@ -16,8 +16,8 @@ export default function NewLayout({
     return (
         <MainLayout>
             <section className="flex justify-evenly bg-foreground/10 rounded-xl w-full">
-                <Link href="/users/admin/prints" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/users/admin/prints") && "bg-accent text-black")}>Your Prints</Link>
-                <Link href="/users/admin/orders" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/users/admin/orders") && "bg-accent text-black")}>Your Orders</Link>
+                <Link href="/users/admin/prints" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/users/admin/prints") && "bg-accent text-black")}>Prints Data</Link>
+                <Link href="/users/admin/orders" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/users/admin/orders") && "bg-accent text-black")}>Order Data</Link>
             </section>
             {children}
         </MainLayout>

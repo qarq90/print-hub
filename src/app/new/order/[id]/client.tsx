@@ -62,7 +62,7 @@ export default function Client({ id }: Props) {
                     </div>
 
                     <div className="flex flex-col gap-5">
-                        <div className="flex flex-col gap-2">
+                        <div className="flex flex-col">
                             <Text size="4xl" weight="bold" className="text-balance">
                                 {item.name}
                             </Text>

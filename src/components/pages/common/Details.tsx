@@ -94,21 +94,25 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const incrementPrintCount = () => {
-        setCurrentDoc(prev => ({
-            ...prev,
-            "print-count": Number(prev["print-count"]) + 1,
-        }));
+        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
+            setCurrentDoc(prev => ({
+                ...prev,
+                "print-count": Number(prev["print-count"]) + 1,
+            }));
+        }
     };
 
     const decrementPrintCount = () => {
-        setCurrentDoc(prev => ({
-            ...prev,
-            "print-count": Math.max(1, prev["print-count"] - 1)
-        }));
+        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
+            setCurrentDoc(prev => ({
+                ...prev,
+                "print-count": Math.max(1, prev["print-count"] - 1)
+            }));
+        }
     };
 
     const togglePrintType = () => {
-        if (page_type === "user_history") {
+        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
             setCurrentDoc(prev => {
                 const newPrintType =
                     prev["print-type"] === "single_side" ? "double_side" : "single_side";
@@ -118,7 +122,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const togglePrintColor = () => {
-        if (page_type === "user_history") {
+        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
             setCurrentDoc(prev => {
                 const newPrintColor =
                     prev["print-color"] === "b/w" ? "colored" : "b/w";
@@ -128,7 +132,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const toggleBinding = () => {
-        if (page_type === "user_history") {
+        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
             setCurrentDoc(prev => {
                 const newBindType =
                     prev["binding-type"] === "no" ? "bind" : "no";
@@ -269,7 +273,8 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                                 currentDoc["print-type"] === "double_side"
                                                     ? "bg-accent text-black"
                                                     : "text-foreground",
-                                                page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                                page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                                "cursor-pointer hover:bg-foreground hover:text-background"
                                             )}
                                             onClick={togglePrintType}
                                         >
@@ -277,11 +282,12 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         </span>
                                         <span
                                             className={cn(
-                                                "rounded-md transition-colors px-2 py-0.5 text-right",
+                                                "rounded-md transition-colors text-right px-2 py-0.5",
                                                 currentDoc["print-type"] === "single_side"
                                                     ? "bg-accent text-black"
                                                     : "text-foreground",
-                                                page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                                page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                                "cursor-pointer hover:bg-foreground hover:text-background"
                                             )}
                                             onClick={togglePrintType}
                                         >
@@ -306,11 +312,12 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         currentDoc["print-color"] === "b/w"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                        page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                        "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={togglePrintColor}
                                 >
-                                    Black & White
+                                    B/W
                                 </span>
                                 <span
                                     className={cn(
@@ -318,11 +325,12 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         currentDoc["print-color"] === "colored"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                        page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                        "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={togglePrintColor}
                                 >
-                                    Colored
+                                    Color
                                 </span>
                             </div>
                         </div>
@@ -341,7 +349,8 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         currentDoc["binding-type"] === "no"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                        page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                        "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={toggleBinding}
                                 >
@@ -353,7 +362,8 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         currentDoc["binding-type"] === "bind"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && "cursor-pointer hover:bg-foreground hover:text-background"
+                                        page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                        "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={toggleBinding}
                                 >
@@ -383,19 +393,20 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             <span className="text-foreground">Copies:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
                                 {
-                                    page_type === "user_history" && (
+                                    page_type === "user_history" && currentDoc["print-status"] === "pending" && (
                                         <LuMinus
-                                            className={cn("mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm", currentDoc["print-count"] <= 1 && "cursor-not-allowed pointer-events-none")}
+                                            className={cn(
+                                                "mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm",
+                                                currentDoc["print-count"] <= 1 && "cursor-not-allowed pointer-events-none"
+                                            )}
                                             size="24"
                                             onClick={decrementPrintCount}
                                         />
                                     )
                                 }
-                                <span>
-                                    {currentDoc["print-count"]}
-                                </span>
+                                <span>{currentDoc["print-count"]}</span>
                                 {
-                                    page_type === "user_history" && (
+                                    page_type === "user_history" && currentDoc["print-status"] === "pending" && (
                                         <LuPlus
                                             className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
                                             size="24"
@@ -437,7 +448,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex justify-end gap-2 items-center w-full ml-32">
                             <Textarea
                                 onChange={(e) => {
-                                    if (page_type === "user_history") {
+                                    if (
+                                        page_type === "user_history" &&
+                                        currentDoc["print-status"] === "pending"
+                                    ) {
                                         const newValue = e.target.value;
                                         setCurrentDoc((prev) => ({
                                             ...prev,
@@ -445,7 +459,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         }));
                                     }
                                 }}
-                                disabled={page_type !== "user_history"}
+                                disabled={
+                                    page_type !== "user_history" ||
+                                    currentDoc["print-status"] !== "pending"
+                                }
                                 value={currentDoc["instructions"] || ""}
                                 placeholder="Specifics..."
                             />

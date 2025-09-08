@@ -54,24 +54,29 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
     }
 
     const calculateCost = (doc: PrintRecord) => {
-        if (doc['print-status'] === "cancelled") {
-            return 0;
+        const costPerPage = doc["print-color"] === "colored" ? 10 : 2.5;
+        let total = costPerPage * doc["page-count"] * doc["print-count"];
+
+        if (doc["binding-type"] && doc["binding-type"] === "bind") {
+            total += 35;
         }
 
-        const costPerPage = doc["print-color"] === "colored" ? 10 : 2;
-        return costPerPage * doc["page-count"] * doc["print-count"];
+        return total;
     };
 
+    const truncateText = (text: string) => {
+        return text.length > 25 ? `${text.substring(0, 25)}...` : text;
+    };
 
     return (
-        <div className="mb-10 transition-colors">
+        <div className="mb-10 transition-colors flex flex-col gap-2">
             {groupEntries.map(([groupKey, docs]) => (
                 <div className="flex flex-col" key={groupKey}>
                     <Accordion type="single" className="md:px-0 px-2" collapsible>
                         <AccordionItem value="groupKey">
-                            <AccordionTrigger className="border border-gray-400/10 rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
-                                <div className="grid grid-cols-3 items-center w-full">
-                                    <div className="flex gap-2 items-center">
+                            <AccordionTrigger className="border bg-gray-500/5 border-foreground/10 shadow-md rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
+                                <div className="grid grid-cols-4 items-center w-full">
+                                    <div className="flex gap-2 col-span-2 items-center">
                                         <span>
                                             {page_type === "user_history" ? (
                                                 <LuCalendarDays size={24} />
@@ -79,7 +84,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                                                 <LuUser size={24} />
                                             )}
                                         </span>
-                                        {groupKey}
+                                        {truncateText(groupKey)}
                                     </div>
                                     {(page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
                                         <div className="flex justify-center items-center gap-1">
@@ -93,7 +98,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
                                 {docs.map((item, itemIndex) => (
                                     <div
                                         key={`${groupKey}-${itemIndex}`}
-                                        className={cn("hover:bg-foreground/5 transition-colors rounded-lg border border-foreground/10 shadow-sm overflow-hidden hover:shadow-md", page_type !== "prints_queue" && "cursor-pointer")}
+                                        className={cn("hover:bg-foreground/5 shadow-md transition-colors rounded-lg border border-foreground/10 overflow-hidden hover:shadow-md", page_type !== "prints_queue" && "cursor-pointer")}
                                         onClick={() => handleRowClick(item)}
                                     >
                                         <div className="p-4">

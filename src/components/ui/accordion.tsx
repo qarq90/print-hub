@@ -21,8 +21,8 @@ function AccordionItem({
     <AccordionPrimitive.Item
       data-slot="accordion-item"
       className={cn(
-        "last:border-b-0 rounded-md",
-        background && "border border-foreground/10 first:rounded-t-md last:rounded-b-md bg-gray-500/5",
+        "rounded-md",
+        background && "bg-gray-500/5 border border-foreground/10 first:rounded-t-md last:rounded-b-md",
         className
       )}
       {...props}
@@ -33,13 +33,10 @@ function AccordionItem({
 function AccordionTrigger({
   className,
   children,
-  background,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Trigger> & { background?: boolean }) {
+}: React.ComponentProps<typeof AccordionPrimitive.Trigger>) {
   return (
-    <AccordionPrimitive.Header
-      className={cn("flex mb-4 items-center justify-between", background ? "bg-gray-500/5" : "rounded-md bg-gray-500/5")}
-    >
+    <AccordionPrimitive.Header className="flex mb-1 items-center justify-between">
       <AccordionPrimitive.Trigger
         data-slot="accordion-trigger"
         className={cn(
@@ -58,10 +55,9 @@ function AccordionTrigger({
 function AccordionContent({
   className,
   children,
-  background,
   padding,
   ...props
-}: React.ComponentProps<typeof AccordionPrimitive.Content> & { background?: boolean; padding?: boolean }) {
+}: React.ComponentProps<typeof AccordionPrimitive.Content> & { padding?: boolean }) {
   return (
     <AccordionPrimitive.Content
       data-slot="accordion-content"
@@ -71,8 +67,7 @@ function AccordionContent({
       <div
         className={cn(
           "pt-0",
-          padding ? "pb-4 px-4" : "pb-0 px-0",
-          background && "bg-gray-500/5",
+          padding ? "pb-4 px-4" : "pb-0 px-0 mb-4 mt-2",
           className
         )}
       >

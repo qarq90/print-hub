@@ -58,15 +58,19 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
         return costPerPage * doc['page-count'] * doc['print-count'];
     };
 
+    const truncateText = (text: string) => {
+        return text.length > 25 ? `${text.substring(0, 25)}...` : text;
+    };
+
     return (
-        <div className="mb-10 transition-colors">
+        <div className="mb-10 transition-colors flex flex-col gap-2">
             {groupEntries.map(([groupKey, docs]) => (
                 <div className="flex flex-col" key={groupKey}>
                     <Accordion type="single" className="md:px-0 px-2" collapsible>
                         <AccordionItem value={groupKey}>
-                            <AccordionTrigger className="border border-gray-400/10 rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
-                                <div className="grid grid-cols-3 items-center w-full">
-                                    <div className="flex gap-2 items-center">
+                            <AccordionTrigger className="border bg-gray-500/5 border-foreground/10 shadow-md rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
+                                <div className="grid grid-cols-4 items-center w-full">
+                                    <div className="flex gap-2 col-span-2 items-center">
                                         <span>
                                             {page_type === "user_history" ? (
                                                 <LuCalendarDays size={24} />
@@ -74,7 +78,7 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                                 <LuUser size={24} />
                                             )}
                                         </span>
-                                        {groupKey}
+                                        {truncateText(groupKey)}
                                     </div>
                                     {(page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
                                         <div className="flex justify-center items-center gap-1">
@@ -85,7 +89,7 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                 </div>
                             </AccordionTrigger>
                             <AccordionContent className="rounded-md border border-foreground/10 mb-4">
-                                <table className="w-full caption-bottom text-sm">
+                                <table className="w-full caption-bottom text-sm shadow-md">
                                     <thead className="[&_tr]:border-b [&_tr]:border-foreground/10 transition-colors">
                                         <tr className="hover:bg-background">
                                             {page_type === "user_history" && (
@@ -114,8 +118,12 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                             <th className="h-12 px-4 align-middle text-center text-foreground font-bold">
                                                 Sided
                                             </th>
-                                            <th className="h-12 px-4 align-middle text-center text-foreground font-bold">
-                                            </th>
+                                            {
+                                                page_type !== "prints_queue" && (
+                                                    <th className="h-12 px-4 align-middle text-center text-foreground font-bold">
+                                                    </th>
+                                                )
+                                            }
                                         </tr>
                                     </thead>
                                     <tbody className="[&_tr:last-child]:border-0">
@@ -155,9 +163,13 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                                 <td className="p-4 align-middle text-center">
                                                     {item['print-type'] === "double_side" ? "Double" : "Single"}
                                                 </td>
-                                                <td className="p-4 align-middle text-foreground cursor-pointer">
-                                                    <LuEllipsisVertical />
-                                                </td>
+                                                {
+                                                    page_type !== "prints_queue" && (
+                                                        <td className="p-4 align-middle text-foreground cursor-pointer">
+                                                            <LuEllipsisVertical />
+                                                        </td>
+                                                    )
+                                                }
                                             </tr>
                                         ))}
                                     </tbody>

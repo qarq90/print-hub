@@ -53,8 +53,8 @@ export default function Client({ user }: ClientProps) {
 
     if (loading) {
         return (
-            <div className="mb-20 mt-4">
-                <div className="mb-4 flex flex-col gap-2 text-left">
+            <div className="mb-20">
+                <div className="mb-4 flex flex-col text-left">
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -74,8 +74,8 @@ export default function Client({ user }: ClientProps) {
 
     if (!prints || prints.length === 0) {
         return (
-            <div className="mb-20  mt-4">
-                <div className="mb-16 flex flex-col gap-2 text-left">
+            <div className="mb-20">
+                <div className="mb-16 flex flex-col text-left">
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -87,7 +87,7 @@ export default function Client({ user }: ClientProps) {
 
     return (
         <>
-            <div className="mb-4 mt-4 flex flex-col gap-2 text-left">
+            <div className="mb-4 flex flex-col text-left">
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>

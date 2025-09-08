@@ -17,7 +17,7 @@ export const ProductCard = ({ item }: ProductCardProps) => {
     return (
         <Link
             href={`/new/order/${item.id}`}
-            className="flex flex-col group transition-all hover:-translate-y-1 rounded-lg border border-foreground/10 overflow-hidden hover:shadow-lg h-full bg-background"
+            className="flex flex-col group transition-all hover:-translate-y-1 rounded-lg border border-foreground/10 overflow-hidden hover:shadow-md h-full bg-background"
         >
             <div className="relative aspect-square overflow-hidden">
                 <Image

@@ -23,6 +23,7 @@ import Scissor from "../../public/img/schedule-order/scissor.png";
 import Chalk from "../../public/img/schedule-order/chalk.png";
 import WhiteboardMarker from "../../public/img/schedule-order/white-board-marker.png";
 import TransparentPouch from "../../public/img/schedule-order/transparent-pouch.png";
+import ApsaraPencil from "../../public/img/schedule-order/apsara-pencil.png";
 
 export interface ItemType {
     factor: string;
@@ -64,7 +65,7 @@ export const Items: Item[] = [
         ],
         weight: "0.1 kg",
         dimensions: "18 x 7 x 1 cm",
-        image: PenPencil,
+        image: ApsaraPencil,
     },
     {
         id: "pen-pencil",

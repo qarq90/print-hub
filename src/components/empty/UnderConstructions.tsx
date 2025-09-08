@@ -27,7 +27,7 @@ export const UnderConstructions = () => {
                 </p>
                 <Link
                     href="/"
-                    className="flex w-full cursor-pointer bg-accent text-black items-center justify-center gap-2 rounded-md py-2 px-3 shadow-lg transition-all duration-200 hover:opacity-80"
+                    className="flex w-full cursor-pointer bg-accent text-black items-center justify-center gap-2 rounded-md py-2 px-3 shadow-md transition-all duration-200 hover:opacity-80"
                 >
                     <LuHouse className="mt-1" /> Back to Home
                 </Link>
