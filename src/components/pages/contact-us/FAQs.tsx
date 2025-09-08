@@ -27,7 +27,7 @@ export const FAQSection = () => {
                                             {faq.question}
                                         </Text>
                                     </AccordionTrigger>
-                                    <AccordionContent padding={true} background={true}>
+                                    <AccordionContent padding={true}>
                                         {faq.answer}
                                     </AccordionContent>
                                 </AccordionItem>
@@ -49,7 +49,7 @@ export const FAQSection = () => {
                                             {faq.question}
                                         </Text>
                                     </AccordionTrigger>
-                                    <AccordionContent padding={true} background={true}>
+                                    <AccordionContent padding={true}>
                                         {faq.answer}
                                     </AccordionContent>
                                 </AccordionItem>
