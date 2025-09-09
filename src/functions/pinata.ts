@@ -19,7 +19,7 @@ export const uploadToPinata = async (file: PrintType) => {
         const data = new FormData();
         data.set("file", renamedFile);
 
-        const uploadRequest = await fetch("/api/post/upload-files", {
+        const uploadRequest = await fetch("/api/post/pinata/upload-files", {
             method: "POST",
             body: data,
         });
@@ -37,7 +37,7 @@ export const uploadToPinata = async (file: PrintType) => {
 
 export const deleteFromPinata = async (file: PrintRecord) => {
     try {
-        const response = await fetch("/api/delete/delete-file", {
+        const response = await fetch("/api/delete/pinata/delete-file", {
             method: "DELETE",
             headers: {
                 "Content-Type": "application/json",
@@ -69,7 +69,7 @@ export const updateFromPinata = async (file: PrintRecord) => {
             throw new Error("Missing document ID");
         }
 
-        const response = await fetch("/api/post/update-file", {
+        const response = await fetch("/api/post/pinata/update-file", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

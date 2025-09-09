@@ -57,7 +57,7 @@ export default function Client() {
 
         await signIn.authenticateWithRedirect({
             strategy: "oauth_google",
-            redirectUrl: "/sso-callback",
+            redirectUrl: "/",
             redirectUrlComplete: "/",
         });
     };

@@ -23,6 +23,7 @@ import Scissor from "../../public/img/schedule-order/scissor.png";
 import Chalk from "../../public/img/schedule-order/chalk.png";
 import WhiteboardMarker from "../../public/img/schedule-order/white-board-marker.png";
 import TransparentPouch from "../../public/img/schedule-order/transparent-pouch.png";
+import GeometryBox from "../../public/img/schedule-order/geometry-box.png";
 import ApsaraPencil from "../../public/img/schedule-order/apsara-pencil.png";
 
 export interface ItemType {
@@ -860,7 +861,7 @@ export const Items: Item[] = [
         ],
         weight: "0.25 kg",
         dimensions: "20 x 15 x 3 cm",
-        image: TransparentPouch,
+        image: GeometryBox,
     },
     // Paper category
     {
