@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/neon/config";
+import { PrintRecord } from "@/interfaces/Print";
 
 export async function GET() {
     try {
@@ -8,7 +9,7 @@ export async function GET() {
       WHERE "print-status" = $1
       ORDER BY "uploaded-at" DESC;
     `;
-        const result = await pool.query(query, ["pending"]);
+        const result = await pool.query<PrintRecord>(query, ["pending"]);
         return NextResponse.json({ data: result.rows, status: true });
     } catch (error) {
         console.error("Error fetching queue:", error);

@@ -1,8 +1,6 @@
 import { PrintType, PrintRecord } from "@/interfaces/Print";
 import { PinataResult } from "@/interfaces/Pinata";
 import { UserProps } from "@/interfaces/User";
-import pool from "@/lib/neon/config";
-import { getFormatDate } from "./file";
 
 export const insertNeon = async (
     user: UserProps,
@@ -10,231 +8,138 @@ export const insertNeon = async (
     pinataResult: PinataResult
 ) => {
     try {
-        const pageCount =
-            file.print_type === "double_side"
-                ? file.page_count
-                : file.page_count * 2;
+        const response = await fetch("/api/post/neon/prints/insert-record", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user, file, pinataResult }),
+        });
 
-        const query = `
-        INSERT INTO "prints" (
-            "print-id",
-            "page-count",
-            "print-type",
-            "print-color",
-            "print-count",
-            "print-status",
-            "ipfs-link",
-            "file-name",
-            "file-type",
-            "user-name",
-            "user-id",
-            "uploaded-at",
-            "binding-type",
-            "instructions"
-        ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
-        RETURNING *;
-    `;
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to insert record");
+        }
 
-        const values = [
-            pinataResult.id,
-            pageCount,
-            file.print_type,
-            file.print_color,
-            file.print_count,
-            "pending",
-            pinataResult.ipfs_url,
-            file.file_name.substring(4),
-            file.file_type,
-            user.fullName,
-            user.id,
-            getFormatDate(new Date()),
-            file.binding_type,
-            file.instructions,
-        ];
-
-        const result = await pool.query(query, values);
-
-        return { data: result.rows, error: null, status: true };
-    } catch (error) {
-        console.error("Error inserting to Neon:", error);
-        return {
-            data: null,
-            error: error instanceof Error ? error : new Error(String(error)),
-            status: false,
-        };
+        return await response.json();
+    } catch (e) {
+        console.error("Neon insertNeon error:", e);
+        throw e;
     }
 };
 
 export const fetchUserHistory = async (user: UserProps) => {
     try {
-        const query = `
-      SELECT * FROM "prints" 
-      WHERE "user-id" = $1 
-      ORDER BY "uploaded-at" ASC;
-    `;
+        const response = await fetch("/api/post/neon/prints/user-history", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user }),
+        });
 
-        const result = await pool.query(query, [user.id]);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch user history");
+        }
 
-        return {
-            data: result.rows as PrintRecord[],
-            error: null,
-            status: true,
-        };
-    } catch (error) {
-        console.error("Error fetching user history:", error);
-        return {
-            data: null,
-            error: error instanceof Error ? error : new Error(String(error)),
-            status: false,
-        };
+        return await response.json();
+    } catch (e) {
+        console.error("Neon fetchUserHistory error:", e);
+        throw e;
     }
 };
 
 export const fetchTodaysQueue = async () => {
     try {
-        const query = `
-      SELECT * FROM "prints" 
-      WHERE "print-status" = $1 
-      ORDER BY "uploaded-at" DESC;
-    `;
+        const response = await fetch("/api/get/neon/prints/todays-queue", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        });
 
-        const result = await pool.query(query, ["pending"]);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch today's queue");
+        }
 
-        return {
-            data: result.rows as PrintRecord[],
-            error: null,
-            status: true,
-        };
-    } catch (error) {
-        console.error("Error fetching today's queue:", error);
-        return {
-            data: null,
-            error: error instanceof Error ? error : new Error(String(error)),
-            status: false,
-        };
+        return await response.json();
+    } catch (e) {
+        console.error("Neon fetchTodaysQueue error:", e);
+        throw e;
     }
 };
 
 export const fetchAllPrints = async () => {
     try {
-        const query = `
-      SELECT * FROM "prints" 
-      ORDER BY "uploaded-at" ASC;
-    `;
+        const response = await fetch("/api/get/neon/prints/fetch-all", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        });
 
-        const result = await pool.query(query);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch all prints");
+        }
 
-        return {
-            data: result.rows as PrintRecord[],
-            error: null,
-            status: true,
-        };
-    } catch (error) {
-        console.error("Error fetching all records:", error);
-        return {
-            data: null,
-            error: error instanceof Error ? error : new Error(String(error)),
-            status: false,
-        };
+        return await response.json();
+    } catch (e) {
+        console.error("Neon fetchAllPrints error:", e);
+        throw e;
     }
 };
 
 export const updateDocument = async (document: PrintRecord) => {
     try {
-        const query = `
-      UPDATE "prints" 
-      SET 
-        "page-count" = $1,
-        "print-count" = $2,
-        "print-type" = $3,
-        "print-color" = $4,
-        "binding-type" = $5,
-        "instructions" = $6
-      WHERE "print-id" = $7
-      RETURNING *;
-    `;
+        const response = await fetch("/api/post/neon/prints/update-print", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ document }),
+        });
 
-        const values = [
-            document["page-count"],
-            document["print-count"],
-            document["print-type"],
-            document["print-color"],
-            document["binding-type"],
-            document["instructions"],
-            document["print-id"],
-        ];
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to update document");
+        }
 
-        const result = await pool.query(query, values);
-
-        return {
-            data: result.rows[0] as PrintRecord,
-            error: null,
-            status: true,
-        };
-    } catch (error) {
-        console.error("Error updating document:", error);
-        return {
-            data: null,
-            error: error instanceof Error ? error : new Error(String(error)),
-            status: false,
-        };
+        return await response.json();
+    } catch (e) {
+        console.error("Neon updateDocument error:", e);
+        throw e;
     }
 };
 
 export const cancelDocument = async (document: PrintRecord) => {
     try {
-        const query = `
-      UPDATE "prints" 
-      SET "print-status" = $1 
-      WHERE "print-id" = $2
-      RETURNING *;
-    `;
+        const response = await fetch("/api/post/neon/prints/cancel-print", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ document }),
+        });
 
-        const result = await pool.query(query, [
-            "cancelled",
-            document["print-id"],
-        ]);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to cancel document");
+        }
 
-        return {
-            data: result.rows[0] as PrintRecord,
-            error: null,
-            status: true,
-        };
-    } catch (error) {
-        console.error("Error cancelling document:", error);
-        return {
-            data: null,
-            error: error instanceof Error ? error : new Error(String(error)),
-            status: false,
-        };
+        return await response.json();
+    } catch (e) {
+        console.error("Neon cancelDocument error:", e);
+        throw e;
     }
 };
 
 export const completeDocument = async (document: PrintRecord) => {
     try {
-        const query = `
-      UPDATE "prints" 
-      SET "print-status" = $1 
-      WHERE "print-id" = $2
-      RETURNING *;
-    `;
+        const response = await fetch("/api/post/neon/prints/complete-print", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ document }),
+        });
 
-        const result = await pool.query(query, [
-            "completed",
-            document["print-id"],
-        ]);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to complete document");
+        }
 
-        return {
-            data: result.rows[0] as PrintRecord,
-            error: null,
-            status: true,
-        };
-    } catch (error) {
-        console.error("Error completing document:", error);
-        return {
-            data: null,
-            error: error instanceof Error ? error : new Error(String(error)),
-            status: false,
-        };
+        return await response.json();
+    } catch (e) {
+        console.error("Neon completeDocument error:", e);
+        throw e;
     }
 };
