@@ -1,9 +1,7 @@
 import { OrderType, OrderRecord } from "@/interfaces/Order";
 import { UserProps } from "@/interfaces/User";
 
-export const fetchAllOrders = async (
-    user: UserProps
-): Promise<OrderRecord[]> => {
+export const fetchAllOrders = async (): Promise<OrderRecord[]> => {
     try {
         const response = await fetch("/api/get/neon/orders/fetch-all", {
             method: "GET",
