@@ -8,7 +8,7 @@ import { ViewType } from "@/components/pages/common/ViewType";
 import { StatusType } from "@/components/pages/common/StatusType";
 import { UserProps } from "@/interfaces/User";
 import { PrintRecord } from "@/interfaces/Print";
-import { fetchUserHistory } from "@/functions/neon";
+import { fetchUserHistory } from "@/functions/neon-prints";
 import { HalfLoader } from "@/components/ui/loader";
 
 interface ClientProps {

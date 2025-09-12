@@ -3,7 +3,9 @@ import pool from "@/lib/neon/config";
 
 export async function POST(req: Request) {
     try {
-        const { userId } = await req.json();
+        const { user } = await req.json();
+
+        console.log(user.id);
 
         const query = `
       SELECT * FROM "prints"
@@ -11,7 +13,7 @@ export async function POST(req: Request) {
       ORDER BY "uploaded-at" ASC;
     `;
 
-        const result = await pool.query(query, [userId]);
+        const result = await pool.query(query, [user.id]);
         return NextResponse.json({ data: result.rows, status: true });
     } catch (error) {
         console.error("Error fetching user history:", error);

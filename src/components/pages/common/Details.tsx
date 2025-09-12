@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 import { usePathname, useRouter } from "next/navigation";
 import { deleteFromPinata, updateFromPinata } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
-import { cancelDocument, completeDocument, updateDocument } from "@/functions/neon";
+import { cancelDocument, completeDocument, updateDocument } from "@/functions/neon-prints";
 import { Textarea } from "@/components/ui/textarea";
 
 interface DetailsProps {

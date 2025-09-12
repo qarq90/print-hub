@@ -6,7 +6,7 @@ import { TableView } from "@/components/pages/common/TableView";
 import { GridView } from "@/components/pages/common/GridView";
 import { ViewType } from "@/components/pages/common/ViewType";
 import { PrintRecord } from "@/interfaces/Print";
-import { fetchTodaysQueue } from "@/functions/neon";
+import { fetchTodaysQueue } from "@/functions/neon-prints";
 import { HalfLoader } from "@/components/ui/loader";
 
 export default function Client() {

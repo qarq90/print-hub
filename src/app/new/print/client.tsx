@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { FullLoader } from "@/components/ui/loader";
 import { PinataResult } from "@/interfaces/Pinata";
 import { Modal } from "@/components/Modal";
-import { insertNeon } from "@/functions/neon";
+import { insertNeon } from "@/functions/neon-prints";
 import { Textarea } from "@/components/ui/textarea";
 
 interface ClientProps {

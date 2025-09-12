@@ -109,7 +109,7 @@ export const cancelDocument = async (document: PrintRecord) => {
         const response = await fetch("/api/post/neon/prints/cancel-print", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ document }),
+            body: JSON.stringify({ printId: document["print-id"] }),
         });
 
         if (!response.ok) {
@@ -129,7 +129,7 @@ export const completeDocument = async (document: PrintRecord) => {
         const response = await fetch("/api/post/neon/prints/complete-print", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ document }),
+            body: JSON.stringify({ printId: document["print-id"] }),
         });
 
         if (!response.ok) {

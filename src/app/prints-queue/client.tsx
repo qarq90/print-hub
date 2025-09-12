@@ -8,7 +8,7 @@ import { GridView } from "@/components/pages/common/GridView";
 import { ViewType } from "@/components/pages/common/ViewType";
 import { UserProps } from "@/interfaces/User";
 import { PrintRecord } from "@/interfaces/Print";
-import { fetchTodaysQueue } from "@/functions/neon";
+import { fetchTodaysQueue } from "@/functions/neon-prints";
 import { HalfLoader } from "@/components/ui/loader";
 
 interface ClientProps {

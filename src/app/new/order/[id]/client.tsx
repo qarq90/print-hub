@@ -8,6 +8,9 @@ import { ItemType } from "@/data/item-data";
 import { LuShoppingCart, LuTruck } from "react-icons/lu";
 import { images } from "@/data/background-images";
 import { useConsistentRandom } from "@/hooks/use-consistent-random";
+import { Modal } from "@/components/Modal";
+import router from "next/router";
+import { useState } from "react";
 
 type Props = {
     id: string;
@@ -16,6 +19,8 @@ type Props = {
 export default function Client({ id }: Props) {
     const item = Items.find((product) => product.id === id);
     const backgroundImage = useConsistentRandom(images, id);
+    const [isOpen, setIsOpen] = useState(false)
+
 
     if (!item) {
         return (
@@ -133,6 +138,46 @@ export default function Client({ id }: Props) {
                     </div>
                 </div>
             </div >
+            {isOpen && (
+                <Modal
+                    isOpen={isOpen}
+                    onClose={() => setIsOpen(false)}
+                    closeOnOutsideClick
+                    closeOnEsc
+                >
+                    <div className="p-6">
+                        <div className="flex flex-col justify-center items-center gap-4 text-center">
+                            <LuShoppingCart size={48} color="accent" />
+                            <h3 className="mt-2 text-lg text-center font-medium">
+                                Files Uploaded Successfully!
+                            </h3>
+                            <div className="">
+                                <p className="text-sm">
+                                    Your files have been queued for printing.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="mt-5 grid grid-cols-2 gap-3">
+                            <Button
+                                variant="outline"
+                                onClick={() => {
+                                    setIsOpen(false);
+                                }}
+                            >
+                                Upload More Files
+                            </Button>
+                            <Button
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    router.push('/user/prints');
+                                }}
+                            >
+                                View Print History
+                            </Button>
+                        </div>
+                    </div>
+                </Modal>
+            )}
         </section >
     );
 }

@@ -7,7 +7,7 @@ import { GridView } from "@/components/pages/common/GridView";
 import { ViewType } from "@/components/pages/common/ViewType";
 import { StatusType } from "@/components/pages/common/StatusType";
 import { PrintRecord } from "@/interfaces/Print";
-import { fetchAllPrints } from "@/functions/neon";
+import { fetchAllPrints } from "@/functions/neon-prints";
 import { HalfLoader } from "@/components/ui/loader";
 
 export default function Client() {
