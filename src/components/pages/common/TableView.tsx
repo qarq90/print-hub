@@ -126,7 +126,7 @@ export const TableView: React.FC<TableViewProps> = ({ documentResult, page_type 
                                             }
                                         </tr>
                                     </thead>
-                                    <tbody className="[&_tr:last-child]:border-0">
+                                    <tbody className="[&_tr:last-child]:border-0 [&_tr:last-child]:rounded-b-md">
                                         {docs.map((item, index) => (
                                             <tr
                                                 key={index}
