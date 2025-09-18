@@ -19,8 +19,8 @@ type Props = {
 export default function Client({ id }: Props) {
     const item = Items.find((product) => product.id === id);
     const backgroundImage = useConsistentRandom(images, id);
-    const [isOpen, setIsOpen] = useState(false)
-
+    const [isOpen, setIsOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     if (!item) {
         return (
@@ -29,6 +29,21 @@ export default function Client({ id }: Props) {
             </div>
         );
     }
+
+    const handleAddToCart = () => {
+        setIsOpen(true);
+    };
+
+    const confirmAddToCart = () => {
+        setIsLoading(true);
+        // Simulate API call
+        setTimeout(() => {
+            setIsLoading(false);
+            setIsOpen(false);
+            // ✅ Here you can actually add to cart logic
+            alert(`${item.name} has been added to cart!`);
+        }, 2000);
+    };
 
     return (
         <section className="w-full">
@@ -66,6 +81,7 @@ export default function Client({ id }: Props) {
                         </div>
                     </div>
 
+                    {/* Right side */}
                     <div className="flex flex-col gap-5">
                         <div className="flex flex-col">
                             <Text size="4xl" weight="bold" className="text-balance">
@@ -115,69 +131,52 @@ export default function Client({ id }: Props) {
                                     </Text>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Button variant="outline"><LuShoppingCart /> Add to Cart</Button>
+                                    <Button variant="outline" onClick={handleAddToCart}>
+                                        <LuShoppingCart /> Add to Cart
+                                    </Button>
                                     <Button><LuTruck /> Order Now</Button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="sticky bottom-4 z-10 mt-2 block md:hidden">
-                            <div className="rounded-lg border border-foreground/10 bg-background/90 p-3 backdrop-blur">
-                                <div className="flex items-center justify-between">
-                                    <Text weight="semibold">
-                                        {"₹"}
-                                        {typeof item.price === "number" ? item.price.toFixed(2) : item.price}
-                                    </Text>
-                                    <div className="flex items-center gap-2">
-                                        <Button variant="outline"><LuShoppingCart /> Add to Cart</Button>
-                                        <Button><LuTruck /> Order Now</Button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div >
+            </div>
+
             {isOpen && (
                 <Modal
                     isOpen={isOpen}
-                    onClose={() => setIsOpen(false)}
-                    closeOnOutsideClick
-                    closeOnEsc
+                    onClose={() => !isLoading && setIsOpen(false)}
+                    closeOnOutsideClick={!isLoading}
+                    closeOnEsc={!isLoading}
                 >
-                    <div className="p-6">
-                        <div className="flex flex-col justify-center items-center gap-4 text-center">
-                            <LuShoppingCart size={48} color="accent" />
-                            <h3 className="mt-2 text-lg text-center font-medium">
-                                Files Uploaded Successfully!
-                            </h3>
-                            <div className="">
-                                <p className="text-sm">
-                                    Your files have been queued for printing.
-                                </p>
+                    <div className="p-6 text-center">
+                        {!isLoading ? (
+                            <>
+                                <LuShoppingCart size={48} className="mx-auto text-accent" />
+                                <h3 className="mt-2 text-lg font-medium">
+                                    Are you sure you want to add this item to cart?
+                                </h3>
+                                <div className="mt-5 grid grid-cols-2 gap-3">
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => setIsOpen(false)}
+                                    >
+                                        No
+                                    </Button>
+                                    <Button onClick={confirmAddToCart}>
+                                        Yes
+                                    </Button>
+                                </div>
+                            </>
+                        ) : (
+                            <div className="flex flex-col items-center gap-3">
+                                <div className="h-10 w-10 animate-spin rounded-full border-4 border-accent border-t-transparent"></div>
+                                <p className="text-sm text-foreground/70">Adding to cart...</p>
                             </div>
-                        </div>
-                        <div className="mt-5 grid grid-cols-2 gap-3">
-                            <Button
-                                variant="outline"
-                                onClick={() => {
-                                    setIsOpen(false);
-                                }}
-                            >
-                                Upload More Files
-                            </Button>
-                            <Button
-                                onClick={() => {
-                                    setIsOpen(false);
-                                    router.push('/user/prints');
-                                }}
-                            >
-                                View Print History
-                            </Button>
-                        </div>
+                        )}
                     </div>
                 </Modal>
             )}
-        </section >
+        </section>
     );
 }

@@ -1,7 +1,7 @@
 Generate Image for the following:
 
-Professional product photography of a [Product Name], [Category]. 
-[Short Description from your spreadsheet]. 
-The product is isolated on a clean, minimalist, solid light gray background, color #F5F5F5. 
+Professional product photography of a  [subject given]. 
+The product is isolated on a clean, minimalist, with a white background. 
 Studio lighting, soft shadows, sharp focus, high detail, 8k resolution. 
 The image should be aesthetically pleasing and suitable for an e-commerce website.
+Make it 1:1 aspect ratio. 
