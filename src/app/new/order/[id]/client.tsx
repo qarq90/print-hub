@@ -9,7 +9,7 @@ import { LuShoppingCart, LuTruck } from "react-icons/lu";
 import { images } from "@/data/background-images";
 import { useConsistentRandom } from "@/hooks/use-consistent-random";
 import { Modal } from "@/components/Modal";
-import router from "next/router";
+// import router from "next/router";
 import { useState } from "react";
 
 type Props = {
