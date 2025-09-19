@@ -189,7 +189,7 @@ export default function Client() {
                                 <LuUser size={24} /> {testimonial.name}
                             </Text>
                             <Text size="lg" className="text-left text-foreground/70">
-                                "{testimonial.feedback}"
+                                &#34;{testimonial.feedback}&#34;
                             </Text>
                         </div>
                     ))}
