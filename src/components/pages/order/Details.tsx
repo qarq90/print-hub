@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils"
 import { FullLoader } from "@/components/ui/loader";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { cancelOrder, completeOrder, updateOrder } from "@/functions/orders";
+import { cancelOrder, checkoutOrder, completeOrder, updateOrder } from "@/functions/orders";
 
 interface OrderDetailsProps {
     item: OrderRecord;
@@ -100,6 +100,19 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
             onClose();
         } catch (error) {
             console.error("Error cancelling order:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const checkoutHandler = async () => {
+        setLoading(true);
+        try {
+            await checkoutOrder(currentOrder);
+            router.refresh();
+            onClose();
+        } catch (error) {
+            console.error("Error placing order:", error);
         } finally {
             setLoading(false);
         }
@@ -290,7 +303,17 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                     </div>
 
                     <div className="flex flex-row w-full gap-2 pt-3">
-                        {page_type === "user_history" && currentOrder["order-status"] === "pending" && (
+                        {page_type === "user_history" && currentOrder["order-status"] === "in-cart" && currentOrder["in-cart"] === true && (
+                            <Button
+                                variant="accent"
+                                onClick={checkoutHandler}
+                                className="grow"
+                            >
+                                Checkout
+                            </Button>
+                        )}
+
+                        {page_type === "user_history" && currentOrder["order-status"] === "pending" && currentOrder["in-cart"] === false && (
                             <Button
                                 variant="destructive"
                                 onClick={cancelHandler}
@@ -300,7 +323,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             </Button>
                         )}
 
-                        {page_type === "user_history" && currentOrder["order-status"] === "pending" && (
+                        {page_type === "user_history" && (currentOrder["order-status"] === "pending" || currentOrder["order-status"] === "in-cart") && (
                             <Button
                                 variant="foreground"
                                 onClick={updateHandler}
@@ -311,7 +334,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             </Button>
                         )}
 
-                        {page_type === "admin_page" && currentOrder["order-status"] === "pending" && (
+                        {page_type === "admin_page" && currentOrder["order-status"] === "pending" && currentOrder["in-cart"] === false && (
                             <Button
                                 variant="foreground"
                                 onClick={completeHandler}
@@ -321,9 +344,6 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             </Button>
                         )}
 
-                        <Button variant="outline" className="grow" onClick={onClose}>
-                            Close
-                        </Button>
                     </div>
                 </div>
             </div>

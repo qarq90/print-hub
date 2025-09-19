@@ -56,7 +56,7 @@ export default function Client() {
                     <Text weight="bold" className="text-5xl mb-4">
                         How It <span className="text-accent">works</span>?
                     </Text>
-                    <Text className="text-xl text-foreground/70">Simple steps to get your prints delivered</Text>
+                    <Text className="text-xl text-foreground/70">Simple steps to get your prints or items delivered</Text>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 max-w-6xl mx-auto">
@@ -123,10 +123,16 @@ export default function Client() {
                     </div>
                 </div>
 
-                <div className="">
+                <div className="flex flex-row gap-4">
+                    <Link href="/new/print">
+                        <Button variant="accent" className="text-black">
+                            <LuUpload /> Schedule Prints
+                        </Button>
+                    </Link>
                     <Link href="/new/order">
-                        <Button size="lg" variant="accent" className="text-black">
-                            Start Your Order <LuArrowRight className="ml-2" />
+                        <Button variant="accent" className="text-black">
+                            <LuList />
+                            Order Now
                         </Button>
                     </Link>
                 </div>

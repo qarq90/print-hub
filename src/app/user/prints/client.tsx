@@ -97,9 +97,9 @@ export default function Client({ user }: ClientProps) {
                 <StatusType setStatusType={setStatusType} statusType={statusType} />
             </div>
             {viewType ? (
-                <TableView documentResult={filteredHistory} page_type="user_history" />
+                <TableView documentResult={filteredHistory} page_type="user_history" statusType={statusType} />
             ) : (
-                <GridView documentResult={filteredHistory} page_type="user_history" />
+                <GridView documentResult={filteredHistory} page_type="user_history" statusType={statusType} />
             )}
         </>
     );

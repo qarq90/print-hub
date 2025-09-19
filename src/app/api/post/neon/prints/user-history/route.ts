@@ -5,8 +5,6 @@ export async function POST(req: Request) {
     try {
         const { user } = await req.json();
 
-        console.log(user.id);
-
         const query = `
       SELECT * FROM "prints"
       WHERE "user-id" = $1

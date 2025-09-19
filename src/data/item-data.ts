@@ -20,19 +20,20 @@ import NoteBook from "../../public/img/schedule-order/NoteBook.png";
 import ColorPencils from "../../public/img/schedule-order/ColorPencils.png";
 import GeometryBox from "../../public/img/schedule-order/GeometryBox.png";
 import Crayons from "../../public/img/schedule-order/Crayons.jpeg";
+import Eraser from "../../public/img/schedule-order/Eraser.jpg";
 import GraphsPaper from "../../public/img/schedule-order/GraphPaper.png";
 import PaperClips from "../../public/img/schedule-order/PaperClips.jpeg";
 import WaterColor from "../../public/img/schedule-order/WaterColors.png";
 import DrawingBook from "../../public/img/schedule-order/DrawingBook.png";
 import BrownPaper from "../../public/img/schedule-order/BrownPaper.png";
 import ScientificCalculator from "../../public/img/schedule-order/ScientificCalculator.jpeg";
-// import BasicCalculator from "../../public/img/schedule-order/BasicCalculator.png";
-
+import Sharpner from "../../public/img/schedule-order/Sharpner.jpg";
+import Roller from "../../public/img/schedule-order/roller.png";
+import Tape from "../../public/img/schedule-order/Tape.png";
+import BasicCalculator from "../../public/img/schedule-order/BasicCalculator.png";
 // import BallPen from "../../public/img/schedule-order/ball-pen.png";
 // import CraftPaper from "../../public/img/schedule-order/craft-paper.png";
 // import PenPencil from "../../public/img/schedule-order/pen-pencil.png";
-import Roller from "../../public/img/schedule-order/roller.png";
-import Tape from "../../public/img/schedule-order/Tape.png";
 
 export interface ItemType {
     factor: string;
@@ -60,7 +61,6 @@ export const Items: Item[] = [
         price: 121,
         types: [
             { factor: "Pack Size", value: "10 Pencils" },
-            { factor: "Lead Grade", value: "HB" },
             { factor: "Material", value: "Wood" },
         ],
         short_description:
@@ -71,7 +71,7 @@ export const Items: Item[] = [
             "Ideal for school, office, and artistic use.",
         ],
         weight: "0.1 kg",
-        dimensions: "18 x 7 x 1 cm",
+        dimensions: "10 x 7 x 1 cm",
         image: ApsaraPencil,
     },
     // {
@@ -160,9 +160,8 @@ export const Items: Item[] = [
         category: "Writing",
         price: 109,
         types: [
-            { factor: "Pack Size", value: "4 Markers" },
+            { factor: "Pack Size", value: "4 Markers or single" },
             { factor: "Colors", value: "Black, Blue, Red, Green" },
-            { factor: "Tip Type", value: "Chisel" },
         ],
         short_description:
             "(Pack of 4 or single) vibrant whiteboard markers for presentations and teaching.",
@@ -181,9 +180,8 @@ export const Items: Item[] = [
         category: "Writing",
         price: 109,
         types: [
-            { factor: "Pack Size", value: "4 Markers" },
+            { factor: "Pack Size", value: "4 Markers or single" },
             { factor: "Colors", value: "Black, Blue, Red, Green" },
-            { factor: "Tip Size", value: "Fine" },
         ],
         short_description:
             "(Pack of 4 or single) Permanent ink markers for writing on various surfaces.",
@@ -202,9 +200,8 @@ export const Items: Item[] = [
         category: "Writing",
         price: 109,
         types: [
-            { factor: "Pack Size", value: "4 Highlighters" },
+            { factor: "Pack Size", value: "4 Highlighters or single" },
             { factor: "Colors", value: "Yellow, Pink, Blue, Green" },
-            { factor: "Tip Type", value: "Chisel" },
         ],
         short_description:
             "(Pack of 4 or single) Vibrant highlighters for emphasizing important text.",
@@ -223,9 +220,8 @@ export const Items: Item[] = [
         category: "Writing",
         price: 225,
         types: [
-            { factor: "Pack Size", value: "100 Pieces" },
-            { factor: "Color", value: "White" },
-            { factor: "Dust Level", value: "Low Dust" },
+            { factor: "Pack Size", value: "100 Pieces or 30" },
+            { factor: "Color", value: "White, Yellow, Pink, Green, Blue" },
         ],
         short_description:
             "Traditional white chalk for blackboard writing and drawing.",
@@ -246,7 +242,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Pack Size", value: "24 Pencils" },
             { factor: "Quality", value: "Artist Grade" },
-            { factor: "Core Type", value: "Wax-based" },
         ],
         short_description:
             "A vibrant set of 24 colored pencils for artists and hobbyists.",
@@ -267,7 +262,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Pack Size", value: "24 Crayons" },
             { factor: "Safety", value: "Non-Toxic" },
-            { factor: "Shape", value: "Round" },
         ],
         short_description:
             "Vibrant non-toxic crayons for children's art projects.",
@@ -288,7 +282,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Colors", value: "24" },
             { factor: "Included", value: "Brush & Palette" },
-            { factor: "Pigmentation", value: "High" },
         ],
         short_description: "Complete watercolor set with 24 pigmented colors.",
         long_description: [
@@ -367,8 +360,7 @@ export const Items: Item[] = [
         price: 250,
         types: [
             { factor: "Pages", value: "50" },
-            { factor: "Page Type", value: "Acid-Free" },
-            { factor: "Size", value: "30x30cm" },
+            { factor: "Size", value: "21x30cm" },
         ],
         short_description:
             "Dedicated Drawing with thick pages for preserving memories.",
@@ -381,27 +373,26 @@ export const Items: Item[] = [
         dimensions: "30 x 30 x 2.5 cm",
         image: DrawingBook,
     },
-    // {
-    //     id: "basic-calculator-3k9s8d7f2j1g",
-    //     name: "Basic Calculator",
-    //     category: "Accessories",
-    //     price: 299,
-    //     types: [
-    //         { factor: "Display", value: "LCD 10-digit" },
-    //         { factor: "Power Source", value: "Solar + Battery" },
-    //         { factor: "Functions", value: "Basic Arithmetic" },
-    //     ],
-    //     short_description:
-    //         "Standard calculator for everyday mathematical calculations.",
-    //     long_description: [
-    //         "Performs basic arithmetic operations including addition, subtraction, multiplication, and division.",
-    //         "Solar powered with battery backup for reliable operation in any lighting condition.",
-    //         "Compact design with large buttons for easy use in office or educational settings.",
-    //     ],
-    //     weight: "0.15 kg",
-    //     dimensions: "14 x 8 x 1.5 cm",
-    //     image: BasicCalculator,
-    // },
+    {
+        id: "basic-calculator-3k9s8d7f2j1g",
+        name: "Basic Calculator",
+        category: "Accessories",
+        price: 299,
+        types: [
+            { factor: "Display", value: "LCD 10-digit" },
+            { factor: "Power Source", value: "Solar + Battery" },
+        ],
+        short_description:
+            "Standard calculator for everyday mathematical calculations.",
+        long_description: [
+            "Performs basic arithmetic operations including addition, subtraction, multiplication, and division.",
+            "Solar powered with battery backup for reliable operation in any lighting condition.",
+            "Compact design with large buttons for easy use in office or educational settings.",
+        ],
+        weight: "0.15 kg",
+        dimensions: "14 x 8 x 1.5 cm",
+        image: BasicCalculator,
+    },
     {
         id: "scientific-calculator-5m2n4b6v8c3x",
         name: "Scientific Calculator",
@@ -410,7 +401,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Display", value: "LCD 2-line" },
             { factor: "Power Source", value: "Battery" },
-            { factor: "Functions", value: "240+ Scientific Functions" },
         ],
         short_description:
             "Advanced scientific calculator for students and professionals.",
@@ -430,7 +420,6 @@ export const Items: Item[] = [
         price: 14,
         types: [
             { factor: "Type", value: "Rubber" },
-            { factor: "Size", value: "Standard" },
             { factor: "Residue", value: "Low" },
         ],
         short_description:
@@ -442,7 +431,7 @@ export const Items: Item[] = [
         ],
         weight: "0.01 kg",
         dimensions: "5 x 2 x 1 cm",
-        image: GlueStick,
+        image: Eraser,
     },
     {
         id: "sharpner-rovzc1kb84eb",
@@ -451,7 +440,6 @@ export const Items: Item[] = [
         price: 63,
         types: [
             { factor: "Blade Material", value: "Steel" },
-            { factor: "Compartment", value: "With Container" },
             { factor: "Hole Size", value: "Standard" },
         ],
         short_description: "A compact metal sharpener for pencils.",
@@ -462,7 +450,7 @@ export const Items: Item[] = [
         ],
         weight: "0.02 kg",
         dimensions: "4 x 4 x 2 cm",
-        image: Scissor,
+        image: Sharpner,
     },
     {
         id: "pen-pencil-leads-avw8gxuq7bnh",
@@ -471,7 +459,6 @@ export const Items: Item[] = [
         price: 25,
         types: [
             { factor: "Diameter", value: "0.5 mm" },
-            { factor: "Grade", value: "HB" },
             { factor: "Quantity", value: "12 Leads" },
         ],
         short_description: "Refill graphite leads for mechanical pencils.",
@@ -492,7 +479,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Weight", value: "40g" },
             { factor: "Color", value: "Clear Drying" },
-            { factor: "Washable", value: "Yes" },
         ],
         short_description:
             "Solid adhesive stick for paper crafting and projects.",
@@ -513,7 +499,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Blade Material", value: "Stainless Steel" },
             { factor: "Size", value: "15cm" },
-            { factor: "Tip Type", value: "Rounded" },
         ],
         short_description:
             "Sharp stainless steel scissors for precise cutting.",
@@ -534,7 +519,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Width", value: "1.2 cm" },
             { factor: "Length", value: "40m" },
-            { factor: "Dispenser", value: "Included" },
         ],
         short_description: "Clear adhesive tape for sealing and repairing.",
         long_description: [
@@ -657,8 +641,7 @@ export const Items: Item[] = [
         price: 150,
         types: [
             { factor: "Length", value: "3m" },
-            { factor: "Material", value: "Steel Tape" },
-            { factor: "Feature", value: "Auto-Retract" },
+            { factor: "Material", value: "Clear Plastic" },
         ],
         short_description:
             "Retractable measuring tool with automatic rewind feature.",
@@ -678,8 +661,7 @@ export const Items: Item[] = [
         price: 20,
         types: [
             { factor: "Size", value: "Standard" },
-            { factor: "Material", value: "Galvanized Steel" },
-            { factor: "Quantity", value: "100 pieces" },
+            { factor: "Quantity", value: "24 pieces" },
         ],
         short_description:
             "Metal paper clips for temporarily binding documents.",
@@ -699,7 +681,6 @@ export const Items: Item[] = [
         price: 120,
         types: [
             { factor: "Capacity", value: "50 Sheets" },
-            { factor: "Staple Size", value: "26/6" },
             { factor: "Feature", value: "Built-in Remover" },
         ],
         short_description: "Desktop stapler for binding documents together.",
@@ -759,7 +740,6 @@ export const Items: Item[] = [
         price: 50,
         types: [
             { factor: "Size", value: "A4" },
-            { factor: "Material", value: "PVC" },
             { factor: "Closure", value: "Zip Lock" },
         ],
         short_description:
@@ -783,7 +763,6 @@ export const Items: Item[] = [
                 factor: "Components",
                 value: "Compass, Divider, Protractor, Set Squares",
             },
-            { factor: "Case Material", value: "Plastic" },
             { factor: "Size", value: "Medium" },
         ],
         short_description: "Complete set of mathematical drawing instruments.",
@@ -802,12 +781,11 @@ export const Items: Item[] = [
         category: "Paper",
         price: 300,
         types: [
-            { factor: "Quantity", value: "500 Sheets" },
-            { factor: "GSM", value: "70" },
-            { factor: "Finish", value: "Matte" },
+            { factor: "Quantity", value: "50 Sheets" },
+            { factor: "GSM", value: "64" },
         ],
         short_description:
-            "A ream of 500 single-sided A4 sheets for general printing.",
+            "A ream of 50 single-sided A4 sheets for general printing.",
         long_description: [
             "Bright white paper ensures sharp print quality and high contrast.",
             "Smooth surface prevents ink bleeding and is ideal for inkjet and laser printers.",
@@ -823,12 +801,11 @@ export const Items: Item[] = [
         category: "Paper",
         price: 350,
         types: [
-            { factor: "Quantity", value: "500 Sheets" },
-            { factor: "GSM", value: "80" },
-            { factor: "Opacity", value: "High" },
+            { factor: "Quantity", value: "50 Sheets" },
+            { factor: "GSM", value: "64" },
         ],
         short_description:
-            "A ream of 500 premium A4 sheets for double-sided printing.",
+            "A ream of 50 premium A4 sheets for double-sided printing.",
         long_description: [
             "Higher weight paper minimizes show-through for professional-looking documents.",
             "Opaque finish allows for clean printing on both sides.",
@@ -846,7 +823,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Quantity", value: "100 Sheets" },
             { factor: "GSM", value: "75" },
-            { factor: "Surface", value: "Smooth" },
         ],
         short_description:
             "High-quality A4 blank sheets for printing, writing and drawing.",
@@ -867,7 +843,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Format", value: "Roll" },
             { factor: "Width", value: "50 cm" },
-            { factor: "Eco-Friendly", value: "Yes" },
         ],
         short_description:
             "Eco-friendly brown kraft paper for wrapping and crafting.",
@@ -886,9 +861,8 @@ export const Items: Item[] = [
         category: "Paper",
         price: 120,
         types: [
-            { factor: "Pages", value: "200" },
+            { factor: "Pages", value: "200 or 100" },
             { factor: "Rule Type", value: "Ruled" },
-            { factor: "Cover", value: "Hard" },
         ],
         short_description:
             "Standard long format notebook for school and office use.",
@@ -909,7 +883,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Pages", value: "100" },
             { factor: "Rule Type", value: "Ruled/Blank" },
-            { factor: "Size", value: "Pocket" },
         ],
         short_description:
             "Compact short notebook for quick notes and portability.",
@@ -930,7 +903,6 @@ export const Items: Item[] = [
         types: [
             { factor: "Pages", value: "150" },
             { factor: "Pattern", value: "Alternating Ruled/Blank" },
-            { factor: "Cover", value: "Soft" },
         ],
         short_description:
             "Specialized notebook with interleaving for organized note-taking.",
@@ -950,8 +922,7 @@ export const Items: Item[] = [
         price: 70,
         types: [
             { factor: "Grid Size", value: "5mm" },
-            { factor: "Color", value: "Light Blue" },
-            { factor: "Quantity", value: "50 Sheets" },
+            { factor: "Quantity", value: "50 Sheets or single" },
         ],
         short_description:
             "Precision grid paper for technical drawings and math work.",
@@ -971,7 +942,6 @@ export const Items: Item[] = [
         price: 120,
         types: [
             { factor: "Size", value: "70x50cm" },
-            { factor: "Lamination", value: "Yes" },
             { factor: "Language", value: "English" },
         ],
         short_description:
@@ -992,7 +962,6 @@ export const Items: Item[] = [
         price: 120,
         types: [
             { factor: "Size", value: "70x50cm" },
-            { factor: "Lamination", value: "Yes" },
             { factor: "Features", value: "Physical Geography" },
         ],
         short_description:

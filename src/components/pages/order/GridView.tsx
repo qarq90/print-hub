@@ -4,13 +4,15 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
 import { cn } from '@/lib/utils';
 import { OrderRecord } from '@/interfaces/Order';
+import { EmptyHistory } from '@/components/empty/EmptyHistory';
 
 interface GridViewProps {
+    statusType?: "all" | "cancelled" | "completed" | "pending" | "in-cart";
     orderResult: OrderRecord[];
     page_type: "user_history" | "order_queue" | "admin_page" | "shopkeeper_page";
 }
 
-export const GridView: React.FC<GridViewProps> = ({ orderResult, page_type }) => {
+export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, page_type }) => {
     const [selectedItem, setSelectedItem] = useState<OrderRecord | null>(null);
 
     const getStatusColor = (status: string) => {
@@ -57,15 +59,111 @@ export const GridView: React.FC<GridViewProps> = ({ orderResult, page_type }) =>
         return text.length > 18 ? `${text.substring(0, 18)}...` : text;
     };
 
+    const getEmptyStateConfig = () => {
+        if (page_type === "order_queue" || page_type === "shopkeeper_page") {
+            switch (statusType) {
+                case "completed":
+                    return {
+                        title: "No Completed Orders",
+                        description: "There are no completed orders in the queue"
+                    };
+                case "cancelled":
+                    return {
+                        title: "No Cancelled Orders",
+                        description: "There are no cancelled orders in the queue"
+                    };
+                case "pending":
+                    return {
+                        title: "No Pending Orders",
+                        description: "The order queue is currently empty"
+                    };
+                case "all":
+                default:
+                    return {
+                        title: "Empty Order Queue",
+                        description: "No orders in the queue"
+                    };
+            }
+        }
+
+        if (page_type === "user_history") {
+            switch (statusType) {
+                case "completed":
+                    return {
+                        title: "No Completed Orders",
+                        description: "You haven't completed any orders yet"
+                    };
+                case "cancelled":
+                    return {
+                        title: "No Cancelled Orders",
+                        description: "You haven't cancelled any orders"
+                    };
+                case "pending":
+                    return {
+                        title: "No Pending Orders",
+                        description: "You don't have any pending orders"
+                    };
+                case "all":
+                default:
+                    return {
+                        title: "No Orders",
+                        description: "You haven't placed any orders yet"
+                    };
+            }
+        }
+
+        if (page_type === "admin_page") {
+            switch (statusType) {
+                case "completed":
+                    return {
+                        title: "No Completed Orders",
+                        description: "No users have completed any orders yet"
+                    };
+                case "cancelled":
+                    return {
+                        title: "No Cancelled Orders",
+                        description: "No users have cancelled any orders"
+                    };
+                case "pending":
+                    return {
+                        title: "No Pending Orders",
+                        description: "There are no pending orders at the moment"
+                    };
+                case "all":
+                default:
+                    return {
+                        title: "No Order Records",
+                        description: "No order records found in the system"
+                    };
+            }
+        }
+
+        return {
+            title: "No Orders",
+            description: "No orders found for the current selection"
+        };
+    };
+
+
+    if (orderResult.length === 0) {
+        const { title, description } = getEmptyStateConfig();
+
+        return (
+            <div className="my-8 flex flex-col text-left">
+                <EmptyHistory description={description} title={title} />
+            </div>
+        );
+    }
+
     return (
         <div className="mb-10 transition-colors flex flex-col gap-2">
             {groupEntries.map(([groupKey, items]) => (
                 <div className="flex flex-col" key={groupKey}>
-                    <Accordion type="single" className="md:px-0 px-2" collapsible>
+                    <Accordion type="single" collapsible>
                         <AccordionItem value="groupKey">
                             <AccordionTrigger className="border bg-gray-500/5 border-foreground/10 shadow-md rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
-                                <div className="grid grid-cols-4 items-center w-full">
-                                    <div className="flex gap-2 col-span-2 items-center">
+                                <div className="md:grid md:grid-cols-4 items-center w-full">
+                                    <div className="flex flex-row gap-2 col-span-2 items-center">
                                         <span>
                                             {page_type === "user_history" ? (
                                                 <LuCalendarDays size={24} />
@@ -76,7 +174,7 @@ export const GridView: React.FC<GridViewProps> = ({ orderResult, page_type }) =>
                                         {truncateText(groupKey)}
                                     </div>
                                     {(page_type !== "order_queue" && page_type !== "shopkeeper_page") && (
-                                        <div className="flex justify-center items-center gap-1">
+                                        <div className="md:flex hidden justify-center items-center gap-1">
                                             Total: {items.reduce((sum, item) => sum + parseInt(item['item-quantity'] || '0'), 0)} <LuIndianRupee />
                                         </div>
                                     )}

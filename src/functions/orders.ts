@@ -133,3 +133,21 @@ export const completeOrder = async (order: OrderRecord) => {
         throw e;
     }
 };
+
+export const checkoutOrder = async (order: OrderRecord) => {
+    try {
+        const response = await fetch("/api/patch/neon/orders/checkout-order", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ order_id: order["order-id"] }),
+        });
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to cancel order");
+        }
+        return await response.json();
+    } catch (e) {
+        console.error("Neon cancelOrder error:", e);
+        throw e;
+    }
+};

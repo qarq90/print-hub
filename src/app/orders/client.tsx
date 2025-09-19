@@ -50,9 +50,6 @@ export default function Client({ user: user }: ClientProps) {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
-                    <ViewType setViewType={setViewType} viewType={viewType} />
-                </div>
                 <HalfLoader />
             </MainLayout>
         );
@@ -90,7 +87,7 @@ export default function Client({ user: user }: ClientProps) {
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>
             </div>
-            <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
+            <div className="relative md:flex hidden justify-between md:py-0 py-3 flex-row items-center z-40">
                 <ViewType setViewType={setViewType} viewType={viewType} />
             </div>
             {viewType ? (

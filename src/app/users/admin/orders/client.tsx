@@ -13,7 +13,7 @@ import { fetchAllOrders } from "@/functions/orders";
 
 export default function AdminOrdersClient() {
     const [viewType, setViewType] = useState(false);
-    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
+    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending" | "in-cart">("all");
     const [orders, setOrders] = useState<OrderRecord[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -132,9 +132,9 @@ export default function AdminOrdersClient() {
                         <ViewType setViewType={setViewType} viewType={viewType} />
                     </div>
                     {viewType ? (
-                        <TableView orderResult={cartItems} page_type="admin_page" />
+                        <TableView orderResult={cartItems} page_type="admin_page" statusType={statusType} />
                     ) : (
-                        <GridView orderResult={cartItems} page_type="admin_page" />
+                        <GridView orderResult={cartItems} page_type="admin_page" statusType={statusType} />
                     )}
                 </>
             )}

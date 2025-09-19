@@ -10,7 +10,7 @@ interface ViewTypeProps {
 
 export const ViewType = ({ setViewType, viewType }: ViewTypeProps) => {
     return (
-        <div className="md:mb-4 flex flex-row gap-4 items-center z-40">
+        <div className="md:mb-4 md:flex hidden flex-row gap-4 items-center z-40">
             {/* <Text size="xl">Display</Text> */}
             <div
                 className="relative flex flex-col items-center gap-1 cursor-pointer group"

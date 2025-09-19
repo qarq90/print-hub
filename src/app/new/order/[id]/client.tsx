@@ -25,6 +25,7 @@ export default function Client({ id, user }: Props) {
     const [isLoading, setIsLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const [instructions, setInstructions] = useState("");
+    const [actionType, setActionType] = useState<"cart" | "order">("cart"); // Track the action type
     const router = useRouter()
 
     if (!item) {
@@ -36,6 +37,12 @@ export default function Client({ id, user }: Props) {
     }
 
     const handleAddToCart = () => {
+        setActionType("cart");
+        setIsOpen(true);
+    };
+
+    const handleOrderNow = () => {
+        setActionType("order");
         setIsOpen(true);
     };
 
@@ -49,7 +56,7 @@ export default function Client({ id, user }: Props) {
         }
     };
 
-    const confirmAddToCart = async () => {
+    const confirmAction = async () => {
         try {
             setIsLoading(true);
             const insertRecord = await insertOrder({
@@ -61,16 +68,16 @@ export default function Client({ id, user }: Props) {
                 item_price: item.price,
                 instructions: instructions,
                 ordered_at: new Date().toISOString(),
-                order_status: "pending",
-                in_cart: true,
+                order_status: actionType === "cart" ? "in-cart" : "pending",
+                in_cart: actionType === "cart",
             }, user)
 
             if (insertRecord.status) {
-                router.push("/new/order")
+                router.push(actionType === "cart" ? "/user/orders" : "/user/orders")
             }
 
         } catch (error) {
-            console.error("Error adding to cart:", error);
+            console.error("Error processing order:", error);
         } finally {
             setIsLoading(false);
             setIsOpen(false);
@@ -87,7 +94,7 @@ export default function Client({ id, user }: Props) {
                                 alt={item.name}
                                 src={item.image}
                                 fill
-                                className="object-contain brightness-50 transition-transform group-hover:scale-105"
+                                className="object-contain border border-foreground/10 shadow-md transition-transform group-hover:scale-105"
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 quality={80}
                                 priority={Items.indexOf(item) < 6}
@@ -95,39 +102,37 @@ export default function Client({ id, user }: Props) {
                         </div>
 
                         <div className="mt-3 grid grid-cols-2 gap-3">
-                            <div className="rounded-md flex flex-col border border-foreground/10 bg-foreground/5 px-3 py-2">
-                                <Text className="text-foreground/70">Weight :</Text>
-                                <Text weight="semibold">{item.weight || "—"}</Text>
-                            </div>
-                            <div className="rounded-md flex flex-col border border-foreground/10 bg-foreground/5 px-3 py-2">
-                                <Text className="text-foreground/70">Dimensions :</Text>
-                                <Text weight="semibold">{item.dimensions || "—"}</Text>
-                            </div>
-                            {item.short_description && <Text className="col-span-2 text-foreground/80">{item.short_description}</Text>}
-                        </div>
-                    </div>
-
-                    {/* Right side */}
-                    <div className="flex flex-col gap-5">
-                        <div className="flex flex-col">
-                            <Text size="4xl" weight="bold" className="text-balance">
-                                {item.name}
-                            </Text>
-                            <Text className="text-foreground/70">{item.category}</Text>
-
                             {item.types.length > 0 && (
-                                <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+                                <div className="mt-3 col-span-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
                                     {item.types.map((t: ItemType, i: number) => (
                                         <div
                                             key={`${t.factor}-${i}`}
                                             className="flex flex-col rounded-md border border-foreground/10 bg-background/60 px-3 py-2"
                                         >
-                                            <span className="text-foreground/70">{t.factor}</span>
+                                            <span className="text-foreground/50">{t.factor}     :</span>
                                             <span className="font-medium text-foreground">{t.value}</span>
                                         </div>
                                     ))}
                                 </div>
                             )}
+                            <div className="rounded-md flex flex-col border border-foreground/10 px-3 py-2">
+                                <Text className="text-foreground/50">Weight :</Text>
+                                <Text weight="semibold">{item.weight || "—"}</Text>
+                            </div>
+                            <div className="rounded-md flex flex-col border border-foreground/10 px-3 py-2">
+                                <Text className="text-foreground/50">Dimensions :</Text>
+                                <Text weight="semibold">{item.dimensions || "—"}</Text>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-col gap-2">
+                            <Text size="4xl" weight="bold" className="text-balance">
+                                {item.name}
+                            </Text>
+                            <Text className="text-foreground/70">{item.category}</Text>
+                            {item.short_description && <Text className=" text-foreground/80">{item.short_description}</Text>}
                         </div>
 
                         {item.long_description.length > 0 && (
@@ -195,7 +200,7 @@ export default function Client({ id, user }: Props) {
                                     <Button variant="outline" onClick={handleAddToCart}>
                                         <LuShoppingCart /> Add to Cart
                                     </Button>
-                                    <Button><LuTruck /> Order Now</Button>
+                                    <Button onClick={handleOrderNow}><LuTruck /> Order Now</Button>
                                 </div>
                             </div>
                         </div>
@@ -213,9 +218,15 @@ export default function Client({ id, user }: Props) {
                     <div className="p-6 text-center">
                         {!isLoading ? (
                             <>
-                                <LuShoppingCart size={48} className="mx-auto text-accent" />
+                                {actionType === "cart" ? (
+                                    <LuShoppingCart size={48} className="mx-auto text-accent" />
+                                ) : (
+                                    <LuTruck size={48} className="mx-auto text-accent" />
+                                )}
                                 <h3 className="mt-2 text-lg font-medium">
-                                    Are you sure you want to add this item to cart?
+                                    {actionType === "cart"
+                                        ? "Are you sure you want to add this item to cart?"
+                                        : "Are you sure you want to place this order now?"}
                                 </h3>
                                 <div className="mt-5 grid grid-cols-2 gap-3">
                                     <Button
@@ -224,7 +235,7 @@ export default function Client({ id, user }: Props) {
                                     >
                                         No
                                     </Button>
-                                    <Button onClick={confirmAddToCart}>
+                                    <Button onClick={confirmAction}>
                                         Yes
                                     </Button>
                                 </div>
@@ -232,7 +243,9 @@ export default function Client({ id, user }: Props) {
                         ) : (
                             <div className="flex flex-col items-center gap-3">
                                 <div className="h-10 w-10 animate-spin rounded-full border-4 border-accent border-t-transparent"></div>
-                                <p className="text-sm text-foreground/70">Adding to cart...</p>
+                                <p className="text-sm text-foreground/70">
+                                    {actionType === "cart" ? "Adding to cart..." : "Placing order..."}
+                                </p>
                             </div>
                         )}
                     </div>

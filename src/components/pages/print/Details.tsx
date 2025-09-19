@@ -154,8 +154,8 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
         setLoading(true)
         await updateFromPinata(currentDoc)
         await updateDocument(currentDoc)
-        router.refresh()
         onClose();
+        router.refresh()
         setLoading(false)
     };
 
@@ -170,7 +170,9 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
         setLoading(true)
         await completeDocument(currentDoc)
         await deleteFromPinata(currentDoc)
+        onClose();
         router.refresh()
+        setLoading(false)
     }
 
     const truncateText = (text: string) => {

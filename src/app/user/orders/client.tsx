@@ -53,7 +53,7 @@ export default function Client({ user }: ClientProps) {
         : (orders || []).filter(item => item["order-status"] === statusType && item["in-cart"] === false);
 
     const cartItems = (orders || []).filter(item =>
-        item["in-cart"] === true && item["order-status"] === "pending"
+        item["in-cart"] === true && item["order-status"] === "in-cart"
     );
 
     if (loading) {
@@ -88,7 +88,7 @@ export default function Client({ user }: ClientProps) {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory description="You haven't uploaded or scheduled any documents for printouts yet" title="Empty History" />
+                <EmptyHistory description="You haven't placed any orders yet" title="No Orders" />
             </div>
         );
     }
@@ -105,9 +105,9 @@ export default function Client({ user }: ClientProps) {
                 <StatusType setStatusType={setStatusType} statusType={statusType} />
             </div>
             {viewType ? (
-                <TableView orderResult={filteredHistory} page_type="user_history" />
+                <TableView orderResult={filteredHistory} page_type="user_history" statusType={statusType} />
             ) : (
-                <GridView orderResult={filteredHistory} page_type="user_history" />
+                <GridView orderResult={filteredHistory} page_type="user_history" statusType={statusType} />
             )}
 
             <div className="mb-6 flex flex-row items-center justify-between text-left">

@@ -1,42 +1,48 @@
-import { NextResponse } from "next/server";
 import pool from "@/lib/neon/config";
+import { NextResponse } from "next/server";
 
 export async function PATCH(req: Request) {
     try {
-        const { print_id } = await req.json();
+        const body = await req.json();
+        const { order_id } = body;
 
-        if (!print_id) {
+        if (!order_id) {
             return NextResponse.json(
-                { error: "Print ID is required", status: false },
+                {
+                    error: "Order ID is required to cancel order",
+                    status: false,
+                },
                 { status: 400 }
             );
         }
 
         const query = `
-            UPDATE "prints"
-            SET "print-status" = 'cancelled'
-            WHERE "print-id" = $1
+            UPDATE "orders" 
+            SET 
+                "order-status" = 'pending',
+                "in-cart" = false
+            WHERE "order-id" = $1
             RETURNING *;
         `;
 
-        const values = [print_id];
+        const values = [order_id];
 
         const result = await pool.query(query, values);
 
         if (result.rows.length === 0) {
             return NextResponse.json(
-                { error: "Print not found", status: false },
+                { error: "Order not found", status: false },
                 { status: 404 }
             );
         }
 
         return NextResponse.json({
             data: result.rows[0],
-            message: "Print cancelled successfully",
+            message: "Order cancelled successfully",
             status: true,
         });
     } catch (error) {
-        console.error("Error cancelling:", error);
+        console.error("Error cancelling order:", error);
         return NextResponse.json(
             { error: String(error), status: false },
             { status: 500 }
