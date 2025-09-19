@@ -2,6 +2,44 @@ import { PrintType, PrintRecord } from "@/interfaces/Print";
 import { PinataResult } from "@/interfaces/Pinata";
 import { UserProps } from "@/interfaces/User";
 
+export const fetchTodaysQueue = async () => {
+    try {
+        const response = await fetch("/api/get/neon/prints/todays-queue", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch today's queue");
+        }
+
+        return await response.json();
+    } catch (e) {
+        console.error("Neon fetchTodaysQueue error:", e);
+        throw e;
+    }
+};
+
+export const fetchAllPrints = async () => {
+    try {
+        const response = await fetch("/api/get/neon/prints/fetch-all", {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch all prints");
+        }
+
+        return await response.json();
+    } catch (e) {
+        console.error("Neon fetchAllPrints error:", e);
+        throw e;
+    }
+};
+
 export const insertNeon = async (
     user: UserProps,
     file: PrintType,
@@ -46,48 +84,10 @@ export const fetchUserHistory = async (user: UserProps) => {
     }
 };
 
-export const fetchTodaysQueue = async () => {
-    try {
-        const response = await fetch("/api/get/neon/prints/todays-queue", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || "Failed to fetch today's queue");
-        }
-
-        return await response.json();
-    } catch (e) {
-        console.error("Neon fetchTodaysQueue error:", e);
-        throw e;
-    }
-};
-
-export const fetchAllPrints = async () => {
-    try {
-        const response = await fetch("/api/get/neon/prints/fetch-all", {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.error || "Failed to fetch all prints");
-        }
-
-        return await response.json();
-    } catch (e) {
-        console.error("Neon fetchAllPrints error:", e);
-        throw e;
-    }
-};
-
 export const updateDocument = async (document: PrintRecord) => {
     try {
-        const response = await fetch("/api/post/neon/prints/update-print", {
-            method: "POST",
+        const response = await fetch("/api/put/neon/prints/update-print", {
+            method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ document }),
         });
@@ -106,8 +106,8 @@ export const updateDocument = async (document: PrintRecord) => {
 
 export const cancelDocument = async (document: PrintRecord) => {
     try {
-        const response = await fetch("/api/post/neon/prints/cancel-print", {
-            method: "POST",
+        const response = await fetch("/api/patch/neon/prints/cancel-print", {
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ printId: document["print-id"] }),
         });
@@ -126,8 +126,8 @@ export const cancelDocument = async (document: PrintRecord) => {
 
 export const completeDocument = async (document: PrintRecord) => {
     try {
-        const response = await fetch("/api/post/neon/prints/complete-print", {
-            method: "POST",
+        const response = await fetch("/api/patch/neon/prints/complete-print", {
+            method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ printId: document["print-id"] }),
         });

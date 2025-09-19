@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 import { usePathname, useRouter } from "next/navigation";
 import { deleteFromPinata, updateFromPinata } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
-import { cancelDocument, completeDocument, updateDocument } from "@/functions/neon-prints";
+import { cancelDocument, completeDocument, updateDocument } from "@/functions/prints";
 import { Textarea } from "@/components/ui/textarea";
 
 interface DetailsProps {
@@ -171,9 +171,11 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
         await completeDocument(currentDoc)
         await deleteFromPinata(currentDoc)
         router.refresh()
-        onClose();
-        setLoading(false)
     }
+
+    const truncateText = (text: string) => {
+        return text.length > 18 ? `${text.substring(0, 18)}...` : text;
+    };
 
     if (pathname.includes("/prints-queue")) {
         return null
@@ -217,9 +219,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 className="font-medium text-right"
                                 title={currentDoc["user-name"] ?? ""}
                             >
-                                {(currentDoc["user-name"] ?? "").length > 30
-                                    ? `${(currentDoc["user-name"] ?? "").slice(0, 30)}...`
-                                    : (currentDoc["user-name"] ?? "")}
+                                {truncateText(currentDoc["user-name"] || "N/A")}
                             </span>
                         </div>
                     </div>

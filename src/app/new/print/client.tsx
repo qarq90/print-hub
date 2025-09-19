@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { FullLoader } from "@/components/ui/loader";
 import { PinataResult } from "@/interfaces/Pinata";
 import { Modal } from "@/components/Modal";
-import { insertNeon } from "@/functions/neon-prints";
+import { insertNeon } from "@/functions/prints";
 import { Textarea } from "@/components/ui/textarea";
 
 interface ClientProps {
@@ -339,9 +339,9 @@ export default function Client({ user }: ClientProps) {
                                                     </div>
                                                 </div>
 
-                                                <div className="grid grid-cols-2">
-                                                    <span className="text-foreground/70">Instructions:</span>
-                                                    <div className="flex justify-end gap-2 items-center w-full">
+                                                <div className="flex flex-col items-start gap-3 w-full">
+                                                    <Text className="text-foreground/70 whitespace-nowrap">Instructions :</Text>
+                                                    <div className="flex-1 w-full">
                                                         <Textarea
                                                             onChange={(e) => {
                                                                 const newValue = e.target.value;
@@ -352,7 +352,9 @@ export default function Client({ user }: ClientProps) {
                                                                 );
                                                             }}
                                                             value={file.instructions || ""}
-                                                            placeholder="Specifics..."
+                                                            placeholder="Specify Instructions..."
+                                                            className="w-full h-16"
+                                                            rows={5}
                                                         />
                                                     </div>
                                                 </div>

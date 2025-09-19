@@ -5,8 +5,8 @@ export async function GET() {
     try {
         const query = `
             SELECT * FROM "orders" 
-            WHERE "order-status" = 'pending'
-            ORDER BY "ordered-at" ASC;
+            WHERE "in-cart" = true
+            ORDER BY "ordered-at" DESC;
         `;
 
         const result = await pool.query(query);
@@ -16,7 +16,7 @@ export async function GET() {
             status: true 
         });
     } catch (error) {
-        console.error("Error fetching pending orders:", error);
+        console.error("Error fetching cart orders:", error);
         return NextResponse.json(
             { error: String(error), status: false },
             { status: 500 }

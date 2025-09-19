@@ -65,7 +65,7 @@ export const GridView: React.FC<GridViewProps> = ({ documentResult, page_type })
     };
 
     const truncateText = (text: string) => {
-        return text.length > 25 ? `${text.substring(0, 25)}...` : text;
+        return text.length > 18 ? `${text.substring(0, 18)}...` : text;
     };
 
     return (

@@ -4,7 +4,7 @@
 import { Text } from "@/components/ui/text";
 import { UserProps } from "@/interfaces/User";
 import { Items } from "@/data/item-data";
-import { OrderType } from "@/components/pages/common/OrderType";
+import { OrderType } from "@/components/pages/print/OrderType";
 import { useState } from "react";
 import { ProductCard } from "@/components/pages/order/ProductCard";
 

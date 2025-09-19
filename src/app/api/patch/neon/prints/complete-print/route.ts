@@ -1,0 +1,45 @@
+import { NextResponse } from "next/server";
+import pool from "@/lib/neon/config";
+
+export async function PATCH(req: Request) {
+    try {
+        const { printId } = await req.json();
+
+        if (!printId) {
+            return NextResponse.json(
+                { error: "Print ID is required", status: false },
+                { status: 400 }
+            );
+        }
+
+        const query = `
+            UPDATE "prints"
+            SET "print-status" = 'completed'
+            WHERE "print-id" = $2
+            RETURNING *;
+        `;
+
+        const values = [printId];
+
+        const result = await pool.query(query, values);
+
+        if (result.rows.length === 0) {
+            return NextResponse.json(
+                { error: "Print not found", status: false },
+                { status: 404 }
+            );
+        }
+
+        return NextResponse.json({
+            data: result.rows[0],
+            message: "Print cancelled successfully",
+            status: true,
+        });
+    } catch (error) {
+        console.error("Error cancelling:", error);
+        return NextResponse.json(
+            { error: String(error), status: false },
+            { status: 500 }
+        );
+    }
+}

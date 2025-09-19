@@ -2,11 +2,11 @@
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
 import { Text } from "@/components/ui/text";
 import { useEffect, useState } from "react";
-import { TableView } from "@/components/pages/common/TableView";
-import { GridView } from "@/components/pages/common/GridView";
-import { ViewType } from "@/components/pages/common/ViewType";
+import { TableView } from "@/components/pages/print/TableView";
+import { GridView } from "@/components/pages/print/GridView";
+import { ViewType } from "@/components/pages/print/ViewType";
 import { PrintRecord } from "@/interfaces/Print";
-import { fetchTodaysQueue } from "@/functions/neon-prints";
+import { fetchTodaysQueue } from "@/functions/prints";
 import { HalfLoader } from "@/components/ui/loader";
 
 export default function Client() {

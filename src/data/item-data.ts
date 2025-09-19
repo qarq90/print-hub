@@ -4,18 +4,18 @@ import ApsaraPencil from "../../public/img/schedule-order/ApsaraPencil.png";
 import PermanentMarker from "../../public/img/schedule-order/PermanentMarker.png";
 import WhiteboardMarker from "../../public/img/schedule-order/WhiteBoardMarker.png";
 import Highlighter from "../../public/img/schedule-order/Highlighter.png";
-// import Stapler from "../../public/img/schedule-order/Stapler.png";
+import Stapler from "../../public/img/schedule-order/Stapler.png";
 import Scissor from "../../public/img/schedule-order/Scissors.png";
 import TransparentPouch from "../../public/img/schedule-order/TransparentPouch.png";
 import IndiaGeography from "../../public/img/schedule-order/IndianGeographyMap.png";
 import IndiaPolitics from "../../public/img/schedule-order/IndianPoliticalMap.png";
-// import Chalk from "../../public/img/schedule-order/Chalk.png";
+import Chalk from "../../public/img/schedule-order/Chalk.png";
 import GlueStick from "../../public/img/schedule-order/GlueStick.png";
 import A4BlankSheets from "../../public/img/schedule-order/A4BlankSheets.png";
 import A4SingleSide from "../../public/img/schedule-order/A4SingleSide.png";
 import A4DoubleSide from "../../public/img/schedule-order/A4DoubleSide.png";
 import PencilLead from "../../public/img/schedule-order/PencilLead.png";
-// import LongBook from "../../public/img/schedule-order/Longbook.png";
+import LongBook from "../../public/img/schedule-order/Longbook.png";
 import NoteBook from "../../public/img/schedule-order/NoteBook.png";
 import ColorPencils from "../../public/img/schedule-order/ColorPencils.png";
 import GeometryBox from "../../public/img/schedule-order/GeometryBox.png";
@@ -25,14 +25,14 @@ import PaperClips from "../../public/img/schedule-order/PaperClips.jpeg";
 import WaterColor from "../../public/img/schedule-order/WaterColors.png";
 import DrawingBook from "../../public/img/schedule-order/DrawingBook.png";
 import BrownPaper from "../../public/img/schedule-order/BrownPaper.png";
-import BasicCalculator from "../../public/img/schedule-order/BasicCalculator.png";
 import ScientificCalculator from "../../public/img/schedule-order/ScientificCalculator.jpeg";
+// import BasicCalculator from "../../public/img/schedule-order/BasicCalculator.png";
 
 // import BallPen from "../../public/img/schedule-order/ball-pen.png";
 // import CraftPaper from "../../public/img/schedule-order/craft-paper.png";
-import PenPencil from "../../public/img/schedule-order/pen-pencil.png";
+// import PenPencil from "../../public/img/schedule-order/pen-pencil.png";
 import Roller from "../../public/img/schedule-order/roller.png";
-// import Tape from "../../public/img/schedule-order/Tape.png";
+import Tape from "../../public/img/schedule-order/Tape.png";
 
 export interface ItemType {
     factor: string;
@@ -74,26 +74,26 @@ export const Items: Item[] = [
         dimensions: "18 x 7 x 1 cm",
         image: ApsaraPencil,
     },
-    {
-        id: "pen-pencil-0qc5aqy2hkqy",
-        name: "Pen Pencil",
-        category: "Writing",
-        price: 20,
-        types: [
-            { factor: "Lead Size", value: "0.5 mm" },
-            { factor: "Grip Type", value: "Rubber" },
-            { factor: "Refillable", value: "Yes" },
-        ],
-        short_description: "A mechanical pencil with a sleek, pen-like design.",
-        long_description: [
-            "Designed for comfort and precision writing or drafting.",
-            "Features a clip for secure attachment to pockets or notebooks.",
-            "Often includes an integrated eraser under the cap.",
-        ],
-        weight: "0.05 kg",
-        dimensions: "14 x 1 x 1 cm",
-        image: PenPencil,
-    },
+    // {
+    //     id: "pen-pencil-0qc5aqy2hkqy",
+    //     name: "Pen Pencil",
+    //     category: "Writing",
+    //     price: 20,
+    //     types: [
+    //         { factor: "Lead Size", value: "0.5 mm" },
+    //         { factor: "Grip Type", value: "Rubber" },
+    //         { factor: "Refillable", value: "Yes" },
+    //     ],
+    //     short_description: "A mechanical pencil with a sleek, pen-like design.",
+    //     long_description: [
+    //         "Designed for comfort and precision writing or drafting.",
+    //         "Features a clip for secure attachment to pockets or notebooks.",
+    //         "Often includes an integrated eraser under the cap.",
+    //     ],
+    //     weight: "0.05 kg",
+    //     dimensions: "14 x 1 x 1 cm",
+    //     image: PenPencil,
+    // },
     // {
     //     id: "ball-pen-han74ss602nk",
     //     name: "Ball Pen",
@@ -217,27 +217,27 @@ export const Items: Item[] = [
         dimensions: "15 x 10 x 2 cm",
         image: Highlighter,
     },
-    // {
-    //     id: "chalk-0smz9q497e9d",
-    //     name: "Chalk",
-    //     category: "Writing",
-    //     price: 225,
-    //     types: [
-    //         { factor: "Pack Size", value: "100 Pieces" },
-    //         { factor: "Color", value: "White" },
-    //         { factor: "Dust Level", value: "Low Dust" },
-    //     ],
-    //     short_description:
-    //         "Traditional white chalk for blackboard writing and drawing.",
-    //     long_description: [
-    //         "Smooth writing experience with minimal dust emission.",
-    //         "Creates clear, visible marks on blackboard surfaces.",
-    //         "Economical option for classrooms, restaurants, and personal use.",
-    //     ],
-    //     weight: "0.05 kg",
-    //     dimensions: "8 x 8 x 1 cm",
-    //     image: Chalk,
-    // },
+    {
+        id: "chalk-0smz9q497e9d",
+        name: "Chalk",
+        category: "Writing",
+        price: 225,
+        types: [
+            { factor: "Pack Size", value: "100 Pieces" },
+            { factor: "Color", value: "White" },
+            { factor: "Dust Level", value: "Low Dust" },
+        ],
+        short_description:
+            "Traditional white chalk for blackboard writing and drawing.",
+        long_description: [
+            "Smooth writing experience with minimal dust emission.",
+            "Creates clear, visible marks on blackboard surfaces.",
+            "Economical option for classrooms, restaurants, and personal use.",
+        ],
+        weight: "0.05 kg",
+        dimensions: "8 x 8 x 1 cm",
+        image: Chalk,
+    },
     {
         id: "color-pencils-2n53d54rpgpg",
         name: "Color Pencils",
@@ -362,7 +362,7 @@ export const Items: Item[] = [
     // },
     {
         id: "scrap-book-nkqtjgs16m89",
-        name: "Scrap Book",
+        name: "Drawing Book",
         category: "Art",
         price: 250,
         types: [
@@ -371,7 +371,7 @@ export const Items: Item[] = [
             { factor: "Size", value: "30x30cm" },
         ],
         short_description:
-            "Dedicated scrapbook with thick pages for preserving memories.",
+            "Dedicated Drawing with thick pages for preserving memories.",
         long_description: [
             "Extra-thick pages prevent bleeding and support various adhesives.",
             "Acid-free paper ensures photos and mementos last for years.",
@@ -381,27 +381,27 @@ export const Items: Item[] = [
         dimensions: "30 x 30 x 2.5 cm",
         image: DrawingBook,
     },
-    {
-        id: "basic-calculator-3k9s8d7f2j1g",
-        name: "Basic Calculator",
-        category: "Accessories",
-        price: 299,
-        types: [
-            { factor: "Display", value: "LCD 10-digit" },
-            { factor: "Power Source", value: "Solar + Battery" },
-            { factor: "Functions", value: "Basic Arithmetic" },
-        ],
-        short_description:
-            "Standard calculator for everyday mathematical calculations.",
-        long_description: [
-            "Performs basic arithmetic operations including addition, subtraction, multiplication, and division.",
-            "Solar powered with battery backup for reliable operation in any lighting condition.",
-            "Compact design with large buttons for easy use in office or educational settings.",
-        ],
-        weight: "0.15 kg",
-        dimensions: "14 x 8 x 1.5 cm",
-        image: BasicCalculator,
-    },
+    // {
+    //     id: "basic-calculator-3k9s8d7f2j1g",
+    //     name: "Basic Calculator",
+    //     category: "Accessories",
+    //     price: 299,
+    //     types: [
+    //         { factor: "Display", value: "LCD 10-digit" },
+    //         { factor: "Power Source", value: "Solar + Battery" },
+    //         { factor: "Functions", value: "Basic Arithmetic" },
+    //     ],
+    //     short_description:
+    //         "Standard calculator for everyday mathematical calculations.",
+    //     long_description: [
+    //         "Performs basic arithmetic operations including addition, subtraction, multiplication, and division.",
+    //         "Solar powered with battery backup for reliable operation in any lighting condition.",
+    //         "Compact design with large buttons for easy use in office or educational settings.",
+    //     ],
+    //     weight: "0.15 kg",
+    //     dimensions: "14 x 8 x 1.5 cm",
+    //     image: BasicCalculator,
+    // },
     {
         id: "scientific-calculator-5m2n4b6v8c3x",
         name: "Scientific Calculator",
@@ -526,26 +526,26 @@ export const Items: Item[] = [
         dimensions: "15 x 8 x 1 cm",
         image: Scissor,
     },
-    // {
-    //     id: "transparent-tape-jcjgbywlg44m",
-    //     name: "Transparent Tape",
-    //     category: "Accessories",
-    //     price: 40,
-    //     types: [
-    //         { factor: "Width", value: "1.2 cm" },
-    //         { factor: "Length", value: "40m" },
-    //         { factor: "Dispenser", value: "Included" },
-    //     ],
-    //     short_description: "Clear adhesive tape for sealing and repairing.",
-    //     long_description: [
-    //         "Crystal clear finish that becomes nearly invisible on paper.",
-    //         "Smooth dispensing with easy-tear perforations.",
-    //         "Strong adhesive suitable for paper, cardboard, and lightweight materials.",
-    //     ],
-    //     weight: "0.08 kg",
-    //     dimensions: "8 x 8 x 2 cm",
-    //     image: Tape,
-    // },
+    {
+        id: "transparent-tape-jcjgbywlg44m",
+        name: "Transparent Tape",
+        category: "Accessories",
+        price: 40,
+        types: [
+            { factor: "Width", value: "1.2 cm" },
+            { factor: "Length", value: "40m" },
+            { factor: "Dispenser", value: "Included" },
+        ],
+        short_description: "Clear adhesive tape for sealing and repairing.",
+        long_description: [
+            "Crystal clear finish that becomes nearly invisible on paper.",
+            "Smooth dispensing with easy-tear perforations.",
+            "Strong adhesive suitable for paper, cardboard, and lightweight materials.",
+        ],
+        weight: "0.08 kg",
+        dimensions: "8 x 8 x 2 cm",
+        image: Tape,
+    },
     // {
     //     id: "paper-tape-pyyp6n25qnzg",
     //     name: "Paper Tape",
@@ -692,26 +692,26 @@ export const Items: Item[] = [
         dimensions: "10 x 5 x 1 cm",
         image: PaperClips,
     },
-    // {
-    //     id: "stapler-3wx33nxx1vsz",
-    //     name: "Stapler",
-    //     category: "Accessories",
-    //     price: 120,
-    //     types: [
-    //         { factor: "Capacity", value: "50 Sheets" },
-    //         { factor: "Staple Size", value: "26/6" },
-    //         { factor: "Feature", value: "Built-in Remover" },
-    //     ],
-    //     short_description: "Desktop stapler for binding documents together.",
-    //     long_description: [
-    //         "Durable metal construction with comfortable grip.",
-    //         "Staple refill mechanism for easy reloading.",
-    //         "Includes built-in staple remover for convenience.",
-    //     ],
-    //     weight: "0.3 kg",
-    //     dimensions: "15 x 7 x 5 cm",
-    //     image: Stapler,
-    // },
+    {
+        id: "stapler-3wx33nxx1vsz",
+        name: "Stapler",
+        category: "Accessories",
+        price: 120,
+        types: [
+            { factor: "Capacity", value: "50 Sheets" },
+            { factor: "Staple Size", value: "26/6" },
+            { factor: "Feature", value: "Built-in Remover" },
+        ],
+        short_description: "Desktop stapler for binding documents together.",
+        long_description: [
+            "Durable metal construction with comfortable grip.",
+            "Staple refill mechanism for easy reloading.",
+            "Includes built-in staple remover for convenience.",
+        ],
+        weight: "0.3 kg",
+        dimensions: "15 x 7 x 5 cm",
+        image: Stapler,
+    },
     // {
     //     id: "stapler-pins-v93an02gm6sx",
     //     name: "Stapler Pins",
@@ -880,27 +880,27 @@ export const Items: Item[] = [
         dimensions: "50 x 70 cm (roll)",
         image: BrownPaper,
     },
-    // {
-    //     id: "long-book-ie99x3fqkd9d",
-    //     name: "Long Book",
-    //     category: "Paper",
-    //     price: 120,
-    //     types: [
-    //         { factor: "Pages", value: "200" },
-    //         { factor: "Rule Type", value: "Ruled" },
-    //         { factor: "Cover", value: "Hard" },
-    //     ],
-    //     short_description:
-    //         "Standard long format notebook for school and office use.",
-    //     long_description: [
-    //         "Durable cover protects pages from damage and wear.",
-    //         "High-quality paper prevents ink bleed-through for neat writing.",
-    //         "Perfect for note-taking, journaling, and subject-specific notebooks.",
-    //     ],
-    //     weight: "0.4 kg",
-    //     dimensions: "24 x 18 x 1.5 cm",
-    //     image: LongBook,
-    // },
+    {
+        id: "long-book-ie99x3fqkd9d",
+        name: "Long Book",
+        category: "Paper",
+        price: 120,
+        types: [
+            { factor: "Pages", value: "200" },
+            { factor: "Rule Type", value: "Ruled" },
+            { factor: "Cover", value: "Hard" },
+        ],
+        short_description:
+            "Standard long format notebook for school and office use.",
+        long_description: [
+            "Durable cover protects pages from damage and wear.",
+            "High-quality paper prevents ink bleed-through for neat writing.",
+            "Perfect for note-taking, journaling, and subject-specific notebooks.",
+        ],
+        weight: "0.4 kg",
+        dimensions: "24 x 18 x 1.5 cm",
+        image: LongBook,
+    },
     {
         id: "notebook-(short-book)-n2x9jvwgugm4",
         name: "Notebook (short book)",
@@ -922,27 +922,27 @@ export const Items: Item[] = [
         dimensions: "18 x 12 x 1 cm",
         image: NoteBook,
     },
-    // {
-    //     id: "single-side-interleaf-book-4oosasdrsgnn",
-    //     name: "Single Side Interleaf Book",
-    //     category: "Paper",
-    //     price: 150,
-    //     types: [
-    //         { factor: "Pages", value: "150" },
-    //         { factor: "Pattern", value: "Alternating Ruled/Blank" },
-    //         { factor: "Cover", value: "Soft" },
-    //     ],
-    //     short_description:
-    //         "Specialized notebook with interleaving for organized note-taking.",
-    //     long_description: [
-    //         "Features alternating blank and ruled pages for versatile note-taking.",
-    //         "Ideal for students who need to combine written notes with diagrams.",
-    //         "Perfect for scientific subjects requiring both text and illustrations.",
-    //     ],
-    //     weight: "0.45 kg",
-    //     dimensions: "24 x 18 x 1.8 cm",
-    //     image: LongBook,
-    // },
+    {
+        id: "single-side-interleaf-book-4oosasdrsgnn",
+        name: "Single Side Interleaf Book",
+        category: "Paper",
+        price: 150,
+        types: [
+            { factor: "Pages", value: "150" },
+            { factor: "Pattern", value: "Alternating Ruled/Blank" },
+            { factor: "Cover", value: "Soft" },
+        ],
+        short_description:
+            "Specialized notebook with interleaving for organized note-taking.",
+        long_description: [
+            "Features alternating blank and ruled pages for versatile note-taking.",
+            "Ideal for students who need to combine written notes with diagrams.",
+            "Perfect for scientific subjects requiring both text and illustrations.",
+        ],
+        weight: "0.45 kg",
+        dimensions: "24 x 18 x 1.8 cm",
+        image: LongBook,
+    },
     {
         id: "graph-paper-5r38xa5ko3b6",
         name: "Graph Paper",

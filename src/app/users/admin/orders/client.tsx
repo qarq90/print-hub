@@ -1,112 +1,143 @@
-"use client";;
+"use client";
 import { Text } from "@/components/ui/text";
-import { UnderConstructions } from "@/components/empty/UnderConstructions";
+import { OrderRecord } from "@/interfaces/Order";
+import { EmptyHistory } from "@/components/empty/EmptyHistory";
+import { GridView } from "@/components/pages/order/GridView";
+import { StatusType } from "@/components/pages/order/StatusType";
+import { TableView } from "@/components/pages/order/TableView";
+import { ViewType } from "@/components/pages/order/ViewType";
+import { HalfLoader } from "@/components/ui/loader";
+import { useState, useEffect } from "react";
+import { LuShoppingCart } from "react-icons/lu";
+import { fetchAllOrders } from "@/functions/orders";
 
-export default function Client() {
-    // const [viewType, setViewType] = useState(false);
-    // const [prints, setPrints] = useState<PrintRecord[] | null>(null);
-    // const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
-    // const [loading, setLoading] = useState(true);
-    // const [error, setError] = useState<string | null>(null);
+export default function AdminOrdersClient() {
+    const [viewType, setViewType] = useState(false);
+    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
+    const [orders, setOrders] = useState<OrderRecord[] | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
-    // useEffect(() => {
-    //     const fetchData = async () => {
-    //         try {
-    //             setLoading(true);
-    //             const result = await fetchAllPrints();
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                setLoading(true);
+                const result = await fetchAllOrders();
 
-    //             if (result.error) {
-    //                 throw result.error;
-    //             }
+                if (result.error) {
+                    throw result.error;
+                }
 
-    //             setPrints(result.data || []);
-    //         } catch (error) {
-    //             console.error("Error fetching user history:", error);
-    //             setError(error instanceof Error ? error.message : "Failed to fetch history");
-    //             setPrints([]);
-    //         } finally {
-    //             setLoading(false);
-    //         }
-    //     };
+                setOrders(result.data || []);
+            } catch (error) {
+                console.error("Error fetching all orders:", error);
+                setError(error instanceof Error ? error.message : "Failed to fetch orders");
+                setOrders([]);
+            } finally {
+                setLoading(false);
+            }
+        };
 
-    //     fetchData()
-    // }, []);
+        fetchData();
+    }, []);
 
-    // const filteredHistory = statusType === "all"
-    //     ? prints || []
-    //     : (prints || []).filter(item => item["print-status"] === statusType);
+    const filteredOrders = statusType === "all"
+        ? orders || []
+        : (orders || []).filter(item => item["order-status"] === statusType);
 
-    return (
-        <div className="mb-8">
-            <div className="mb-4 flex flex-col text-left">
-                <Text size="5xl" weight="bold">Orders</Text>
+
+    const cartItems = (orders || []).filter(item =>
+        item["in-cart"] === true && item["order-status"] === "pending"
+    );
+
+    if (loading) {
+        return (
+            <div className="mb-20">
+                <div className="mb-4 flex flex-col text-left">
+                    <Text size="5xl" weight="bold">All Orders</Text>
+                    <Text size="base">
+                        Last updated: {new Date().toLocaleDateString()}
+                    </Text>
+                </div>
+                <HalfLoader />
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="flex justify-center items-center h-64">
+                <Text color="error">{error}</Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>
             </div>
-            <UnderConstructions />
-        </div>
-    )
+        );
+    }
 
-    // if (loading) {
-    //     return (
-    //         <>
-    //             <div className="mb-4 flex flex-col text-left">
-    //                 <Text size="5xl" weight="bold">Prints Queue</Text>
-    //                 <Text size="base">
-    //                     Last updated: {new Date().toLocaleDateString()}
-    //                 </Text>
+    if (!orders || orders.length === 0) {
+        return (
+            <div className="mb-20">
+                <div className="mb-16 flex flex-col text-left">
+                    <Text size="5xl" weight="bold">All Orders</Text>
+                    <Text size="base">
+                        Last updated: {new Date().toLocaleDateString()}
+                    </Text>
+                </div>
+                <EmptyHistory description="No orders have been placed yet" title="No Orders" />
+            </div>
+        );
+    }
 
-    //             </div>
-    //             <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
-    //                 <ViewType setViewType={setViewType} viewType={viewType} />
-    //             </div>
-    //             <HalfLoader />
-    //         </>
-    //     );
-    // }
+    return (
+        <>
+            <div className="mb-4 flex flex-col text-left">
+                <Text size="5xl" weight="bold">All Orders</Text>
+                <Text size="base">
+                    Last updated: {new Date().toLocaleDateString()}
+                </Text>
+            </div>
+            <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
+                <ViewType setViewType={setViewType} viewType={viewType} />
+                <StatusType setStatusType={setStatusType} statusType={statusType} />
+            </div>
+            {viewType ? (
+                <TableView orderResult={filteredOrders} page_type="admin_page" />
+            ) : (
+                <GridView orderResult={filteredOrders} page_type="admin_page" />
+            )}
 
-    // if (error) {
-    //     return (
-    //         <>
-    //             <div className="flex justify-center items-center h-64">
-    //                 <Text color="error">{error}</Text>
-    //             </div>
-    //         </>
-    //     );
-    // }
+            <div className="mb-6 flex flex-row items-center justify-between text-left">
+                <div className="flex flex-col">
+                    <Text size="5xl" weight="bold">Active Carts</Text>
+                    <Text size="base">
+                        Last updated: {new Date().toLocaleDateString()}
+                    </Text>
+                </div>
+                <Text size="lg" className="flex flex-row items-center gap-2">
+                    {cartItems.length} item{cartItems.length !== 1 ? 's' : ''} in carts <LuShoppingCart />
+                </Text>
+            </div>
 
-    // if (!prints || prints.length === 0) {
-    //     return (
-    //         <>
-    //             <div className="mb-4 flex flex-col text-left">
-    //                 <Text size="5xl" weight="bold">Prints</Text>
-    //                 <Text size="base">
-    //                     Last updated: {new Date().toLocaleDateString()}
-    //                 </Text>
-    //             </div>
-    //             <EmptyHistory description="No users have scheduled any prints." title="Empty Schedule" />
-    //         </>
-    //     );
-    // }
-
-    // return (
-    //     <>
-    //         <div className="mb-4 flex flex-col text-left">
-    //             <Text size="5xl" weight="bold">Prints</Text>
-    //             <Text size="base">
-    //                 Last updated: {new Date().toLocaleDateString()}
-    //             </Text>
-    //         </div>
-    //         <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
-    //             <ViewType setViewType={setViewType} viewType={viewType} />
-    //             <StatusType setStatusType={setStatusType} statusType={statusType} />
-    //         </div>
-    //         {viewType ? (
-    //             <TableView documentResult={filteredHistory} page_type="admin_page" />
-    //         ) : (
-    //             <GridView documentResult={filteredHistory} page_type="admin_page" />
-    //         )}
-    //     </>
-    // );
+            {cartItems.length === 0 ? (
+                <div className="mb-16">
+                    <EmptyHistory
+                        description="No active carts found"
+                        title="No Items in Carts"
+                    />
+                </div>
+            ) : (
+                <>
+                    <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
+                        <ViewType setViewType={setViewType} viewType={viewType} />
+                    </div>
+                    {viewType ? (
+                        <TableView orderResult={cartItems} page_type="admin_page" />
+                    ) : (
+                        <GridView orderResult={cartItems} page_type="admin_page" />
+                    )}
+                </>
+            )}
+        </>
+    );
 }

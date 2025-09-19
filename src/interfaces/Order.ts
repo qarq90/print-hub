@@ -1,7 +1,7 @@
 export interface OrderType {
     item_id: string;
-    user_id: string;
-    user_name: string;
+    user_id?: string;
+    user_name?: string;
     item_name: string;
     item_category: string;
     item_type: string;
@@ -9,11 +9,12 @@ export interface OrderType {
     item_price: number;
     instructions: string;
     ordered_at: string;
-    order_status: "pending" | "completed" | "cancelled";
+    order_status: "pending" | "completed" | "cancelled" | "in-cart";
     in_cart: boolean;
 }
 
 export interface OrderRecord {
+    "order-id": string;
     "item-id": string;
     "user-id": string;
     "user-name": string;
@@ -24,6 +25,6 @@ export interface OrderRecord {
     "item-price": number;
     instructions: string;
     "ordered-at": string;
-    "order-status": "pending" | "completed" | "cancelled";
+    "order-status": "pending" | "completed" | "cancelled" | "in-cart";
     "in-cart": boolean;
 }
