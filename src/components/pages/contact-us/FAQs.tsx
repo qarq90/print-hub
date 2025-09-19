@@ -12,11 +12,11 @@ export const FAQSection = () => {
     return (
         <>
             <Text size="3xl" weight="bold">FAQs</Text>
-            <div className="flex flex-row gap-4 w-full">
+            <div className="flex flex-col md:flex-row md:gap-4 w-full">
                 <Accordion
                     type="single"
                     collapsible
-                    className="rounded-md md:px-0 px-4 mt-2 mb-12 w-1/2"
+                    className="rounded-md px-0 md:mt-2 md:mb-12 w-full md:w-1/2"
                 >
                     {AboutUsFAQs.map((faq, index) => (
                         index % 2 == 1 && (
@@ -38,7 +38,7 @@ export const FAQSection = () => {
                 <Accordion
                     type="single"
                     collapsible
-                    className="rounded-md md:px-0 px-4 mt-2 mb-12 w-1/2"
+                    className="rounded-md px-0 md:mt-2 mb-12 w-full md:w-1/2"
                 >
                     {AboutUsFAQs.map((faq, index) => (
                         index % 2 == 0 && (
