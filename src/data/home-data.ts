@@ -17,11 +17,16 @@ type featuresType = {
     header: string;
 };
 
+type testimonialType = {
+    name: string;
+    feedback: string;
+};
+
 export const printHubFeatures: featuresType[] = [
     {
         icon: LuSmartphone,
         header: "Mobile Ready",
-        text: "Request and approve documents from any device.",
+        text: "Request and approve jobs from any device.",
     },
     {
         icon: LuShieldEllipsis,
@@ -40,8 +45,8 @@ export const printHubFeatures: featuresType[] = [
     },
     {
         icon: LuRefreshCw,
-        header: "Print Tracking",
-        text: "Monitor status from submission to printing to pickup.",
+        header: "Task Tracking",
+        text: "Monitor status from submission to order to pickup.",
     },
     {
         icon: LuCloud,
@@ -51,16 +56,49 @@ export const printHubFeatures: featuresType[] = [
     {
         icon: LuCloudLightning,
         header: "Lightning Fast",
-        text: "Get your academic materials printed within 24 hours.",
+        text: "Get your academic materials and prints within 24 hours.",
     },
     {
         icon: LuList,
         header: "Track Everything",
-        text: "Monitor all print jobs in real-time via dashboard.",
+        text: "Monitor all jobs in real-time via dashboard.",
     },
     {
         icon: LuCheckCheck,
         header: "Fast Turnaround",
         text: "College materials printed and ready within 24 hours.",
+    },
+];
+
+export const printhubTestimonials: testimonialType[] = [
+    {
+        name: "Siddique Arquam",
+        feedback:
+            "PrintHub made my project submission stress-free. Super quick and affordable!",
+    },
+    {
+        name: "Sofiya Patwekar",
+        feedback:
+            "I loved the scheduling feature. My prints were ready exactly when I needed them.",
+    },
+    {
+        name: "Haadiya Sayed",
+        feedback:
+            "Quality prints every single time. The colors are sharp and delivery is on point.",
+    },
+    {
+        name: "Tuba Chaudhary",
+        feedback:
+            "As a student, PrintHub saved me countless hours. Highly recommend it!",
+    },
+    {
+        name: "Tabish Javed",
+        feedback:
+            "The website is clean and easy to use. I uploaded my files and got them printed in minutes.",
+    },
+    {
+        name: "Anas Nathani",
+        feedback:
+            "Excellent customer service and reliable printing. Won’t go anywhere else.",
     },
 ];
