@@ -29,6 +29,12 @@ export default function Client() {
         }
     };
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            loginHandler();
+        }
+    }
+
     const clearHandler = () => {
         setPassword("");
     };
@@ -64,6 +70,7 @@ export default function Client() {
                         </Text>
                         <div className="flex w-64 flex-col gap-4 items-center justify-center">
                             <Input
+                                onKeyDown={handleKeyDown}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full"
@@ -91,6 +98,7 @@ export default function Client() {
                         </Text>
                         <div className="flex flex-col w-64 gap-4 items-center justify-center">
                             <Input
+                                onKeyDown={handleKeyDown}
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 className="w-full"

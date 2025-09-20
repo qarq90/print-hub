@@ -23,7 +23,7 @@ export const NotLoggedIn = () => {
                     Account required to access this content.
                 </p>
                 <Link
-                    href="/authentication"
+                    href="/sign-in/google"
                     className="flex w-full cursor-pointer bg-accent text-black items-center justify-center gap-2 rounded-md py-2 px-3 shadow-md transition-all duration-200 hover:opacity-75"
                 >
                     <LuUserPlus className="mt-1" /> Log In

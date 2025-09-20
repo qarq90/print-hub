@@ -42,10 +42,6 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
         return quantity * price;
     };
 
-    const calculateGroupTotal = (items: OrderRecord[]) => {
-        return items.reduce((sum, item) => sum + calculateItemCost(item), 0);
-    };
-
     const groupedDocuments = orderResult.reduce((acc, doc) => {
         const groupKey = (page_type === "order_queue" || page_type === "shopkeeper_page") ?
             (doc['user-name'] ? doc['user-name'] : "") :
@@ -197,7 +193,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
                                 <table className="w-full caption-bottom text-sm shadow-md">
                                     <thead className="[&_tr]:border-b [&_tr]:border-foreground/10 transition-colors">
                                         <tr className="hover:bg-background">
-                                            {page_type === "order_queue" && (
+                                            {page_type !== "order_queue" && (
                                                 <th className="h-12 px-4 text-left align-middle text-foreground font-bold">
                                                     User
                                                 </th>
@@ -238,7 +234,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
                                                 className={cn("border-b border-foreground/10 transition-colors hover:bg-foreground/10", page_type !== "order_queue" && "cursor-pointer")}
                                                 onClick={() => handleRowClick(item)}
                                             >
-                                                {page_type === "order_queue" && (
+                                                {page_type !== "order_queue" && (
                                                     <td className="p-4 align-middle">
                                                         <div className="flex flex-col">
                                                             <div className="font-medium text-foreground">{item['user-name']}</div>
