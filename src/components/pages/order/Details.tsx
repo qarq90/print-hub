@@ -63,7 +63,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
     };
 
     const incrementQuantity = () => {
-        if (page_type === "user_history" && currentOrder["order-status"] === "pending") {
+        if (page_type === "user_history" && currentOrder["order-status"] === "in-cart") {
             setCurrentOrder(prev => ({
                 ...prev,
                 "item-quantity": (parseInt(prev["item-quantity"] || '0') + 1).toString(),
@@ -72,7 +72,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
     };
 
     const decrementQuantity = () => {
-        if (page_type === "user_history" && currentOrder["order-status"] === "pending") {
+        if (page_type === "user_history" && currentOrder["order-status"] === "in-cart") {
             setCurrentOrder(prev => ({
                 ...prev,
                 "item-quantity": Math.max(1, parseInt(prev["item-quantity"] || '1') - 1).toString(),
@@ -206,7 +206,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Quantity:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
-                                {page_type === "user_history" && currentOrder["order-status"] === "pending" && (
+                                {page_type === "user_history" && currentOrder["order-status"] === "in-cart" && (
                                     <LuMinus
                                         className={cn(
                                             "mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm",
@@ -217,7 +217,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                                     />
                                 )}
                                 <span>{currentOrder["item-quantity"]}</span>
-                                {page_type === "user_history" && currentOrder["order-status"] === "pending" && (
+                                {page_type === "user_history" && currentOrder["order-status"] === "in-cart" && (
                                     <LuPlus
                                         className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
                                         size="24"
@@ -271,7 +271,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             onChange={(e) => {
                                 if (
                                     page_type === "user_history" &&
-                                    currentOrder["order-status"] === "pending"
+                                    currentOrder["order-status"] === "in-cart"
                                 ) {
                                     const newValue = e.target.value;
                                     setCurrentOrder(prev => ({
@@ -282,7 +282,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             }}
                             disabled={
                                 page_type !== "user_history" ||
-                                currentOrder["order-status"] !== "pending"
+                                currentOrder["order-status"] !== "in-cart"
                             }
                             value={currentOrder["instructions"] || ""}
                             placeholder="Specific instructions for this order..."
@@ -323,7 +323,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             </Button>
                         )}
 
-                        {page_type === "user_history" && (currentOrder["order-status"] === "pending" || currentOrder["order-status"] === "in-cart") && (
+                        {page_type === "user_history" && (currentOrder["order-status"] === "pending" || currentOrder["order-status"] === "in-cart") && currentOrder["in-cart"] === true && (
                             <Button
                                 variant="foreground"
                                 onClick={updateHandler}
