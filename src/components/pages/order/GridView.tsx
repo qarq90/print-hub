@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
+import { LuUser, LuCalendarDays } from "react-icons/lu";
 import { cn } from '@/lib/utils';
 import { OrderRecord } from '@/interfaces/Order';
 import { EmptyHistory } from '@/components/empty/EmptyHistory';
@@ -173,11 +173,11 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
                                         </span>
                                         {truncateText(groupKey)}
                                     </div>
-                                    {(page_type !== "order_queue" && page_type !== "shopkeeper_page") && (
+                                    {/* {(page_type !== "order_queue" && page_type !== "shopkeeper_page") && (
                                         <div className="md:flex hidden justify-center items-center gap-1">
-                                            Total: {items.reduce((sum, item) => sum + parseInt(item['item-quantity'] || '0'), 0)} <LuIndianRupee />
+                                            Total: {items.reduce((sum, item) => sum + item['item-price'], 0)} <LuIndianRupee />
                                         </div>
-                                    )}
+                                    )} */}
                                     <div></div>
                                 </div>
                             </AccordionTrigger>

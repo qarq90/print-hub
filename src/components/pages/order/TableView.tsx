@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LuEllipsisVertical, LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
+import { LuEllipsisVertical, LuUser, LuCalendarDays } from "react-icons/lu";
 import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { cn } from '@/lib/utils';
@@ -185,11 +185,11 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
                                         </span>
                                         {truncateText(groupKey)}
                                     </div>
-                                    {(page_type !== "order_queue" && page_type !== "shopkeeper_page") && (
+                                    {/* {(page_type !== "order_queue" && page_type !== "shopkeeper_page") && (
                                         <div className="md:flex hidden justify-center items-center gap-1">
                                             Total: ₹{calculateGroupTotal(docs).toFixed(2)} <LuIndianRupee />
                                         </div>
-                                    )}
+                                    )} */}
                                     <div></div>
                                 </div>
                             </AccordionTrigger>
