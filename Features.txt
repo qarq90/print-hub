@@ -1,21 +1,24 @@
 Pages:
     Home
-    Today's Log
-    Upload Files
+    Prints Queue
+    Scheduled Orders
+    New
+        Print
+        Order
     User
         History
-        Authentication
-    Admin
-    About Us            -
-    Contact Us          -
-    Terms of service    -
-    Privacy Policy      -
+        Orders
+    Users
+        Admin
+            Prints
+            Orders
+        Shopkeeper
+            Prints
+            Orders
+    About Us    
+    Contact Us  
+    Policies    
     
-    
-    
-    glitter pen
-book marker
-cutter
-DIARY
-scrapbook
-toggle book
+Razorpay Payment Gateway was cancelled
+
+Project Completion on 20/09/2025
