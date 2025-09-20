@@ -8,14 +8,13 @@ import {
     LuList,
     LuUpload,
     LuUser,
-    LuUserPlus,
     LuUsers,
     LuSettings,
     LuShoppingCart,
     LuTruck,
     LuArrowRight,
     LuPlus,
-} from "react-icons/lu"
+} from "react-icons/lu";
 import { Text } from "@/components/ui/text"
 
 export default function Client() {
