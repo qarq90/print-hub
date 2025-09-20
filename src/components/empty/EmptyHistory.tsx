@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LuUpload } from "react-icons/lu";
+import { LuPlus } from "react-icons/lu";
 import { useState } from "react";
 import { EmptyHistoryImages } from "@/data/empty-svgs";
 
@@ -33,7 +33,7 @@ export const EmptyHistory = ({ title, description }: EmptyHistoryProps) => {
                     href={title.includes("History") ? "/new/print" : "/new/order"}
                     className="flex w-full cursor-pointer bg-accent text-black items-center justify-center rounded-md gap-2 py-2 px-3 shadow-md transition-all duration-200 hover:opacity-75"
                 >
-                    <LuUpload className="mt-1" /> Schedule
+                    <LuPlus className="mt-1" /> New
                 </Link>
             </div>
         </div>
