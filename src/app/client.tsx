@@ -43,11 +43,11 @@ export default function Client() {
                             Order Now
                         </Button>
                     </Link>
-                    <Link href="/sign-in/google">
+                    {/* <Link href="/sign-in/google">
                         <Button variant="outline">
                             <LuUserPlus /> Sign In
                         </Button>
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
 

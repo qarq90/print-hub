@@ -25,7 +25,7 @@ export default function Client({ id, user }: Props) {
     const [isLoading, setIsLoading] = useState(false);
     const [quantity, setQuantity] = useState(1);
     const [instructions, setInstructions] = useState("");
-    const [actionType, setActionType] = useState<"cart" | "order">("cart"); // Track the action type
+    const [actionType, setActionType] = useState<"cart" | "order">("cart");
     const router = useRouter()
 
     if (!item) {
