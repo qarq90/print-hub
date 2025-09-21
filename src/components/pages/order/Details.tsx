@@ -313,7 +313,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             </Button>
                         )}
 
-                        {page_type === "user_history" && currentOrder["order-status"] === "pending" && currentOrder["in-cart"] === false && (
+                        {(page_type === "user_history" || page_type === "admin_page") && currentOrder["order-status"] === "pending" && currentOrder["in-cart"] === false && (
                             <Button
                                 variant="destructive"
                                 onClick={cancelHandler}

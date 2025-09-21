@@ -3,9 +3,9 @@ import pool from "@/lib/neon/config";
 
 export async function PATCH(req: Request) {
     try {
-        const { printId } = await req.json();
+        const { print_id } = await req.json();
 
-        if (!printId) {
+        if (!print_id) {
             return NextResponse.json(
                 { error: "Print ID is required", status: false },
                 { status: 400 }
@@ -19,7 +19,7 @@ export async function PATCH(req: Request) {
             RETURNING *;
         `;
 
-        const values = [printId];
+        const values = [print_id];
 
         const result = await pool.query(query, values);
 
