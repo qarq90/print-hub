@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { cn } from '@/lib/utils';
 import { OrderRecord } from '@/interfaces/Order';
 import { EmptyHistory } from '@/components/empty/EmptyHistory';
+import { getEmptyStateConfig, truncateText } from '@/functions/orders';
 
 interface TableViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending" | "in-cart";
@@ -63,98 +64,8 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
         });
     }
 
-    const truncateText = (text: string) => {
-        return text.length > 18 ? `${text.substring(0, 18)}...` : text;
-    };
-
-    const getEmptyStateConfig = () => {
-        if (page_type === "order_queue" || page_type === "shopkeeper_page") {
-            switch (statusType) {
-                case "completed":
-                    return {
-                        title: "No Completed Orders",
-                        description: "There are no completed orders in the queue"
-                    };
-                case "cancelled":
-                    return {
-                        title: "No Cancelled Orders",
-                        description: "There are no cancelled orders in the queue"
-                    };
-                case "pending":
-                    return {
-                        title: "No Pending Orders",
-                        description: "The order queue is currently empty"
-                    };
-                case "all":
-                default:
-                    return {
-                        title: "Empty Order Queue",
-                        description: "No orders in the queue"
-                    };
-            }
-        }
-
-        if (page_type === "user_history") {
-            switch (statusType) {
-                case "completed":
-                    return {
-                        title: "No Completed Orders",
-                        description: "You haven't completed any orders yet"
-                    };
-                case "cancelled":
-                    return {
-                        title: "No Cancelled Orders",
-                        description: "You haven't cancelled any orders"
-                    };
-                case "pending":
-                    return {
-                        title: "No Pending Orders",
-                        description: "You don't have any pending orders"
-                    };
-                case "all":
-                default:
-                    return {
-                        title: "No Orders",
-                        description: "You haven't placed any orders yet"
-                    };
-            }
-        }
-
-        if (page_type === "admin_page") {
-            switch (statusType) {
-                case "completed":
-                    return {
-                        title: "No Completed Orders",
-                        description: "No users have completed any orders yet"
-                    };
-                case "cancelled":
-                    return {
-                        title: "No Cancelled Orders",
-                        description: "No users have cancelled any orders"
-                    };
-                case "pending":
-                    return {
-                        title: "No Pending Orders",
-                        description: "There are no pending orders at the moment"
-                    };
-                case "all":
-                default:
-                    return {
-                        title: "No Order Records",
-                        description: "No order records found in the system"
-                    };
-            }
-        }
-
-        return {
-            title: "No Orders",
-            description: "No orders found for the current selection"
-        };
-    };
-
-
     if (orderResult.length === 0) {
-        const { title, description } = getEmptyStateConfig();
+        const { title, description } = getEmptyStateConfig(page_type, statusType || "all");
 
         return (
             <div className="my-8 flex flex-col text-left">
@@ -164,7 +75,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
     }
 
     return (
-        <div className="mb-10 transition-colors flex flex-col gap-2">
+        <div className="mb-10 transition-colors flex flex-col">
             {groupEntries.map(([groupKey, docs]) => (
                 <div className="flex flex-col" key={groupKey}>
                     <Accordion type="single" collapsible>

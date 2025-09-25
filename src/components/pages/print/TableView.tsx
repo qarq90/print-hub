@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { PrintRecord } from "@/interfaces/Print";
 import { cn } from '@/lib/utils';
 import { EmptyHistory } from '@/components/empty/EmptyHistory';
+import { getEmptyStateConfig, truncateText } from '@/functions/orders';
 
 interface TableViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending";
@@ -60,97 +61,10 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
         return costPerPage * doc['page-count'] * doc['print-count'];
     };
 
-    const truncateText = (text: string) => {
-        return text.length > 18 ? `${text.substring(0, 18)}...` : text;
-    };
 
-    const getEmptyStateConfig = () => {
-        if (page_type === "prints_queue" || page_type === "shopkeeper_page") {
-            switch (statusType) {
-                case "completed":
-                    return {
-                        title: "No Completed Jobs",
-                        description: "There are no completed print jobs in the queue"
-                    };
-                case "cancelled":
-                    return {
-                        title: "No Cancelled Jobs",
-                        description: "There are no cancelled print jobs in the queue"
-                    };
-                case "pending":
-                    return {
-                        title: "No Pending Jobs",
-                        description: "The print queue is currently empty"
-                    };
-                case "all":
-                default:
-                    return {
-                        title: "Empty Queue",
-                        description: "No print jobs in the queue"
-                    };
-            }
-        }
-
-        if (page_type === "user_history") {
-            switch (statusType) {
-                case "completed":
-                    return {
-                        title: "No Completed Documents",
-                        description: "You haven't completed any print jobs yet"
-                    };
-                case "cancelled":
-                    return {
-                        title: "No Cancelled Documents",
-                        description: "You haven't cancelled any print jobs"
-                    };
-                case "pending":
-                    return {
-                        title: "No Pending Documents",
-                        description: "You don't have any pending print jobs"
-                    };
-                case "all":
-                default:
-                    return {
-                        title: "No Documents",
-                        description: "You haven't scheduled any prints yet"
-                    };
-            }
-        }
-
-        if (page_type === "admin_page") {
-            switch (statusType) {
-                case "completed":
-                    return {
-                        title: "No Completed Records",
-                        description: "No users have completed any print jobs yet"
-                    };
-                case "cancelled":
-                    return {
-                        title: "No Cancelled Records",
-                        description: "No users have cancelled any print jobs"
-                    };
-                case "pending":
-                    return {
-                        title: "No Pending Requests",
-                        description: "There are no pending print requests at the moment"
-                    };
-                case "all":
-                default:
-                    return {
-                        title: "No Print Records",
-                        description: "No print records found in the system"
-                    };
-            }
-        }
-
-        return {
-            title: "No Documents",
-            description: "No documents found for the current selection"
-        };
-    };
 
     if (documentResult.length === 0) {
-        const { title, description } = getEmptyStateConfig();
+        const { title, description } = getEmptyStateConfig(page_type, statusType || "all");
 
         return (
             <div className="my-8 flex flex-col text-left">
@@ -160,7 +74,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
     }
 
     return (
-        <div className="mb-10 transition-colors flex flex-col gap-2">
+        <div className="mb-10 transition-colors flex flex-col">
             {groupEntries.map(([groupKey, docs]) => (
                 <div className="flex flex-col" key={groupKey}>
                     <Accordion type="single" collapsible>

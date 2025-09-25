@@ -143,3 +143,95 @@ export const completeDocument = async (document: PrintRecord) => {
         throw e;
     }
 };
+
+export const truncateText = (text: string) => {
+    return text.length > 18 ? `${text.substring(0, 18)}...` : text;
+};
+
+export const getEmptyStateConfig = (page_type: string, statusType: string) => {
+    if (page_type === "prints_queue" || page_type === "shopkeeper_page") {
+        switch (statusType) {
+            case "completed":
+                return {
+                    title: "No Completed Jobs",
+                    description:
+                        "There are no completed print jobs in the queue",
+                };
+            case "cancelled":
+                return {
+                    title: "No Cancelled Jobs",
+                    description:
+                        "There are no cancelled print jobs in the queue",
+                };
+            case "pending":
+                return {
+                    title: "No Pending Jobs",
+                    description: "The print queue is currently empty",
+                };
+            case "all":
+            default:
+                return {
+                    title: "Empty Queue",
+                    description: "No print jobs in the queue",
+                };
+        }
+    }
+
+    if (page_type === "user_history") {
+        switch (statusType) {
+            case "completed":
+                return {
+                    title: "No Completed Documents",
+                    description: "You haven't completed any print jobs yet",
+                };
+            case "cancelled":
+                return {
+                    title: "No Cancelled Documents",
+                    description: "You haven't cancelled any print jobs",
+                };
+            case "pending":
+                return {
+                    title: "No Pending Documents",
+                    description: "You don't have any pending print jobs",
+                };
+            case "all":
+            default:
+                return {
+                    title: "No Documents",
+                    description: "You haven't scheduled any prints yet",
+                };
+        }
+    }
+
+    if (page_type === "admin_page") {
+        switch (statusType) {
+            case "completed":
+                return {
+                    title: "No Completed Records",
+                    description: "No users have completed any print jobs yet",
+                };
+            case "cancelled":
+                return {
+                    title: "No Cancelled Records",
+                    description: "No users have cancelled any print jobs",
+                };
+            case "pending":
+                return {
+                    title: "No Pending Requests",
+                    description:
+                        "There are no pending print requests at the moment",
+                };
+            case "all":
+            default:
+                return {
+                    title: "No Print Records",
+                    description: "No print records found in the system",
+                };
+        }
+    }
+
+    return {
+        title: "No Documents",
+        description: "No documents found for the current selection",
+    };
+};
