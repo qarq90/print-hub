@@ -16,9 +16,9 @@ export async function PUT(req: Request) {
         const query = `
             UPDATE "orders" 
             SET 
-                "item-quantity" = $1,
-                "instructions" = $2
-            WHERE "order-id" = $3
+                item_quantity = $1,
+                instructions = $2
+            WHERE order_id = $3
             RETURNING *;
         `;
 

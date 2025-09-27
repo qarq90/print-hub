@@ -39,7 +39,7 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
     };
 
     const groupedDocuments = orderResult.reduce((acc, item) => {
-        const groupKey = (page_type === "order_queue" || page_type === "shopkeeper_page") ? (item.user_name ? item.user_name : "") : (item['ordered-at'] ? item['ordered-at'] : "");
+        const groupKey = (page_type === "order_queue" || page_type === "shopkeeper_page") ? (item.user_name ? item.user_name : "") : (item.ordered_at ? item.ordered_at : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
         }
@@ -99,35 +99,35 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
                                             <div className="flex justify-between items-start gap-2">
                                                 <div className="truncate">
                                                     <h3 className="text-lg font-medium text-foreground truncate">
-                                                        {item['item-name']}
+                                                        {item.item_name}
                                                     </h3>
                                                 </div>
                                                 <span
-                                                    className={`h-3 w-3 mt-2 rounded-full flex-shrink-0 ${getStatusColor(item['order-status'])}`}
-                                                    aria-label={item['order-status']}
+                                                    className={`h-3 w-3 mt-2 rounded-full flex-shrink-0 ${getStatusColor(item.order_status)}`}
+                                                    aria-label={item.order_status}
                                                 />
                                             </div>
 
                                             <div className="mt-2 space-y-2">
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Category :</span>
-                                                    <span className="text-foreground font-medium">{item['item-category']}</span>
+                                                    <span className="text-foreground font-medium">{item.item_category}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Pages :</span>
-                                                    <span className="text-foreground font-medium">{item['item-quantity']}</span>
+                                                    <span className="text-foreground font-medium">{item.item_quantity}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Quantity :</span>
-                                                    <span className="text-foreground font-medium">{item['item-quantity']}</span>
+                                                    <span className="text-foreground font-medium">{item.item_quantity}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Price :</span>
-                                                    <span className="text-foreground font-medium">₹ {item['item-price']}</span>
+                                                    <span className="text-foreground font-medium">₹ {item.item_price}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Cart :</span>
-                                                    <span className="text-foreground font-medium">{item['in-cart'] === true ? "Yes" : "No"}</span>
+                                                    <span className="text-foreground font-medium">{item.in_cart === true ? "Yes" : "No"}</span>
                                                 </div>
                                             </div>
                                         </div>

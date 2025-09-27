@@ -5,15 +5,15 @@ export async function GET() {
     try {
         const query = `
             SELECT * FROM "orders" 
-            WHERE "order-status" = 'pending'
-            ORDER BY "ordered-at" ASC;
+            WHERE order_status = 'pending'
+            ORDER BY ordered_at ASC;
         `;
 
         const result = await pool.query(query);
 
-        return NextResponse.json({ 
-            data: result.rows, 
-            status: true 
+        return NextResponse.json({
+            data: result.rows,
+            status: true,
         });
     } catch (error) {
         console.error("Error fetching pending orders:", error);

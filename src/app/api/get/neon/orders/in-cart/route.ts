@@ -5,15 +5,15 @@ export async function GET() {
     try {
         const query = `
             SELECT * FROM "orders" 
-            WHERE "in-cart" = true
-            ORDER BY "ordered-at" DESC;
+            WHERE in_cart = true
+            ORDER BY ordered_at DESC;
         `;
 
         const result = await pool.query(query);
 
-        return NextResponse.json({ 
-            data: result.rows, 
-            status: true 
+        return NextResponse.json({
+            data: result.rows,
+            status: true,
         });
     } catch (error) {
         console.error("Error fetching cart orders:", error);

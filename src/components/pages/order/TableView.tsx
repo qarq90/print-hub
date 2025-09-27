@@ -39,15 +39,15 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
     };
 
     const calculateItemCost = (item: OrderRecord) => {
-        const quantity = parseInt(item['item-quantity'] || '0');
-        const price = item['item-price'] || 0;
+        const quantity = parseInt(item.item_quantity || '0');
+        const price = item.item_price || 0;
         return quantity * price;
     };
 
     const groupedDocuments = orderResult.reduce((acc, doc) => {
         const groupKey = (page_type === "order_queue" || page_type === "shopkeeper_page") ?
             (doc.user_name ? doc.user_name : "") :
-            (doc['ordered-at'] ? doc['ordered-at'] : "");
+            (doc.ordered_at ? doc.ordered_at : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
         }
@@ -149,24 +149,24 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
                                                     </td>
                                                 )}
                                                 <td className="p-4 align-middle text-foreground">
-                                                    {item['item-name']}
+                                                    {item.item_name}
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
                                                     <span className="rounded-full px-2 py-1">
-                                                        {item['item-category']}
+                                                        {item.item_category}
                                                     </span>
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
-                                                    {item['item-quantity']}
+                                                    {item.item_quantity}
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
-                                                    ₹{item['item-price']}
+                                                    ₹{item.item_price}
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
-                                                    <div className={`inline-block h-3 w-3 rounded-full ${getStatusColor(item['order-status'])}`} />
+                                                    <div className={`inline-block h-3 w-3 rounded-full ${getStatusColor(item.order_status)}`} />
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
-                                                    {item['in-cart'] ? "Yes" : "No"}
+                                                    {item.in_cart ? "Yes" : "No"}
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground font-medium">
                                                     ₹{calculateItemCost(item).toFixed(2)}

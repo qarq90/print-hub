@@ -19,8 +19,8 @@ export async function PATCH(req: Request) {
         const query = `
             UPDATE "orders" 
             SET 
-                "order-status" = 'cancelled'
-            WHERE "order-id" = $1
+                order_status = 'cancelled'
+            WHERE order_id = $1
             RETURNING *;
         `;
 

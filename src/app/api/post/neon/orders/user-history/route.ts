@@ -7,8 +7,8 @@ export async function POST(req: Request) {
 
         const query = `
       SELECT * FROM "orders"
-      WHERE "user-id" = $1
-      ORDER BY "ordered-at" ASC;
+      WHERE user_id = $1
+      ORDER BY ordered_at ASC;
     `;
 
         const result = await pool.query(query, [user.id]);

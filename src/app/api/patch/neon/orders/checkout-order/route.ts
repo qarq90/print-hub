@@ -19,9 +19,9 @@ export async function PATCH(req: Request) {
         const query = `
             UPDATE "orders" 
             SET 
-                "order-status" = 'pending',
-                "in-cart" = false
-            WHERE "order-id" = $1
+                order_status = 'pending',
+                in_cart = false
+            WHERE order_id = $1
             RETURNING *;
         `;
 
