@@ -23,7 +23,7 @@ import {
 import { PrintRecord } from "@/interfaces/Print";
 import { cn } from "@/lib/utils"
 import { usePathname, useRouter } from "next/navigation";
-import { deleteFromPinata, updateFromPinata } from "@/functions/pinata";
+import { deleteFromPinata } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
 import { cancelDocument, checkExistingHash, completeDocument, updateDocument } from "@/functions/prints";
 import { Textarea } from "@/components/ui/textarea";
