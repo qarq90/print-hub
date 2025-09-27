@@ -1,4 +1,3 @@
-// OrderDetails.tsx
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import {
@@ -54,28 +53,28 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
     const [loading, setLoading] = useState(false);
     const router = useRouter();
 
-    const statusStyles = getStatusStyles(currentOrder["order-status"]);
+    const statusStyles = getStatusStyles(currentOrder.order_status);
 
     const calculateCost = (order: OrderRecord) => {
-        const quantity = parseInt(order["item-quantity"] || '0');
-        const price = order["item-price"] || 0;
+        const quantity = parseInt(order.item_quantity || '0');
+        const price = order.item_price || 0;
         return quantity * price;
     };
 
     const incrementQuantity = () => {
-        if (page_type === "user_history" && currentOrder["order-status"] === "in-cart") {
+        if (page_type === "user_history" && currentOrder.order_status === "in-cart") {
             setCurrentOrder(prev => ({
                 ...prev,
-                "item-quantity": (parseInt(prev["item-quantity"] || '0') + 1).toString(),
+                item_quantity: (parseInt(prev.item_quantity || '0') + 1).toString(),
             }));
         }
     };
 
     const decrementQuantity = () => {
-        if (page_type === "user_history" && currentOrder["order-status"] === "in-cart") {
+        if (page_type === "user_history" && currentOrder.order_status === "in-cart") {
             setCurrentOrder(prev => ({
                 ...prev,
-                "item-quantity": Math.max(1, parseInt(prev["item-quantity"] || '1') - 1).toString(),
+                item_quantity: Math.max(1, parseInt(prev.item_quantity || '1') - 1).toString(),
             }));
         }
     };
@@ -170,7 +169,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Customer:</span>
                             <span className="font-medium text-right">
-                                {truncateText(currentOrder["user-name"] || "N/A")}
+                                {truncateText(currentOrder.user_name || "N/A")}
                             </span>
                         </div>
                     </div>
@@ -182,7 +181,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Item Name:</span>
                             <span className="font-medium text-right">
-                                {currentOrder["item-name"]}
+                                {currentOrder.item_name}
                             </span>
                         </div>
                     </div>
@@ -194,7 +193,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Category:</span>
                             <span className="font-medium text-right">
-                                {currentOrder["item-category"]}
+                                {currentOrder.item_category}
                             </span>
                         </div>
                     </div>
@@ -206,18 +205,18 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Quantity:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
-                                {page_type === "user_history" && currentOrder["order-status"] === "in-cart" && (
+                                {page_type === "user_history" && currentOrder.order_status === "in-cart" && (
                                     <LuMinus
                                         className={cn(
                                             "mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm",
-                                            parseInt(currentOrder["item-quantity"] || '0') <= 1 && "cursor-not-allowed pointer-events-none"
+                                            parseInt(currentOrder.item_quantity || '0') <= 1 && "cursor-not-allowed pointer-events-none"
                                         )}
                                         size="24"
                                         onClick={decrementQuantity}
                                     />
                                 )}
-                                <span>{currentOrder["item-quantity"]}</span>
-                                {page_type === "user_history" && currentOrder["order-status"] === "in-cart" && (
+                                <span>{currentOrder.item_quantity}</span>
+                                {page_type === "user_history" && currentOrder.order_status === "in-cart" && (
                                     <LuPlus
                                         className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
                                         size="24"
@@ -235,7 +234,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Price per Item:</span>
                             <span className="font-medium text-right">
-                                ₹{currentOrder["item-price"]}
+                                ₹{currentOrder.item_price}
                             </span>
                         </div>
                     </div>
@@ -247,7 +246,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Status:</span>
                             <span className={`font-medium text-right ${statusStyles.text}`}>
-                                {currentOrder["order-status"]}
+                                {currentOrder.order_status}
                             </span>
                         </div>
                     </div>
@@ -259,7 +258,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Ordered At:</span>
                             <span className="font-medium text-right">
-                                {currentOrder["ordered-at"]}
+                                {currentOrder.ordered_at}
                             </span>
                         </div>
                     </div>
@@ -271,7 +270,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             onChange={(e) => {
                                 if (
                                     page_type === "user_history" &&
-                                    currentOrder["order-status"] === "in-cart"
+                                    currentOrder.order_status === "in-cart"
                                 ) {
                                     const newValue = e.target.value;
                                     setCurrentOrder(prev => ({
@@ -282,9 +281,9 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             }}
                             disabled={
                                 page_type !== "user_history" ||
-                                currentOrder["order-status"] !== "in-cart"
+                                currentOrder.order_status !== "in-cart"
                             }
-                            value={currentOrder["instructions"] || ""}
+                            value={currentOrder.instructions || ""}
                             placeholder="Specific instructions for this order..."
                             className="flex-1"
                         />
@@ -303,7 +302,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                     </div>
 
                     <div className="flex flex-row w-full gap-2 pt-3">
-                        {page_type === "user_history" && currentOrder["order-status"] === "in-cart" && currentOrder["in-cart"] === true && (
+                        {page_type === "user_history" && currentOrder.order_status === "in-cart" && currentOrder.in_cart === true && (
                             <Button
                                 variant="accent"
                                 onClick={checkoutHandler}
@@ -313,7 +312,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             </Button>
                         )}
 
-                        {(page_type === "user_history" || page_type === "admin_page") && currentOrder["order-status"] === "pending" && currentOrder["in-cart"] === false && (
+                        {(page_type === "user_history" || page_type === "admin_page") && currentOrder.order_status === "pending" && currentOrder.in_cart === false && (
                             <Button
                                 variant="destructive"
                                 onClick={cancelHandler}
@@ -323,7 +322,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             </Button>
                         )}
 
-                        {page_type === "user_history" && (currentOrder["order-status"] === "pending" || currentOrder["order-status"] === "in-cart") && currentOrder["in-cart"] === true && (
+                        {page_type === "user_history" && (currentOrder.order_status === "pending" || currentOrder.order_status === "in-cart") && currentOrder.in_cart === true && (
                             <Button
                                 variant="foreground"
                                 onClick={updateHandler}
@@ -334,7 +333,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             </Button>
                         )}
 
-                        {page_type === "admin_page" && currentOrder["order-status"] === "pending" && currentOrder["in-cart"] === false && (
+                        {page_type === "admin_page" && currentOrder.order_status === "pending" && currentOrder.in_cart === false && (
                             <Button
                                 variant="foreground"
                                 onClick={completeHandler}
@@ -343,7 +342,6 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                                 Complete
                             </Button>
                         )}
-
                     </div>
                 </div>
             </div>

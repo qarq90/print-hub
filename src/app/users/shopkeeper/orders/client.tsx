@@ -42,8 +42,7 @@ export default function AdminOrdersClient() {
 
     const filteredOrders = statusType === "all"
         ? orders || []
-        : (orders || []).filter(item => item["order-status"] === statusType);
-
+        : (orders || []).filter(item => item.order_status === statusType);
 
     if (loading) {
         return (

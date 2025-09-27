@@ -43,11 +43,11 @@ export default function AdminOrdersClient() {
 
     const filteredOrders = statusType === "all"
         ? orders || []
-        : (orders || []).filter(item => item["order-status"] === statusType);
+        : (orders || []).filter(item => item.order_status === statusType);
 
 
     const cartItems = (orders || []).filter(item =>
-        item["in-cart"] === true && item["order-status"] === "pending"
+        item.in_cart === true && item.order_status === "pending"
     );
 
     if (loading) {

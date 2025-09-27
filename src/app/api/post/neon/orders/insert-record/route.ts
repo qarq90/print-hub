@@ -9,18 +9,18 @@ export async function POST(req: Request) {
 
         const query = `
       INSERT INTO "orders" (
-        "item-id",
-        "user-id",
-        "user-name",
-        "item-name",
-        "item-category",
-        "item-type",
-        "item-quantity",
-        "item-price",
-        "instructions",
-        "ordered-at",
-        "order-status",
-        "in-cart"
+        item_id,
+        user_id,
+        user_name,
+        item_name,
+        item_category,
+        item_type,
+        item_quantity,
+        item_price,
+        instructions,
+        ordered_at,
+        order_status,
+        in_cart
       ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
       RETURNING *;
     `;

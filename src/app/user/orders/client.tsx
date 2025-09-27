@@ -49,11 +49,11 @@ export default function Client({ user }: ClientProps) {
     }, [user]);
 
     const filteredHistory = statusType === "all"
-        ? (orders || []).filter(item => item["in-cart"] === false)
-        : (orders || []).filter(item => item["order-status"] === statusType && item["in-cart"] === false);
+        ? (orders || []).filter(item => item.in_cart === false)
+        : (orders || []).filter(item => item.order_status === statusType && item.in_cart === false);
 
     const cartItems = (orders || []).filter(item =>
-        item["in-cart"] === true && item["order-status"] === "in-cart"
+        item.in_cart === true && item.order_status === "in-cart"
     );
 
     if (loading) {
