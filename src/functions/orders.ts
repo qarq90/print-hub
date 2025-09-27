@@ -82,9 +82,9 @@ export const updateOrder = async (order: OrderRecord) => {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                order_id: order["order-id"],
-                item_quantity: order["item-quantity"],
-                instructions: order["instructions"],
+                order_id: order.order_id,
+                item_quantity: order.item_quantity,
+                instructions: order.instructions,
             }),
         });
         if (!response.ok) {
@@ -103,7 +103,7 @@ export const cancelOrder = async (order: OrderRecord) => {
         const response = await fetch("/api/patch/neon/orders/cancel-order", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ order_id: order["order-id"] }),
+            body: JSON.stringify({ order_id: order.order_id }),
         });
         if (!response.ok) {
             const errorData = await response.json();
@@ -121,7 +121,7 @@ export const completeOrder = async (order: OrderRecord) => {
         const response = await fetch("/api/patch/neon/orders/complete-order", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ order_id: order["order-id"] }),
+            body: JSON.stringify({ order_id: order.order_id }),
         });
         if (!response.ok) {
             const errorData = await response.json();
@@ -139,7 +139,7 @@ export const checkoutOrder = async (order: OrderRecord) => {
         const response = await fetch("/api/patch/neon/orders/checkout-order", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ order_id: order["order-id"] }),
+            body: JSON.stringify({ order_id: order.order_id }),
         });
         if (!response.ok) {
             const errorData = await response.json();
