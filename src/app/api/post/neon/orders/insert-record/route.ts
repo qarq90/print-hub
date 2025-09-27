@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/neon/config";
-import { getFormatDate } from "@/functions/file";
+import { getFormatDate } from "@/functions/utility";
 
 export async function POST(req: Request) {
     try {

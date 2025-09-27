@@ -254,22 +254,14 @@ export const getEmptyStateConfig = (page_type: string, statusType: string) => {
     };
 };
 
-export const generatePrintId = (): string => {
-    let randomBytes: Uint8Array;
+export const generatePrintId = () => {
+    const array = new Uint8Array(32);
+    crypto.getRandomValues(array);
 
-    if (typeof window !== "undefined" && window.crypto) {
-        randomBytes = new Uint8Array(32);
-        crypto.getRandomValues(randomBytes);
-    } else {
-        const nodeCrypto = require("crypto");
-        randomBytes = nodeCrypto.randomBytes(32);
-    }
-
-    const base64 = Buffer.from(randomBytes)
-        .toString("base64")
+    const base64 = btoa(String.fromCharCode(...array))
         .replace(/\+/g, "-")
         .replace(/\//g, "_")
         .replace(/=/g, "");
 
-    return base64.padEnd(255, "0").slice(0, 255);
+    return base64.slice(0, 64);
 };
