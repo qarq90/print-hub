@@ -14,17 +14,17 @@ export interface OrderType {
 }
 
 export interface OrderRecord {
-    "order-id": string;
-    "item-id": string;
-    "user-id": string;
-    "user-name": string;
-    "item-name": string;
-    "item-category": string;
-    "item-type": string;
-    "item-quantity": string;
-    "item-price": number;
+    order_id: string;
+    item_id: string;
+    user_id: string;
+    user_name: string;
+    item_name: string;
+    item_category: string;
+    item_type: string;
+    item_quantity: string;
+    item_price: number;
     instructions: string;
-    "ordered-at": string;
-    "order-status": "pending" | "completed" | "cancelled" | "in-cart";
-    "in-cart": boolean;
+    ordered_at: string;
+    order_status: "pending" | "completed" | "cancelled" | "in-cart";
+    in_cart: boolean;
 }
