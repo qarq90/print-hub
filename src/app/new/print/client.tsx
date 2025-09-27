@@ -4,8 +4,8 @@ import { Text } from "@/components/ui/text";
 import { PrintType } from "@/interfaces/Print";
 import { FileUpload } from "@/components/ui/file-input";
 import { LuCheckCheck, LuMinus, LuPlus, LuTrash } from "react-icons/lu";
-import { getPDFPageCount } from "@/functions/file";
-import { getFormatDate, getFileType, getFileSize } from "@/functions/file";
+import { generateFileHash, getPDFPageCount } from "@/functions/file";
+import { getFileType, getFileSize } from "@/functions/file";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { uploadToPinata } from "@/functions/pinata";
@@ -14,8 +14,9 @@ import { useRouter } from "next/navigation";
 import { FullLoader } from "@/components/ui/loader";
 import { PinataResult } from "@/interfaces/Pinata";
 import { Modal } from "@/components/Modal";
-import { insertNeon } from "@/functions/prints";
+import { checkExistingHash, insertNeon } from "@/functions/prints";
 import { Textarea } from "@/components/ui/textarea";
+import { getFormatDate } from "@/functions/utility";
 
 interface ClientProps {
     user: UserProps;
@@ -49,16 +50,8 @@ export default function Client({ user }: ClientProps) {
                         break;
                 }
 
-                const printColor = "b/w";
-                const printType = "double_side";
-
-                const prefix = (fileType === ".pdf" || fileType === ".png" || fileType === ".jpeg" ||
-                    fileType === ".jpg" || fileType === ".gif" || fileType === ".webp")
-                    ? `${printColor === "b/w" ? "B" : "C"}_${printType === "double_side" ? "D" : "S"}`
-                    : "";
-
                 return {
-                    file_name: prefix ? `${prefix}_${file.name}` : file.name,
+                    file_name: file.name,
                     file_type: fileType,
                     print_count: 1,
                     page_count: pageCount,
@@ -69,6 +62,7 @@ export default function Client({ user }: ClientProps) {
                     instructions: "",
                     uploaded_at: getFormatDate(new Date()),
                     original_file: file,
+                    hashed_content: await generateFileHash(file),
                 };
             })
         );
@@ -98,14 +92,10 @@ export default function Client({ user }: ClientProps) {
             prevFiles.map((file, i) => {
                 if (i === index) {
                     const newPrintType = file.print_type === "single_side" ? "double_side" : "single_side";
-                    const prefix = `${file.print_color === "b/w" ? "B" : "C"}_${newPrintType === "single_side" ? "S" : "D"}`;
-
-                    const originalName = file.file_name.replace(/^(B|C)_(S|D)_/, '') || file.file_name;
 
                     return {
                         ...file,
                         print_type: newPrintType,
-                        file_name: `${prefix}_${originalName}`
                     };
                 }
                 return file;
@@ -118,14 +108,10 @@ export default function Client({ user }: ClientProps) {
             prevFiles.map((file, i) => {
                 if (i === index) {
                     const newPrintColor = file.print_color === "b/w" ? "colored" : "b/w";
-                    const prefix = `${newPrintColor === "b/w" ? "B" : "C"}_${file.print_type === "single_side" ? "S" : "D"}`;
-
-                    const originalName = file.file_name.replace(/^(B|C)_(S|D)_/, '') || file.file_name;
 
                     return {
                         ...file,
                         print_color: newPrintColor,
-                        file_name: `${prefix}_${originalName}`
                     };
                 }
                 return file;
@@ -163,17 +149,23 @@ export default function Client({ user }: ClientProps) {
         await Promise.all(
             selectedFiles.map(async (file) => {
                 try {
-                    const pinataResult: PinataResult = await uploadToPinata(file);
-                    const neonResult = await insertNeon(user, file, pinataResult);
-                    if (neonResult.status) {
-                        setLoading(false);
-                        setIsOpen(true)
-                        setSelectedFiles([])
+                    const existingFileResponse = await checkExistingHash(file);
+
+                    let pinataResult: PinataResult;
+
+                    if (existingFileResponse.fileExists) {
+                        pinataResult = existingFileResponse.existsResult;
+                    } else {
+                        pinataResult = await uploadToPinata(file);
                     }
+
+                    await insertNeon(user, file, pinataResult);
                 } catch (e) {
                     console.log("Something went wrong: ", e);
                 } finally {
                     setLoading(false);
+                    setIsOpen(true);
+                    setSelectedFiles([]);
                 }
             })
         );
@@ -200,7 +192,7 @@ export default function Client({ user }: ClientProps) {
                                     >
                                         <div className="p-4 flex flex-col space-y-3">
                                             <h3 className="text-lg font-medium text-foreground truncate flex-1">
-                                                {file.file_name.substring(4, file.file_name.length)}
+                                                {file.file_name}
                                             </h3>
                                             <div className="flex flex-row justify-between items-center">
                                                 <p className="text-sm text-foreground/70">

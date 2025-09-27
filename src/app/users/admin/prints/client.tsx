@@ -42,7 +42,7 @@ export default function Client() {
 
     const filteredHistory = statusType === "all"
         ? prints || []
-        : (prints || []).filter(item => item["print-status"] === statusType);
+        : (prints || []).filter(item => item.print_status === statusType);
 
     if (loading) {
         return (

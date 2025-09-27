@@ -6,8 +6,8 @@ export async function GET() {
     try {
         const query = `
       SELECT * FROM "prints"
-      WHERE "print-status" = $1
-      ORDER BY "uploaded-at" DESC;
+      WHERE print_status = $1
+      ORDER BY uploaded_at DESC;
     `;
         const result = await pool.query<PrintRecord>(query, ["pending"]);
         return NextResponse.json({ data: result.rows, status: true });

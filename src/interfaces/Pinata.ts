@@ -1,5 +1,5 @@
 export interface PinataResult {
-    id: string;
+    ipfs_id: string;
     ipfs_hash: string;
     ipfs_url: string;
 }

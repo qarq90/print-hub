@@ -109,7 +109,7 @@ export const cancelDocument = async (document: PrintRecord) => {
         const response = await fetch("/api/patch/neon/prints/cancel-print", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ print_id: document["print-id"] }),
+            body: JSON.stringify({ print_id: document.print_id }),
         });
 
         if (!response.ok) {
@@ -129,7 +129,7 @@ export const completeDocument = async (document: PrintRecord) => {
         const response = await fetch("/api/patch/neon/prints/complete-print", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ print_id: document["print-id"] }),
+            body: JSON.stringify({ print_id: document.print_id }),
         });
 
         if (!response.ok) {
@@ -144,8 +144,26 @@ export const completeDocument = async (document: PrintRecord) => {
     }
 };
 
-export const truncateText = (text: string) => {
-    return text.length > 18 ? `${text.substring(0, 18)}...` : text;
+export const checkExistingHash = async (document: PrintType) => {
+    try {
+        const response = await fetch("/api/post/neon/prints/check-hash", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                hashed_content: document.hashed_content,
+            }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to complete document");
+        }
+
+        return await response.json();
+    } catch (e) {
+        console.error("Neon completeDocument error:", e);
+        throw e;
+    }
 };
 
 export const getEmptyStateConfig = (page_type: string, statusType: string) => {
@@ -234,4 +252,24 @@ export const getEmptyStateConfig = (page_type: string, statusType: string) => {
         title: "No Documents",
         description: "No documents found for the current selection",
     };
+};
+
+export const generatePrintId = (): string => {
+    let randomBytes: Uint8Array;
+
+    if (typeof window !== "undefined" && window.crypto) {
+        randomBytes = new Uint8Array(32);
+        crypto.getRandomValues(randomBytes);
+    } else {
+        const nodeCrypto = require("crypto");
+        randomBytes = nodeCrypto.randomBytes(32);
+    }
+
+    const base64 = Buffer.from(randomBytes)
+        .toString("base64")
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=/g, "");
+
+    return base64.padEnd(255, "0").slice(0, 255);
 };

@@ -5,7 +5,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { PrintRecord } from "@/interfaces/Print";
 import { cn } from '@/lib/utils';
 import { EmptyHistory } from '@/components/empty/EmptyHistory';
-import { getEmptyStateConfig, truncateText } from '@/functions/orders';
+import { getEmptyStateConfig } from '@/functions/orders';
+import { truncateText } from '@/functions/utility';
 
 interface TableViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending";
@@ -38,7 +39,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
     };
 
     const groupedDocuments = documentResult.reduce((acc, doc) => {
-        const groupKey = (page_type === "prints_queue" || page_type === "shopkeeper_page") ? (doc['user-name'] ? doc['user-name'] : "") : (doc['uploaded-at'] ? doc['uploaded-at'] : "");
+        const groupKey = (page_type === "prints_queue" || page_type === "shopkeeper_page") ? (doc.user_name ? doc.user_name : "") : (doc.uploaded_at ? doc.uploaded_at : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
         }
@@ -57,8 +58,8 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
     }
 
     const calculateCost = (doc: PrintRecord) => {
-        const costPerPage = doc['print-color'] === "colored" ? 10 : 2;
-        return costPerPage * doc['page-count'] * doc['print-count'];
+        const costPerPage = doc.print_color === "colored" ? 10 : 2;
+        return costPerPage * doc.page_count * doc.print_count;
     };
 
 
@@ -147,32 +148,32 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
                                                 {page_type === "user_history" && (
                                                     <td className="p-4 align-middle">
                                                         <div className="flex flex-col">
-                                                            <div className="font-medium text-foreground">{item['user-name']}</div>
+                                                            <div className="font-medium text-foreground">{item.user_name}</div>
                                                         </div>
                                                     </td>
                                                 )}
                                                 <td className="p-4 align-middle text-foreground">
-                                                    {item['file-name']}
+                                                    {item.file_name}
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
                                                     <span className="rounded-full px-2 py-1">
-                                                        {item['file-type']}
+                                                        {item.file_type}
                                                     </span>
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
-                                                    {item['page-count']}
+                                                    {item.page_count}
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
-                                                    {item['print-count']}
+                                                    {item.print_count}
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
-                                                    <div className={`inline-block h-3 w-3 rounded-full ${getStatusColor(item['print-status'])}`} />
+                                                    <div className={`inline-block h-3 w-3 rounded-full ${getStatusColor(item.print_status)}`} />
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
-                                                    {item['print-color'] === "b/w" ? "B/W" : "Colored"}
+                                                    {item.print_color === "b/w" ? "B/W" : "Colored"}
                                                 </td>
                                                 <td className="p-4 align-middle text-center">
-                                                    {item['print-type'] === "double_side" ? "Double" : "Single"}
+                                                    {item.print_type === "double_side" ? "Double" : "Single"}
                                                 </td>
                                                 {
                                                     page_type !== "prints_queue" && (

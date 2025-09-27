@@ -152,10 +152,6 @@ export const checkoutOrder = async (order: OrderRecord) => {
     }
 };
 
-export const truncateText = (text: string) => {
-    return text.length > 18 ? `${text.substring(0, 18)}...` : text;
-};
-
 export const getEmptyStateConfig = (page_type: string, statusType: string) => {
     if (page_type === "order_queue" || page_type === "shopkeeper_page") {
         switch (statusType) {

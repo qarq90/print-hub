@@ -5,7 +5,8 @@ import { LuUser, LuCalendarDays } from "react-icons/lu";
 import { cn } from '@/lib/utils';
 import { OrderRecord } from '@/interfaces/Order';
 import { EmptyHistory } from '@/components/empty/EmptyHistory';
-import { getEmptyStateConfig, truncateText } from '@/functions/orders';
+import { getEmptyStateConfig } from '@/functions/orders';
+import { truncateText } from '@/functions/utility';
 
 interface GridViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending" | "in-cart";
@@ -38,7 +39,7 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
     };
 
     const groupedDocuments = orderResult.reduce((acc, item) => {
-        const groupKey = (page_type === "order_queue" || page_type === "shopkeeper_page") ? (item['user-name'] ? item['user-name'] : "") : (item['ordered-at'] ? item['ordered-at'] : "");
+        const groupKey = (page_type === "order_queue" || page_type === "shopkeeper_page") ? (item.user_name ? item.user_name : "") : (item['ordered-at'] ? item['ordered-at'] : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
         }
@@ -84,11 +85,6 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
                                         </span>
                                         {truncateText(groupKey)}
                                     </div>
-                                    {/* {(page_type !== "order_queue" && page_type !== "shopkeeper_page") && (
-                                        <div className="md:flex hidden justify-center items-center gap-1">
-                                            Total: {items.reduce((sum, item) => sum + item['item-price'], 0)} <LuIndianRupee />
-                                        </div>
-                                    )} */}
                                     <div></div>
                                 </div>
                             </AccordionTrigger>

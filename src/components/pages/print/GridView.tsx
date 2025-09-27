@@ -5,7 +5,8 @@ import { LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
 import { PrintRecord } from "@/interfaces/Print";
 import { cn } from '@/lib/utils';
 import { EmptyHistory } from '@/components/empty/EmptyHistory';
-import { getEmptyStateConfig, truncateText } from '@/functions/orders';
+import { getEmptyStateConfig } from '@/functions/orders';
+import { truncateText } from '@/functions/utility';
 
 interface GridViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending";
@@ -38,7 +39,7 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
     };
 
     const groupedDocuments = documentResult.reduce((acc, doc) => {
-        const groupKey = (page_type === "prints_queue" || page_type === "shopkeeper_page") ? (doc['user-name'] ? doc['user-name'] : "") : (doc['uploaded-at'] ? doc['uploaded-at'] : "");
+        const groupKey = (page_type === "prints_queue" || page_type === "shopkeeper_page") ? (doc.user_name ? doc.user_name : "") : (doc.uploaded_at ? doc.uploaded_at : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
         }
@@ -57,10 +58,10 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
     }
 
     const calculateCost = (doc: PrintRecord) => {
-        const costPerPage = doc["print-color"] === "colored" ? 10 : 2.5;
-        let total = costPerPage * doc["page-count"] * doc["print-count"];
+        const costPerPage = doc.print_color === "colored" ? 10 : 2.5;
+        let total = costPerPage * doc.page_count * doc.print_count;
 
-        if (doc["binding-type"] && doc["binding-type"] === "bind") {
+        if (doc.binding_type && doc.binding_type === "bind") {
             total += 35;
         }
 
@@ -114,34 +115,34 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
                                             <div className="flex justify-between items-start gap-2">
                                                 <div className="truncate">
                                                     <h3 className="text-lg font-medium text-foreground truncate">
-                                                        {item['file-name']}
+                                                        {item.file_name}
                                                     </h3>
                                                     <p className="text-sm text-foreground/70">
-                                                        {item['file-type']}
+                                                        {item.file_type}
                                                     </p>
                                                 </div>
                                                 <span
-                                                    className={`h-3 w-3 mt-2 rounded-full flex-shrink-0 ${getStatusColor(item['print-status'])}`}
-                                                    aria-label={item['print-status']}
+                                                    className={`h-3 w-3 mt-2 rounded-full flex-shrink-0 ${getStatusColor(item.print_status)}`}
+                                                    aria-label={item.print_status}
                                                 />
                                             </div>
 
                                             <div className="mt-2 space-y-2">
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Pages :</span>
-                                                    <span className="text-foreground font-medium">{item['page-count']}</span>
+                                                    <span className="text-foreground font-medium">{item.page_count}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Copies :</span>
-                                                    <span className="text-foreground font-medium">{item['print-count']}</span>
+                                                    <span className="text-foreground font-medium">{item.print_count}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Color :</span>
-                                                    <span className="text-foreground font-medium">{item['print-color'] === "b/w" ? "Black & White" : "Colored"}</span>
+                                                    <span className="text-foreground font-medium">{item.print_color === "b/w" ? "Black & White" : "Colored"}</span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
                                                     <span className="text-foreground/70">Sided :</span>
-                                                    <span className="text-foreground font-medium">{item['print-type'] === "double_side" ? "Double Side" : "Single Side"}</span>
+                                                    <span className="text-foreground font-medium">{item.print_type === "double_side" ? "Double Side" : "Single Side"}</span>
                                                 </div>
                                             </div>
                                         </div>

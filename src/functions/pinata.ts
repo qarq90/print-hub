@@ -42,7 +42,7 @@ export const deleteFromPinata = async (file: PrintRecord) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id: file["print-id"] }),
+            body: JSON.stringify({ id: file.print_id }),
         });
 
         const data = await response.json();
@@ -65,7 +65,7 @@ export const deleteFromPinata = async (file: PrintRecord) => {
 
 export const updateFromPinata = async (file: PrintRecord) => {
     try {
-        if (!file["print-id"]) {
+        if (!file.print_id) {
             throw new Error("Missing document ID");
         }
 
@@ -75,8 +75,8 @@ export const updateFromPinata = async (file: PrintRecord) => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                id: file["print-id"],
-                file_name: file["file-name"],
+                id: file.print_id,
+                file_name: file.file_name,
             }),
         });
 

@@ -5,7 +5,8 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { cn } from '@/lib/utils';
 import { OrderRecord } from '@/interfaces/Order';
 import { EmptyHistory } from '@/components/empty/EmptyHistory';
-import { getEmptyStateConfig, truncateText } from '@/functions/orders';
+import { getEmptyStateConfig } from '@/functions/orders';
+import { truncateText } from '@/functions/utility';
 
 interface TableViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending" | "in-cart";
@@ -45,7 +46,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
 
     const groupedDocuments = orderResult.reduce((acc, doc) => {
         const groupKey = (page_type === "order_queue" || page_type === "shopkeeper_page") ?
-            (doc['user-name'] ? doc['user-name'] : "") :
+            (doc.user_name ? doc.user_name : "") :
             (doc['ordered-at'] ? doc['ordered-at'] : "");
         if (!acc[groupKey]) {
             acc[groupKey] = [];
@@ -92,11 +93,6 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
                                         </span>
                                         {truncateText(groupKey)}
                                     </div>
-                                    {/* {(page_type !== "order_queue" && page_type !== "shopkeeper_page") && (
-                                        <div className="md:flex hidden justify-center items-center gap-1">
-                                            Total: ₹{calculateGroupTotal(docs).toFixed(2)} <LuIndianRupee />
-                                        </div>
-                                    )} */}
                                     <div></div>
                                 </div>
                             </AccordionTrigger>
@@ -148,7 +144,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
                                                 {page_type !== "order_queue" && (
                                                     <td className="p-4 align-middle">
                                                         <div className="flex flex-col">
-                                                            <div className="font-medium text-foreground">{item['user-name']}</div>
+                                                            <div className="font-medium text-foreground">{item.user_name}</div>
                                                         </div>
                                                     </td>
                                                 )}

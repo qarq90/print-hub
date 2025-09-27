@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 import { usePathname, useRouter } from "next/navigation";
 import { deleteFromPinata, updateFromPinata } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
-import { cancelDocument, completeDocument, updateDocument } from "@/functions/prints";
+import { cancelDocument, checkExistingHash, completeDocument, updateDocument } from "@/functions/prints";
 import { Textarea } from "@/components/ui/textarea";
 
 interface DetailsProps {
@@ -80,13 +80,13 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const router = useRouter()
     const pathname = usePathname()
 
-    const statusStyles = getStatusStyles(currentDoc["print-status"]);
+    const statusStyles = getStatusStyles(currentDoc.print_status);
 
     const calculateCost = (doc: PrintRecord) => {
-        const costPerPage = doc["print-color"] === "colored" ? 10 : 2.5;
-        let total = costPerPage * doc["page-count"] * doc["print-count"];
+        const costPerPage = doc.print_color === "colored" ? 10 : 2.5;
+        let total = costPerPage * doc.page_count * doc.print_count;
 
-        if (doc["binding-type"] && doc["binding-type"] === "bind") {
+        if (doc.binding_type && doc.binding_type === "bind") {
             total += 35;
         }
 
@@ -94,56 +94,59 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const incrementPrintCount = () => {
-        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
+        if (page_type === "user_history" && currentDoc.print_status === "pending") {
             setCurrentDoc(prev => ({
                 ...prev,
-                "print-count": Number(prev["print-count"]) + 1,
+                print_count: Number(prev.print_count) + 1,
             }));
         }
     };
 
     const decrementPrintCount = () => {
-        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
+        if (page_type === "user_history" && currentDoc.print_status === "pending") {
             setCurrentDoc(prev => ({
                 ...prev,
-                "print-count": Math.max(1, prev["print-count"] - 1)
+                print_count: Math.max(1, prev.print_count - 1)
             }));
         }
     };
 
     const togglePrintType = () => {
-        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
+        if (page_type === "user_history" && currentDoc.print_status === "pending") {
             setCurrentDoc(prev => {
                 const newPrintType =
-                    prev["print-type"] === "single_side" ? "double_side" : "single_side";
-                return { ...prev, "print-type": newPrintType };
+                    prev.print_type === "single_side" ? "double_side" : "single_side";
+                return { ...prev, print_type: newPrintType };
             });
         }
     };
 
     const togglePrintColor = () => {
-        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
+        if (page_type === "user_history" && currentDoc.print_status === "pending") {
             setCurrentDoc(prev => {
                 const newPrintColor =
-                    prev["print-color"] === "b/w" ? "colored" : "b/w";
-                return { ...prev, "print-color": newPrintColor };
+                    prev.print_color === "b/w" ? "colored" : "b/w";
+                return { ...prev, print_color: newPrintColor };
             });
         }
     };
 
     const toggleBinding = () => {
-        if (page_type === "user_history" && currentDoc["print-status"] === "pending") {
+        if (page_type === "user_history" && currentDoc.print_status === "pending") {
             setCurrentDoc(prev => {
                 const newBindType =
-                    prev["binding-type"] === "no" ? "bind" : "no";
-                return { ...prev, "binding-type": newBindType };
+                    prev.binding_type === "no" ? "bind" : "no";
+                return { ...prev, binding_type: newBindType };
             });
         }
     };
 
     const cancelHandler = async () => {
         setLoading(true)
-        await cancelDocument(currentDoc)
+        const result = await checkExistingHash(currentDoc)
+        if (result.numberOfRows > 1) {
+            await cancelDocument(currentDoc)
+        }
         await deleteFromPinata(currentDoc)
         router.refresh()
         onClose();
@@ -152,7 +155,6 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
     const updateHandler = async () => {
         setLoading(true)
-        await updateFromPinata(currentDoc)
         await updateDocument(currentDoc)
         onClose();
         router.refresh()
@@ -161,7 +163,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
 
     const viewHandler = async () => {
         setLoading(true)
-        const openLink = currentDoc["ipfs-link"]?.toString();
+        const openLink = currentDoc.ipfs_link?.toString();
         window.open(openLink);
         setLoading(false)
     }
@@ -219,22 +221,22 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             <span className="text-foreground">Owner:</span>
                             <span
                                 className="font-medium text-right"
-                                title={currentDoc["user-name"] ?? ""}
+                                title={currentDoc.user_name ?? ""}
                             >
-                                {truncateText(currentDoc["user-name"] || "N/A")}
+                                {truncateText(currentDoc.user_name || "N/A")}
                             </span>
                         </div>
                     </div>
 
                     <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
-                            {getFileTypeIcon(currentDoc["file-type"])}
+                            {getFileTypeIcon(currentDoc.file_type)}
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">File Name:</span>
                             <span className="font-medium text-right truncate">
                                 {(() => {
-                                    const fileName = currentDoc["file-name"] ?? "";
+                                    const fileName = currentDoc.file_name ?? "";
                                     const nameWithoutExt = fileName.includes(".")
                                         ? fileName.substring(0, fileName.lastIndexOf("."))
                                         : fileName;
@@ -243,7 +245,6 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         ? `${nameWithoutExt.slice(0, 30)}...`
                                         : nameWithoutExt;
                                 })()}
-
                             </span>
                         </div>
                     </div>
@@ -255,13 +256,13 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">File Type:</span>
                             <span className="font-medium text-right">
-                                {formatFileType(currentDoc["file-type"])}
+                                {formatFileType(currentDoc.file_type)}
                             </span>
                         </div>
                     </div>
 
                     {
-                        currentDoc["file-type"] === ".pdf" && (
+                        currentDoc.file_type === ".pdf" && (
                             <div className="flex justify-center items-center gap-3 my-3.5">
                                 <span className="text-foreground flex-shrink-0 mt-1">
                                     <LuBookOpen />
@@ -272,10 +273,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         <span
                                             className={cn(
                                                 "rounded-md transition-colors text-right px-2 py-0.5",
-                                                currentDoc["print-type"] === "double_side"
+                                                currentDoc.print_type === "double_side"
                                                     ? "bg-accent text-black"
                                                     : "text-foreground",
-                                                page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                                page_type === "user_history" && currentDoc.print_status === "pending" &&
                                                 "cursor-pointer hover:bg-foreground hover:text-background"
                                             )}
                                             onClick={togglePrintType}
@@ -285,10 +286,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         <span
                                             className={cn(
                                                 "rounded-md transition-colors text-right px-2 py-0.5",
-                                                currentDoc["print-type"] === "single_side"
+                                                currentDoc.print_type === "single_side"
                                                     ? "bg-accent text-black"
                                                     : "text-foreground",
-                                                page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                                page_type === "user_history" && currentDoc.print_status === "pending" &&
                                                 "cursor-pointer hover:bg-foreground hover:text-background"
                                             )}
                                             onClick={togglePrintType}
@@ -311,10 +312,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 <span
                                     className={cn(
                                         "rounded-md transition-colors text-right px-2 py-0.5",
-                                        currentDoc["print-color"] === "b/w"
+                                        currentDoc.print_color === "b/w"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                        page_type === "user_history" && currentDoc.print_status === "pending" &&
                                         "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={togglePrintColor}
@@ -324,10 +325,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 <span
                                     className={cn(
                                         "rounded-md transition-colors text-right px-2 py-0.5",
-                                        currentDoc["print-color"] === "colored"
+                                        currentDoc.print_color === "colored"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                        page_type === "user_history" && currentDoc.print_status === "pending" &&
                                         "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={togglePrintColor}
@@ -348,10 +349,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 <span
                                     className={cn(
                                         "rounded-md transition-colors text-right px-2 py-0.5",
-                                        currentDoc["binding-type"] === "no"
+                                        currentDoc.binding_type === "no"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                        page_type === "user_history" && currentDoc.print_status === "pending" &&
                                         "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={toggleBinding}
@@ -361,10 +362,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 <span
                                     className={cn(
                                         "rounded-md transition-colors text-right px-2 py-0.5",
-                                        currentDoc["binding-type"] === "bind"
+                                        currentDoc.binding_type === "bind"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && currentDoc["print-status"] === "pending" &&
+                                        page_type === "user_history" && currentDoc.print_status === "pending" &&
                                         "cursor-pointer hover:bg-foreground hover:text-background"
                                     )}
                                     onClick={toggleBinding}
@@ -382,7 +383,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Pages:</span>
                             <span className="font-medium text-right">
-                                {currentDoc["page-count"]}
+                                {currentDoc.page_count}
                             </span>
                         </div>
                     </div>
@@ -395,20 +396,20 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             <span className="text-foreground">Copies:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
                                 {
-                                    page_type === "user_history" && currentDoc["print-status"] === "pending" && (
+                                    page_type === "user_history" && currentDoc.print_status === "pending" && (
                                         <LuMinus
                                             className={cn(
                                                 "mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm",
-                                                currentDoc["print-count"] <= 1 && "cursor-not-allowed pointer-events-none"
+                                                currentDoc.print_count <= 1 && "cursor-not-allowed pointer-events-none"
                                             )}
                                             size="24"
                                             onClick={decrementPrintCount}
                                         />
                                     )
                                 }
-                                <span>{currentDoc["print-count"]}</span>
+                                <span>{currentDoc.print_count}</span>
                                 {
-                                    page_type === "user_history" && currentDoc["print-status"] === "pending" && (
+                                    page_type === "user_history" && currentDoc.print_status === "pending" && (
                                         <LuPlus
                                             className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
                                             size="24"
@@ -427,7 +428,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Status:</span>
                             <span className={`font-medium text-right ${statusStyles.text}`}>
-                                {currentDoc["print-status"]}
+                                {currentDoc.print_status}
                             </span>
                         </div>
                     </div>
@@ -439,7 +440,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Uploaded:</span>
                             <span className="font-medium text-right">
-                                {currentDoc["uploaded-at"]}
+                                {currentDoc.uploaded_at}
                             </span>
                         </div>
                     </div>
@@ -452,7 +453,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 onChange={(e) => {
                                     if (
                                         page_type === "user_history" &&
-                                        currentDoc["print-status"] === "pending"
+                                        currentDoc.print_status === "pending"
                                     ) {
                                         const newValue = e.target.value;
                                         setCurrentDoc((prev) => ({
@@ -463,26 +464,27 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 }}
                                 disabled={
                                     page_type !== "user_history" ||
-                                    currentDoc["print-status"] !== "pending"
+                                    currentDoc.print_status !== "pending"
                                 }
-                                value={currentDoc["instructions"] || ""}
+                                value={currentDoc.instructions || ""}
                                 placeholder="Specifics..."
                             />
                         </div>
                     </div>
 
                     {
-                        (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (<div className="flex justify-center items-center gap-3 my-3.5">
-                            <span className="text-foreground flex-shrink-0 mt-1">
-                                <LuBadgeIndianRupee />
-                            </span>
-                            <div className="flex-1 flex justify-between">
-                                <span className="text-foreground">Cost:</span>
-                                <span className="font-medium text-right">
-                                    ₹ {calculateCost(currentDoc)}
+                        (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
+                            <div className="flex justify-center items-center gap-3 my-3.5">
+                                <span className="text-foreground flex-shrink-0 mt-1">
+                                    <LuBadgeIndianRupee />
                                 </span>
+                                <div className="flex-1 flex justify-between">
+                                    <span className="text-foreground">Cost:</span>
+                                    <span className="font-medium text-right">
+                                        ₹ {calculateCost(currentDoc)}
+                                    </span>
+                                </div>
                             </div>
-                        </div>
                         )
                     }
 
@@ -491,16 +493,16 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
                                 <Button
                                     variant={
-                                        currentDoc["print-status"] === "pending"
+                                        currentDoc.print_status === "pending"
                                             ? "destructive"
-                                            : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
+                                            : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
                                                 ? "ghost"
                                                 : "foreground"
                                     }
                                     onClick={cancelHandler}
                                     disabled={
-                                        currentDoc["print-status"] === "completed" ||
-                                        currentDoc["print-status"] === "cancelled"
+                                        currentDoc.print_status === "completed" ||
+                                        currentDoc.print_status === "cancelled"
                                     }
                                     className="grow"
                                 >
@@ -517,19 +519,19 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             (page_type === "user_history") && (
                                 <Button
                                     variant={
-                                        currentDoc["print-status"] === "pending"
+                                        currentDoc.print_status === "pending"
                                             ? (
                                                 JSON.stringify(currentDoc) === JSON.stringify(doc) ? "ghost" : "foreground"
                                             )
-                                            : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
+                                            : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
                                                 ? "ghost"
                                                 : "foreground"
                                     }
                                     onClick={updateHandler}
                                     disabled={
                                         JSON.stringify(currentDoc) === JSON.stringify(doc) ||
-                                        currentDoc["print-status"] === "completed" ||
-                                        currentDoc["print-status"] === "cancelled"
+                                        currentDoc.print_status === "completed" ||
+                                        currentDoc.print_status === "cancelled"
                                     }
                                     className="grow"
                                 >
@@ -539,15 +541,15 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         }
                         <Button
                             variant={
-                                currentDoc["print-status"] === "pending"
+                                currentDoc.print_status === "pending"
                                     ? "foreground"
-                                    : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
+                                    : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
                                         ? "ghost"
                                         : "foreground"
                             }
                             disabled={
-                                currentDoc["print-status"] === "completed" ||
-                                currentDoc["print-status"] === "cancelled"
+                                currentDoc.print_status === "completed" ||
+                                currentDoc.print_status === "cancelled"
                             }
                             className="grow"
                             onClick={viewHandler}
@@ -558,14 +560,14 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             <Button
                                 className="grow"
                                 variant={
-                                    currentDoc["print-status"] === "pending"
+                                    currentDoc.print_status === "pending"
                                         ? "foreground"
-                                        : (currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled")
+                                        : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
                                             ? "ghost"
                                             : "foreground"
                                 }
                                 disabled={
-                                    currentDoc["print-status"] === "completed" || currentDoc["print-status"] === "cancelled"
+                                    currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled"
                                 } onClick={completeHandler}
                             >
                                 Completed

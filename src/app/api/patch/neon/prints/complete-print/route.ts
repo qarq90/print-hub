@@ -14,8 +14,8 @@ export async function PATCH(req: Request) {
 
         const query = `
             UPDATE "prints"
-            SET "print-status" = 'completed'
-            WHERE "print-id" = $1
+            SET print_status = 'completed'
+            WHERE print_id = $1
             RETURNING *;
         `;
 

@@ -1,52 +1,52 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/neon/config";
-import { getFormatDate } from "@/functions/file";
+import { getFormatDate } from "@/functions/utility";
+import { generatePrintId } from "@/functions/prints";
 
 export async function POST(req: Request) {
     try {
         const body = await req.json();
         const { pinataResult, file, user } = body;
 
-        const pageCount =
-            file.print_type === "double_side"
-                ? file.page_count
-                : file.page_count * 2;
-
         const query = `
       INSERT INTO "prints" (
-        "print-id",
-        "page-count",
-        "print-type",
-        "print-color",
-        "print-count",
-        "print-status",
-        "ipfs-link",
-        "file-name",
-        "file-type",
-        "user-name",
-        "user-id",
-        "uploaded-at",
-        "binding-type",
-        "instructions"
-      ) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14)
+        print_id,
+        user_id,
+        user_name,
+        file_name,
+        file_type,
+        ipfs_id,
+        ipfs_link,
+        hashed_content,
+        print_count,
+        page_count,
+        print_type,
+        print_color,
+        binding_type,
+        instructions,
+        print_status,
+        uploaded_at
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
       RETURNING *;
     `;
 
         const values = [
-            pinataResult.id,
-            pageCount,
+            generatePrintId(),
+            user.id,
+            user.fullName,
+            file.file_name,
+            file.file_type,
+            pinataResult.ipfs_id,
+            pinataResult.ipfs_url,
+            file.hashed_content,
+            file.print_count,
+            file.page_count,
             file.print_type,
             file.print_color,
-            file.print_count,
-            "pending",
-            pinataResult.ipfs_url,
-            file.file_name.substring(4),
-            file.file_type,
-            user.fullName,
-            user.id,
-            getFormatDate(new Date()),
             file.binding_type,
-            file.instructions,
+            file.instructions || "",
+            "pending",
+            getFormatDate(new Date()),
         ];
 
         const result = await pool.query(query, values);

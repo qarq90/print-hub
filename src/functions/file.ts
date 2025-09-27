@@ -59,14 +59,6 @@ export const getFileSize = (bytes: number): string => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
 };
 
-export const getFormatDate = (date: Date): string => {
-    return date.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric",
-    });
-};
-
 export const getPDFPageCount = async (file: File): Promise<number> => {
     try {
         const arrayBuffer = await file.arrayBuffer();
@@ -76,4 +68,11 @@ export const getPDFPageCount = async (file: File): Promise<number> => {
         console.error("Error estimating PDF page count:", e);
         return 1;
     }
+};
+
+export const generateFileHash = async (file: File): Promise<string> => {
+    const arrayBuffer = await file.arrayBuffer();
+    const hashBuffer = await crypto.subtle.digest("SHA-512", arrayBuffer);
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
 };
