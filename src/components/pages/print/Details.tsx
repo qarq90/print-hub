@@ -144,10 +144,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const cancelHandler = async () => {
         setLoading(true)
         const result = await checkExistingHash(currentDoc)
-        if (result.numberOfRows > 1) {
-            await cancelDocument(currentDoc)
+        if (result.numberOfRows === 1) {
+            await deleteFromPinata(currentDoc)
         }
-        await deleteFromPinata(currentDoc)
+        await cancelDocument(currentDoc)
         router.refresh()
         onClose();
         setLoading(false)

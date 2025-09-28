@@ -58,7 +58,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
     }
 
     const calculateCost = (doc: PrintRecord) => {
-        const costPerPage = doc.print_color === "colored" ? 10 : 2;
+        const costPerPage = doc.print_color === "colored" ? 10 : 2.5;
         return costPerPage * doc.page_count * doc.print_count;
     };
 
