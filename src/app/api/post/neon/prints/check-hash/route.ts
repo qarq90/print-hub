@@ -13,7 +13,6 @@ export async function POST(req: Request) {
         const result = await pool.query(query, [hashed_content]);
 
         if (result.rows.length > 0) {
-            console.log(result);
             return NextResponse.json({
                 fileExists: true,
                 status: true,
