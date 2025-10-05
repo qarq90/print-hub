@@ -29,7 +29,7 @@ export default function AdminOrdersClient() {
 
                 setOrders(result.data || []);
             } catch (error) {
-                console.error("Error fetching all orders:", error);
+                console.error("Error fetching Pending Orders:", error);
                 setError(error instanceof Error ? error.message : "Failed to fetch orders");
                 setOrders([]);
             } finally {
@@ -47,8 +47,8 @@ export default function AdminOrdersClient() {
     if (loading) {
         return (
             <div className="mb-20">
-                <div className="mb-4 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">All Orders</Text>
+                <div className="md:mb-4 mb-2 flex flex-col text-left">
+                    <Text size="5xl" weight="bold">Pending Orders</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -73,7 +73,7 @@ export default function AdminOrdersClient() {
         return (
             <div className="mb-20">
                 <div className="mb-16 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">All Orders</Text>
+                    <Text size="5xl" weight="bold">Pending Orders</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -85,7 +85,7 @@ export default function AdminOrdersClient() {
 
     return (
         <>
-            <div className="mb-4 flex flex-col text-left">
+            <div className="md:mb-4 mb-2 flex flex-col text-left">
                 <Text size="5xl" weight="bold">Pending Orders</Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}

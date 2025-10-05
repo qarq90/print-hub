@@ -53,7 +53,7 @@ export default function AdminOrdersClient() {
     if (loading) {
         return (
             <div className="mb-20">
-                <div className="mb-4 flex flex-col text-left">
+                <div className="md:mb-4 mb-2 flex flex-col text-left">
                     <Text size="5xl" weight="bold">All Orders</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
@@ -91,7 +91,7 @@ export default function AdminOrdersClient() {
 
     return (
         <>
-            <div className="mb-4 flex flex-col text-left">
+            <div className="md:mb-4 mb-2 flex flex-col text-left">
                 <Text size="5xl" weight="bold">All Orders</Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}

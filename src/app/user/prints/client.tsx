@@ -54,7 +54,7 @@ export default function Client({ user }: ClientProps) {
     if (loading) {
         return (
             <div className="mb-20">
-                <div className="mb-4 flex flex-col text-left">
+                <div className="md:mb-4 mb-2 flex flex-col text-left">
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -87,7 +87,7 @@ export default function Client({ user }: ClientProps) {
 
     return (
         <>
-            <div className="mb-4 flex flex-col text-left">
+            <div className="md:mb-4 mb-2 flex flex-col text-left">
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>

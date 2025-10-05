@@ -49,7 +49,7 @@ export default function Client({ user }: ClientProps) {
     if (loading) {
         return (
             <MainLayout>
-                <div className="mb-4 flex flex-col text-left">
+                <div className="md:mb-4 mb-2 flex flex-col text-left">
                     <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
@@ -73,20 +73,20 @@ export default function Client({ user }: ClientProps) {
     if (!prints || prints.length === 0) {
         return (
             <MainLayout>
-                <div className="mb-4 flex flex-col text-left">
+                <div className="md:mb-4 mb-2 flex flex-col text-left">
                     <Text size="5xl" weight="bold">Prints Queue</Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory title="Empty History" description="No documents have been uploaded or scheduled for printouts yet" />
+                <EmptyHistory title="Empty Queue" description="No documents have been uploaded or scheduled for printouts yet" />
             </MainLayout>
         );
     }
 
     return (
         <MainLayout>
-            <div className="mb-4 flex flex-col text-left">
+            <div className="md:mb-4 mb-2 flex flex-col text-left">
                 <Text size="5xl" weight="bold">Prints Queue</Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
