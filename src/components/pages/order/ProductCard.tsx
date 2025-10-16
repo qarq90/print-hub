@@ -1,10 +1,7 @@
-"use client";
-
+"use client";;
 import Image from "next/image";
 import Link from "next/link";
 import { Text } from "@/components/ui/text";
-import { useConsistentRandom } from "@/hooks/use-consistent-random";
-import { images } from "@/data/background-images";
 import { Item } from "@/data/item-data";
 
 interface ProductCardProps {
@@ -12,7 +9,6 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ item }: ProductCardProps) => {
-    const backgroundImage = useConsistentRandom(images, item.id);
 
     return (
         <Link
@@ -20,13 +16,6 @@ export const ProductCard = ({ item }: ProductCardProps) => {
             className="flex flex-col group transition-all hover:-translate-y-1 rounded-lg border border-foreground/10 overflow-hidden hover:shadow-md h-full bg-background"
         >
             <div className="relative aspect-square overflow-hidden">
-                <Image
-                    src={backgroundImage}
-                    alt="Background"
-                    fill
-                    className="object-cover"
-                    priority={false}
-                />
                 <Image
                     alt={item.name}
                     src={item.image}

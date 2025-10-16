@@ -27,6 +27,7 @@ export default function Client({ user }: ClientProps) {
     const [selectedFiles, setSelectedFiles] = useState<PrintType[]>([]);
     const [loading, setLoading] = useState(false);
     const [isOpen, setIsOpen] = useState(false)
+    const [isFilesSelected, setIsFilesSelected] = useState(false)
     const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     const router = useRouter();
@@ -67,6 +68,7 @@ export default function Client({ user }: ClientProps) {
             })
         );
         setSelectedFiles([...selectedFiles, ...processedFiles]);
+        setIsFilesSelected(true);
     };
 
     const incrementPrintCount = (index: number) => {
@@ -135,6 +137,9 @@ export default function Client({ user }: ClientProps) {
     };
 
     const handleDeleteFile = (index: number) => {
+        if (selectedFiles.length === 1) {
+            setIsFilesSelected(false);
+        }
         setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
     };
 
@@ -175,11 +180,8 @@ export default function Client({ user }: ClientProps) {
         <>
             <section key="files" title="Upload Files">
                 <div className="flex flex-col gap-4">
-                    <Text size="5xl" weight="bold">
-                        Upload Files
-                    </Text>
                     <div className="w-full flex justify-center items-center">
-                        <FileUpload handleFiles={handleFiles} ref={fileInputRef} />
+                        <FileUpload isFilesSelected={isFilesSelected} handleFiles={handleFiles} ref={fileInputRef} />
                     </div>
 
                     {selectedFiles.length > 0 && (

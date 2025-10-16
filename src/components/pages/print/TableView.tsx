@@ -58,11 +58,11 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
     }
 
     const calculateCost = (doc: PrintRecord) => {
-        const costPerPage = doc.print_color === "colored" ? 10 : 2.5;
+        if (doc.print_status !== "completed") return 0;
+        let costPerPage = doc.print_color === "colored" ? 10 : 2.5;
+        if (doc.binding_type === "bind") costPerPage += 30;
         return costPerPage * doc.page_count * doc.print_count;
     };
-
-
 
     if (documentResult.length === 0) {
         const { title, description } = getEmptyStateConfig(page_type, statusType || "all");

@@ -6,6 +6,6 @@ export const getFormatDate = (date: Date): string => {
     });
 };
 
-export const truncateText = (text: string) => {
-    return text.length > 18 ? `${text.substring(0, 18)}...` : text;
+export const truncateText = (text: string, length = 18) => {
+    return text.length > 18 ? `${text.substring(0, length)}...` : text;
 };

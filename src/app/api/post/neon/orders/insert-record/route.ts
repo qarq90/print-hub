@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/neon/config";
-import { getFormatDate } from "@/functions/utility";
 
 export async function POST(req: Request) {
     try {
@@ -25,6 +24,8 @@ export async function POST(req: Request) {
       RETURNING *;
     `;
 
+        console.log(order);
+
         const values = [
             order.item_id,
             user.id,
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
             order.item_quantity,
             order.item_price,
             order.instructions,
-            getFormatDate(new Date()),
+            order.ordered_at,
             order.order_status,
             order.in_cart,
         ];

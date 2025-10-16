@@ -42,19 +42,22 @@ export default function Client() {
                             Order Now
                         </Button>
                     </Link>
-                    {/* <Link href="/sign-in/google">
-                        <Button variant="outline">
-                            <LuUserPlus /> Sign In
-                        </Button>
-                    </Link> */}
                 </div>
             </div>
 
             <div className="flex flex-col gap-12 w-full justify-center items-center my-32 px-4">
-                <div className="text-center flex flex-col">
-                    <Text weight="bold" className="text-5xl mb-4">
-                        How It <span className="text-accent">works</span>?
-                    </Text>
+                <div className="text-center flex flex-col gap-8">
+                    <div className="flex flex-col md:flex-row items-center justify-center">
+                        <Text className="text-5xl md:text-5xl">
+                            How it works&nbsp;
+                        </Text>
+                        <Text weight="bold" className="text-5xl md:text-5xl">
+                            Print
+                        </Text>
+                        <Text weight="bold" className="text-5xl md:text-5xl text-accent">
+                            hub
+                        </Text>
+                    </div>
                     <Text className="text-xl text-foreground/70">Simple steps to get your prints or items delivered</Text>
                 </div>
 
@@ -68,7 +71,7 @@ export default function Client() {
                                 1
                             </div>
                         </div>
-                        <Text weight="semibold" size="lg" className="mb-2">
+                        <Text size="lg" className="mb-2">
                             Create Job
                         </Text>
                     </div>
@@ -84,7 +87,7 @@ export default function Client() {
                                 2
                             </div>
                         </div>
-                        <Text weight="semibold" size="lg" className="mb-2">
+                        <Text size="lg" className="mb-2">
                             Customize Options
                         </Text>
                     </div>
@@ -100,7 +103,7 @@ export default function Client() {
                                 3
                             </div>
                         </div>
-                        <Text weight="semibold" size="lg" className="mb-2">
+                        <Text size="lg" className="mb-2">
                             Confirm Order
                         </Text>
                     </div>
@@ -116,7 +119,7 @@ export default function Client() {
                                 4
                             </div>
                         </div>
-                        <Text weight="semibold" size="lg" className="mb-2">
+                        <Text size="lg" className="mb-2">
                             Get Delivery
                         </Text>
                     </div>
@@ -139,17 +142,14 @@ export default function Client() {
 
             <div className="flex flex-col gap-8 w-full justify-center items-center my-32">
                 <div className="flex flex-col md:flex-row items-center justify-center">
-                    <Text weight="bold" className="text-5xl md:text-7xl">
+                    <Text className="text-5xl md:text-5xl">
                         Why choose&nbsp;
                     </Text>
-                    <Text weight="bold" className="text-5xl md:text-7xl">
+                    <Text weight="bold" className="text-5xl md:text-5xl">
                         Print
                     </Text>
-                    <Text weight="bold" className="text-5xl md:text-7xl text-accent">
+                    <Text weight="bold" className="text-5xl md:text-5xl text-accent">
                         hub
-                    </Text>
-                    <Text weight="bold" className="text-5xl md:text-7xl">
-                        ?
                     </Text>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
@@ -159,11 +159,11 @@ export default function Client() {
                             <div
                                 key={index}
                                 className={cn(
-                                    "flex flex-col gap-3 rounded-lg border bg-gray-500/5 border-foreground/10 justify-center items-center px-8 py-8 hover:shadow-md transition-all",
+                                    "flex flex-col gap-3 rounded-lg border bg-gray-500/5 border-foreground/10 justify-center items-center px-8 py-10 hover:shadow-md transition-all",
                                 )}
                             >
                                 <Icon size={36} className="text-accent" />
-                                <Text size="xl" weight="semibold">
+                                <Text size="xl">
                                     {feature.header}
                                 </Text>
                                 <Text className="text-center text-foreground/80">{feature.text}</Text>
@@ -174,11 +174,11 @@ export default function Client() {
             </div>
 
             <div className="flex flex-col gap-12 w-full justify-center items-center my-32">
-                <Text weight="bold" className="w-full justify-center flex text-4xl flex-row items-center">
+                <Text className="w-full justify-center flex text-4xl flex-row items-center">
                     What our <LuUsers className="mx-4 text-accent" /> say...
                 </Text>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
                     {printhubTestimonials.map((testimonial, index) => (
                         <div
                             key={index}

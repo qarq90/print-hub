@@ -58,14 +58,10 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
     }
 
     const calculateCost = (doc: PrintRecord) => {
-        const costPerPage = doc.print_color === "colored" ? 10 : 2.5;
-        let total = costPerPage * doc.page_count * doc.print_count;
-
-        if (doc.binding_type && doc.binding_type === "bind") {
-            total += 35;
-        }
-
-        return total;
+        if (doc.print_status !== "completed") return 0;
+        let costPerPage = doc.print_color === "colored" ? 10 : 2.5;
+        if (doc.binding_type === "bind") costPerPage += 30;
+        return costPerPage * doc.page_count * doc.print_count;
     };
 
     if (documentResult.length === 0) {
@@ -104,7 +100,7 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
                                     <div></div>
                                 </div>
                             </AccordionTrigger>
-                            <AccordionContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
+                            <AccordionContent className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
                                 {docs.map((item, itemIndex) => (
                                     <div
                                         key={`${groupKey}-${itemIndex}`}
@@ -115,7 +111,7 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
                                             <div className="flex justify-between items-start gap-2">
                                                 <div className="truncate">
                                                     <h3 className="text-lg font-medium text-foreground truncate">
-                                                        {item.file_name}
+                                                        {truncateText(item.file_name.split(".")[0], 18)}
                                                     </h3>
                                                     <p className="text-sm text-foreground/70">
                                                         {item.file_type}

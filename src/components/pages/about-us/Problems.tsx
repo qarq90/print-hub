@@ -6,7 +6,7 @@ export const Problems = () => {
     return (
         <>
             <section className="text-left flex flex-col gap-4">
-                <div className="flex flex-col-reverse md:flex-row gap-8 items-center">
+                <div className="flex flex-col-reverse md:flex-row gap-36 items-center">
                     <div className="relative rounded-full overflow-hidden">
                         <Image
                             src={Documents}
@@ -15,14 +15,17 @@ export const Problems = () => {
                         />
                     </div>
                     <div>
-                        <Text size="3xl" weight="bold">
-                            The Problem We Solve
-                        </Text>
-                        <br />
-                        <p className="my-4">
-                            Traditional document printing processes often
-                            involve:
-                        </p>
+                        <div className="flex flex-row">
+                            <Text className="text-4xl">
+                                The&nbsp;
+                            </Text>
+                            <Text weight="bold" className="text-4xl text-accent">
+                                Problems
+                            </Text>
+                            <Text className="text-4xl">
+                                &nbsp;we aim to solve
+                            </Text>
+                        </div>
                         <ul className="pl-5 mt-2 space-y-1">
                             <li>- Lengthy approval chains</li>
                             <li>- Manual form submissions</li>

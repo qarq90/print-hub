@@ -13,6 +13,7 @@ import { UserProps } from "@/interfaces/User";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
+import { getFormatDate } from "@/functions/utility";
 
 type Props = {
     id: string;
@@ -67,7 +68,7 @@ export default function Client({ id, user }: Props) {
                 item_quantity: quantity.toString(),
                 item_price: item.price,
                 instructions: instructions,
-                ordered_at: new Date().toISOString(),
+                ordered_at: getFormatDate(new Date()),
                 order_status: actionType === "cart" ? "in-cart" : "pending",
                 in_cart: actionType === "cart",
             }, user)
@@ -86,10 +87,10 @@ export default function Client({ id, user }: Props) {
 
     return (
         <section className="w-full">
-            <div className="mx-auto max-w-5xl py-5">
+            <div className="py-5">
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                     <div className="flex flex-col gap-2">
-                        <div className="relative aspect-square overflow-hidden rounded-md">
+                        <div className="relative aspect-square overflow-hidden rounded-xl">
                             <Image
                                 alt={item.name}
                                 src={item.image}

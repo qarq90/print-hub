@@ -7,9 +7,14 @@ export const Features = () => {
     return (
         <>
             <section className="flex flex-col justify-center items-center gap-4">
-                <Text size="3xl" weight="bold">
-                    Our Technology Solution
-                </Text>
+                <div className="flex flex-row">
+                    <Text className="text-4xl">
+                        Our technology
+                    </Text>
+                    <Text weight="bold" className="text-4xl text-accent">
+                        &nbsp;solution
+                    </Text>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 md:gap-6 gap-0">
                     {AboutUsFeatures.map((feature, index) => (
                         <div
@@ -30,7 +35,7 @@ export const Features = () => {
                                 />
                             </div>
                             <div className="flex flex-col gap-2">
-                                <Text size="xl" weight="bold">
+                                <Text size="2xl">
                                     {feature.title}
                                 </Text>
                                 <Text size="base">

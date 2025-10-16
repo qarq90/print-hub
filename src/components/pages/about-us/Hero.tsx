@@ -6,9 +6,16 @@ export const Hero = () => {
     return (
         <>
             <section className="text-left flex flex-col gap-4">
-                <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div className="grid md:grid-cols-2 gap-36 items-center">
                     <div>
-                        <Text weight="bold" size="3xl">Our Vision</Text>
+                        <div className="flex flex-row">
+                            <Text className="text-4xl">
+                                Our&nbsp;
+                            </Text>
+                            <Text weight="bold" className="text-4xl text-accent">
+                                Vision
+                            </Text>
+                        </div>
                         <br />
                         <p className="my-4 text-justify">
                             Founded by Abdurrahman, Print Hub was born from
