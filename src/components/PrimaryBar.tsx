@@ -41,7 +41,7 @@ export const PrimaryBar = () => {
                             key={index}
                         >
                             <div className="flex items-center gap-2">
-                                {<link.icon />}
+                                {<link.icon className="group-hover:scale-110" />}
                                 <span className="md:block text-foreground hidden text-sm opacity-0 py-1 px-2 rounded-md group-hover:bg-foreground/10 group-hover:opacity-100 transition-opacity duration-200">
                                     {link.text}
                                 </span>
@@ -66,7 +66,7 @@ export const PrimaryBar = () => {
                                 height={24}
                                 src={user.imageUrl}
                                 alt="Profile"
-                                className="w-6 h-6 rounded-full"
+                                className="w-6 h-6 rounded-full group-hover:scale-110"
                             />
                             <span className="md:block text-foreground hidden text-sm opacity-0 py-1 px-2 rounded-md group-hover:bg-foreground/10 group-hover:opacity-100 transition-opacity duration-200">
                                 {user.firstName || "Profile"}
@@ -74,7 +74,7 @@ export const PrimaryBar = () => {
                         </>
                     ) : (
                         <>
-                            <LuUser />
+                            <LuUser className="group-hover:scale-110" />
                             <span className="md:block text-foreground hidden text-sm opacity-0 py-1 px-2 rounded-md group-hover:bg-foreground/10 group-hover:opacity-100 transition-opacity duration-200">
                                 Profile
                             </span>

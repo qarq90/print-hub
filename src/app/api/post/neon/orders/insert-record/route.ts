@@ -24,8 +24,6 @@ export async function POST(req: Request) {
       RETURNING *;
     `;
 
-        console.log(order);
-
         const values = [
             order.item_id,
             user.id,

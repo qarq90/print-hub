@@ -22,40 +22,41 @@ const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
 
         return (
             <div className="w-full flex flex-col my-3">
-                {
-                    !isFilesSelected && (
-                        <div className="flex items-center justify-center w-full rounded-lg border border-foreground/5 hover:scale-105 bg-foreground/5">
-                            <label
-                                htmlFor={props.id}
-                                className={cn(
-                                    "flex flex-col items-center justify-center w-full h-80 md:h-[425px] rounded-lg cursor-pointer",
-                                    "border-border hover:bg-accent/10",
-                                    "transition-colors duration-200 ease-in-out",
-                                    className
-                                )}
-                            >
-                                <div className="flex flex-col items-center justify-center py-6">
-                                    <LuUpload className="w-8 h-8 mb-4" />
-                                    <p className="mb-2 text-sm">
-                                        <span className="font-semibold">{label}</span>
-                                    </p>
-                                    <p className="text-xs">
-                                        {supportedFormats || description}
-                                    </p>
-                                </div>
-                                <input
-                                    ref={ref}
-                                    multiple
-                                    type="file"
-                                    className="hidden"
-                                    accept=".pdf,.png,.jpeg,.jpg,application/pdf,image/png,image/jpeg"
-                                    onChange={onFileChange}
-                                    {...props}
-                                />
-                            </label>
+                <div
+                    className={cn(
+                        "flex items-center justify-center w-full rounded-lg border border-foreground/5 hover:scale-105 bg-foreground/5",
+                        isFilesSelected && "hidden"
+                    )}
+                >
+                    <label
+                        htmlFor={props.id}
+                        className={cn(
+                            "flex flex-col items-center justify-center w-full h-80 md:h-[425px] rounded-lg cursor-pointer",
+                            "border-border hover:bg-accent/10",
+                            "transition-colors duration-200 ease-in-out",
+                            className
+                        )}
+                    >
+                        <div className="flex flex-col items-center justify-center py-6">
+                            <LuUpload className="w-8 h-8 mb-4" />
+                            <p className="mb-2 text-sm">
+                                <span className="font-semibold">{label}</span>
+                            </p>
+                            <p className="text-xs">
+                                {supportedFormats || description}
+                            </p>
                         </div>
-                    )
-                }
+                        <input
+                            ref={ref}
+                            multiple
+                            type="file"
+                            className="hidden"
+                            accept=".pdf,.png,.jpeg,.jpg,application/pdf,image/png,image/jpeg"
+                            onChange={onFileChange}
+                            {...props}
+                        />
+                    </label>
+                </div>
                 {
                     isFilesSelected && (
                         <Text className="text-3xl md:text-5xl">

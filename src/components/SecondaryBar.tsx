@@ -57,7 +57,7 @@ export const SecondaryBar = () => {
                                     <span className="text-sm text-foreground opacity-0 py-1 px-2 rounded-md group-hover:bg-foreground/10 group-hover:opacity-100 transition-opacity duration-200">
                                         {link.text}
                                     </span>
-                                    {<link.icon />}
+                                    {<link.icon className="group-hover:scale-110" />}
                                 </div>
                             </Link>
                         )
@@ -70,7 +70,7 @@ export const SecondaryBar = () => {
                 )}
             >
                 <div className="flex flex-row-reverse items-center gap-2">
-                    {isDarkMode ? <LuMoon className="text-background md:text-foreground" /> : <LuSun className="text-background md:text-foreground" />}
+                    {isDarkMode ? <LuMoon className="text-background md:text-foreground group-hover:scale-110" /> : <LuSun className="text-background md:text-foreground group-hover:scale-110" />}
                     <span className="md:block text-foreground hidden text-sm opacity-0 py-1 px-2 rounded-md group-hover:bg-foreground/10 group-hover:opacity-100 transition-opacity duration-200">
                         Theme
                     </span>
