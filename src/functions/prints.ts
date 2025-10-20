@@ -84,6 +84,26 @@ export const fetchUserHistory = async (user: UserProps) => {
     }
 };
 
+export const fetchUserUnpaidPrints = async (user: UserProps) => {
+    try {
+        const response = await fetch("/api/post/neon/prints/user-unpaid", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch user history");
+        }
+
+        return await response.json();
+    } catch (e) {
+        console.error("Neon fetchUserHistory error:", e);
+        throw e;
+    }
+};
+
 export const updateDocument = async (document: PrintRecord) => {
     try {
         const response = await fetch("/api/put/neon/prints/update-print", {
@@ -107,6 +127,26 @@ export const updateDocument = async (document: PrintRecord) => {
 export const cancelDocument = async (document: PrintRecord) => {
     try {
         const response = await fetch("/api/patch/neon/prints/cancel-print", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ print_id: document.print_id }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to cancel document");
+        }
+
+        return await response.json();
+    } catch (e) {
+        console.error("Neon cancelDocument error:", e);
+        throw e;
+    }
+};
+
+export const paidDocument = async (document: PrintRecord) => {
+    try {
+        const response = await fetch("/api/patch/neon/prints/paid-print", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ print_id: document.print_id }),

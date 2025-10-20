@@ -19,8 +19,9 @@ export async function POST(req: Request) {
         instructions,
         ordered_at,
         order_status,
-        in_cart
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
+        in_cart,
+        payment_status
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
       RETURNING *;
     `;
 
@@ -37,6 +38,7 @@ export async function POST(req: Request) {
             order.ordered_at,
             order.order_status,
             order.in_cart,
+            "unpaid",
         ];
 
         const result = await pool.query(query, values);

@@ -3,13 +3,15 @@ import { Metadata } from "next";
 import { Text } from "@/components/ui/text";
 import { auth, currentUser } from '@clerk/nextjs/server'
 import { UserProps } from "@/interfaces/User";
-import { SignOutButton } from "@clerk/nextjs";
 import { NotLoggedIn } from "@/components/empty/NotLoggedIn";
+import { FaArrowLeft } from "react-icons/fa6";
+import Link from "next/link";
+import { SignOutButton } from "@clerk/nextjs";
 import { FiLogOut, FiCreditCard } from "react-icons/fi";
 
 export const metadata: Metadata = {
-    title: "Print Hub | User | Orders",
-    description: "Manage your active orders and view past order history in Print Hub.",
+    title: "Print Hub | User | Orders Payment",
+    description: "Payment page for orders in Print Hub.",
 };
 
 export default async function Page() {
@@ -42,9 +44,9 @@ export default async function Page() {
                     <div className="cursor-pointer bg-accent text-black shadow-xs hover:bg-primary/90 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:scale-105">
                         <FiLogOut className="rotate-180 mt-0.5" /> <SignOutButton />
                     </div>
-                    <div className="cursor-pointer bg-accent text-black shadow-xs hover:bg-primary/90 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:scale-105">
+                    <Link href={"/user/orders/pay"} className="cursor-pointer bg-accent text-black shadow-xs hover:bg-primary/90 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:scale-105">
                         <FiCreditCard className="mt-0.5" /> Pay Now
-                    </div>
+                    </Link>
                 </div>
             </div>
             <Client user={userProps} />

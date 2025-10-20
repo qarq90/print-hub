@@ -162,17 +162,21 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                 </div>
 
                 <div className="space-y-3">
-                    <div className="flex justify-center items-center gap-3 my-3.5">
-                        <span className="text-foreground flex-shrink-0 mt-1">
-                            <LuUser />
-                        </span>
-                        <div className="flex-1 flex justify-between">
-                            <span className="text-foreground">Customer:</span>
-                            <span className="font-medium text-right">
-                                {truncateText(currentOrder.user_name || "N/A")}
-                            </span>
-                        </div>
-                    </div>
+                    {
+                        page_type !== "user_history" && (
+                            <div className="flex justify-center items-center gap-3 my-3.5">
+                                <span className="text-foreground flex-shrink-0 mt-1">
+                                    <LuUser />
+                                </span>
+                                <div className="flex-1 flex justify-between">
+                                    <span className="text-foreground">Customer:</span>
+                                    <span className="font-medium text-right">
+                                        {truncateText(currentOrder.user_name || "N/A")}
+                                    </span>
+                                </div>
+                            </div>
+                        )
+                    }
 
                     <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">

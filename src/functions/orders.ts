@@ -76,6 +76,26 @@ export const fetchUserOrders = async (user: UserProps) => {
     }
 };
 
+export const fetchUserUnpaidOrders = async (user: UserProps) => {
+    try {
+        const response = await fetch("/api/post/neon/orders/user-unpaid", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch user history");
+        }
+
+        return await response.json();
+    } catch (e) {
+        console.error("Neon fetchUserHistory error:", e);
+        throw e;
+    }
+};
+
 export const updateOrder = async (order: OrderRecord) => {
     try {
         const response = await fetch("/api/put/neon/orders/update-order", {
@@ -112,6 +132,26 @@ export const cancelOrder = async (order: OrderRecord) => {
         return await response.json();
     } catch (e) {
         console.error("Neon cancelOrder error:", e);
+        throw e;
+    }
+};
+
+export const paidOrder = async (order: OrderRecord) => {
+    try {
+        const response = await fetch("/api/patch/neon/orders/paid-order", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ order_id: order.order_id }),
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to cancel document");
+        }
+
+        return await response.json();
+    } catch (e) {
+        console.error("Neon cancelDocument error:", e);
         throw e;
     }
 };

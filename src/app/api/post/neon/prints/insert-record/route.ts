@@ -25,8 +25,9 @@ export async function POST(req: Request) {
         binding_type,
         instructions,
         print_status,
-        uploaded_at
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+        uploaded_at,
+        payment_status
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
       RETURNING *;
     `;
 
@@ -47,6 +48,7 @@ export async function POST(req: Request) {
             file.instructions || "",
             "pending",
             getFormatDate(new Date()),
+            "unpaid",
         ];
 
         const result = await pool.query(query, values);

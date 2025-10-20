@@ -25,7 +25,7 @@ import { cn } from "@/lib/utils"
 import { usePathname, useRouter } from "next/navigation";
 import { deleteFromPinata } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
-import { cancelDocument, checkExistingHash, completeDocument, updateDocument } from "@/functions/prints";
+import { cancelDocument, checkExistingHash, completeDocument, paidDocument, updateDocument } from "@/functions/prints";
 import { Textarea } from "@/components/ui/textarea";
 
 interface DetailsProps {
@@ -161,6 +161,14 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
         setLoading(false)
     };
 
+    const paidHandler = async () => {
+        setLoading(true)
+        await paidDocument(currentDoc)
+        onClose();
+        router.refresh()
+        setLoading(false)
+    };
+
     const viewHandler = async () => {
         setLoading(true)
         const openLink = currentDoc.ipfs_link?.toString();
@@ -213,20 +221,24 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                 </div>
 
                 <div className="space-y-3">
-                    <div className="flex justify-center items-center gap-3 my-3.5">
-                        <span className="text-foreground flex-shrink-0 mt-1">
-                            <LuUser />
-                        </span>
-                        <div className="flex-1 flex justify-between">
-                            <span className="text-foreground">Owner:</span>
-                            <span
-                                className="font-medium text-right"
-                                title={currentDoc.user_name ?? ""}
-                            >
-                                {truncateText(currentDoc.user_name || "N/A")}
-                            </span>
-                        </div>
-                    </div>
+                    {
+                        page_type !== "user_history" && (
+                            <div className="flex justify-center items-center gap-3 my-3.5">
+                                <span className="text-foreground flex-shrink-0 mt-1">
+                                    <LuUser />
+                                </span>
+                                <div className="flex-1 flex justify-between">
+                                    <span className="text-foreground">Owner:</span>
+                                    <span
+                                        className="font-medium text-right"
+                                        title={currentDoc.user_name ?? ""}
+                                    >
+                                        {truncateText(currentDoc.user_name || "N/A")}
+                                    </span>
+                                </div>
+                            </div>
+                        )
+                    }
 
                     <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
@@ -571,6 +583,24 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 } onClick={completeHandler}
                             >
                                 Completed
+                            </Button>
+                        )}
+
+                        {page_type === "admin_page" && (
+                            <Button
+                                className="grow"
+                                variant={
+                                    currentDoc.print_status === "pending"
+                                        ? "foreground"
+                                        : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
+                                            ? "ghost"
+                                            : "foreground"
+                                }
+                                disabled={
+                                    currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled"
+                                } onClick={paidHandler}
+                            >
+                                Paid
                             </Button>
                         )}
                     </div>

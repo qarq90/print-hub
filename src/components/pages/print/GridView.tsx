@@ -58,7 +58,6 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
     }
 
     const calculateCost = (doc: PrintRecord) => {
-        if (doc.print_status !== "completed") return 0;
         let costPerPage = doc.print_color === "colored" ? 10 : 2.5;
         if (doc.binding_type === "bind") costPerPage += 30;
         return costPerPage * doc.page_count * doc.print_count;

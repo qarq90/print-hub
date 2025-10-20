@@ -11,6 +11,7 @@ export interface OrderType {
     ordered_at: string;
     order_status: "pending" | "completed" | "cancelled" | "in-cart";
     in_cart: boolean;
+    payment_status?: "paid" | "unpaid";
 }
 
 export interface OrderRecord {
@@ -27,4 +28,5 @@ export interface OrderRecord {
     ordered_at: string;
     order_status: "pending" | "completed" | "cancelled" | "in-cart";
     in_cart: boolean;
+    payment_status: "paid" | "unpaid";
 }
