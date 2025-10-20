@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";;
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
 import { Text } from "@/components/ui/text";
@@ -20,7 +22,7 @@ export default function Client({ user }: ClientProps) {
     const [prints, setPrints] = useState<PrintRecord[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [paymentMethod, setPaymentMethod] = useState<string>("razorpay"); // default value
+    const [paymentMethod, setPaymentMethod] = useState<string>("razorpay");
 
     useEffect(() => {
         const fetchData = async () => {

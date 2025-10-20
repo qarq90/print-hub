@@ -142,48 +142,78 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const cancelHandler = async () => {
-        setLoading(true)
-        const result = await checkExistingHash(currentDoc)
-        if (result.numberOfRows === 1) {
-            await deleteFromPinata(currentDoc)
+        try {
+            setLoading(true);
+            const result = await checkExistingHash(currentDoc);
+            if (result.numberOfRows === 1) {
+                await deleteFromPinata(currentDoc);
+            }
+            await cancelDocument(currentDoc);
+            router.refresh();
+            onClose();
+        } catch (error) {
+            console.error("Error cancelling document:", error);
+        } finally {
+            setLoading(false);
         }
-        await cancelDocument(currentDoc)
-        router.refresh()
-        onClose();
-        setLoading(false)
     };
 
     const updateHandler = async () => {
-        setLoading(true)
-        await updateDocument(currentDoc)
-        onClose();
-        router.refresh()
-        setLoading(false)
+        try {
+            setLoading(true);
+            await updateDocument(currentDoc);
+            onClose();
+            router.refresh();
+        } catch (error) {
+            console.error("Error updating document:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const paidHandler = async () => {
-        setLoading(true)
-        await paidDocument(currentDoc)
-        onClose();
-        router.refresh()
-        setLoading(false)
+        try {
+            setLoading(true);
+            await paidDocument(currentDoc);
+            onClose();
+            router.refresh();
+        } catch (error) {
+            console.error("Error marking document as paid:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const viewHandler = async () => {
-        setLoading(true)
-        const openLink = currentDoc.ipfs_link?.toString();
-        window.open(openLink);
-        setLoading(false)
-    }
+        try {
+            setLoading(true);
+            const openLink = currentDoc.ipfs_link?.toString();
+            if (openLink) {
+                window.open(openLink, "_blank");
+            } else {
+                console.warn("No IPFS link available for this document.");
+            }
+        } catch (error) {
+            console.error("Error viewing document:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const completeHandler = async () => {
-        setLoading(true)
-        await completeDocument(currentDoc)
-        await deleteFromPinata(currentDoc)
-        onClose();
-        router.refresh()
-        setLoading(false)
-    }
+        try {
+            setLoading(true);
+            await completeDocument(currentDoc);
+            await deleteFromPinata(currentDoc);
+            onClose();
+            router.refresh();
+        } catch (error) {
+            console.error("Error completing document:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     const truncateText = (text: string) => {
         return text.length > 18 ? `${text.substring(0, 18)}...` : text;
@@ -586,7 +616,7 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             </Button>
                         )}
 
-                        {page_type === "admin_page" && (
+                        {page_type === "admin_page" && currentDoc.payment_status === "unpaid" && (
                             <Button
                                 className="grow"
                                 variant={

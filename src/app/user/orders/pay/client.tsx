@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
 "use client";;
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
 import { Text } from "@/components/ui/text";
 import { useEffect, useState } from "react";
 import { UserProps } from "@/interfaces/User";
-import { PrintRecord } from "@/interfaces/Print";
-import { fetchUserUnpaidPrints } from "@/functions/prints";
 import { HalfLoader } from "@/components/ui/loader";
 import { truncateText } from "@/functions/utility";
 import { Button } from "@/components/ui/button";

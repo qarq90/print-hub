@@ -4,7 +4,6 @@ import { Text } from "@/components/ui/text";
 import { auth, currentUser } from '@clerk/nextjs/server'
 import { UserProps } from "@/interfaces/User";
 import { NotLoggedIn } from "@/components/empty/NotLoggedIn";
-import { FaArrowLeft } from "react-icons/fa6";
 import Link from "next/link";
 import { SignOutButton } from "@clerk/nextjs";
 import { FiLogOut, FiCreditCard } from "react-icons/fi";

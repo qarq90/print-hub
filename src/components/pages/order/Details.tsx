@@ -20,7 +20,7 @@ import { cn } from "@/lib/utils"
 import { FullLoader } from "@/components/ui/loader";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { cancelOrder, checkoutOrder, completeOrder, updateOrder } from "@/functions/orders";
+import { cancelOrder, checkoutOrder, completeOrder, paidOrder, updateOrder } from "@/functions/orders";
 
 interface OrderDetailsProps {
     item: OrderRecord;
@@ -86,6 +86,19 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
             router.refresh();
         } catch (error) {
             console.error("Error updating order:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const paidHandler = async () => {
+        try {
+            setLoading(true);
+            await paidOrder(currentOrder);
+            onClose();
+            router.refresh();
+        } catch (error) {
+            console.error("Error marking document as paid:", error);
         } finally {
             setLoading(false);
         }
@@ -344,6 +357,16 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                                 className="grow"
                             >
                                 Complete
+                            </Button>
+                        )}
+
+                        {page_type === "admin_page" && currentOrder.payment_status === "unpaid" && currentOrder.in_cart === false && (
+                            <Button
+                                variant="foreground"
+                                onClick={paidHandler}
+                                className="grow"
+                            >
+                                Paid
                             </Button>
                         )}
                     </div>
