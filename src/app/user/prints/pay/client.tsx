@@ -20,6 +20,12 @@ interface ClientProps {
     user: UserProps;
 }
 
+interface RazorpayPaymentResponse {
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature: string;
+}
+
 declare global {
     interface Window {
         Razorpay: any;
@@ -70,12 +76,12 @@ export default function Client({ user }: ClientProps) {
 
             const options = {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
-                amount: totalAmount * 100,
+                amount: totalAmount * 100, // in paisa
                 currency: "INR",
                 name: "Printhub",
                 description: "Print Payment",
                 order_id: data.order_id,
-                handler: function (res: any) {
+                handler: function (res: RazorpayPaymentResponse) {
                     console.log("Payment complete", res);
                     // TODO: refresh prints or redirect to success page
                 },
@@ -85,6 +91,7 @@ export default function Client({ user }: ClientProps) {
                 },
                 theme: { color: "#3399cc" },
             };
+
 
             const rzp = new window.Razorpay(options);
             rzp.open();

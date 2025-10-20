@@ -18,6 +18,12 @@ interface ClientProps {
     user: UserProps;
 }
 
+interface RazorpayPaymentResponse {
+    razorpay_payment_id: string;
+    razorpay_order_id: string;
+    razorpay_signature: string;
+}
+
 declare global {
     interface Window {
         Razorpay: any;
@@ -69,9 +75,9 @@ export default function Client({ user }: ClientProps) {
                 name: "Printhub",
                 description: "Order Payment",
                 order_id: data.order_id,
-                handler: function (res: any) {
+                handler: function (res: RazorpayPaymentResponse) {
                     console.log("Payment complete", res);
-                    // TODO: Optionally refresh orders or redirect to a success page
+                    // TODO: refresh orders or redirect to success page
                 },
                 prefill: {
                     name: user.fullName || "Jon Doe",
