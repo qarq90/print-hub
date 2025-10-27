@@ -110,7 +110,7 @@ export default function Client({ user }: ClientProps) {
                     )}
 
                     {isMultiSelect && (
-                        <MultiMarkAs isAdminPage={false} selectedPrints={selectedPrints} setSelectedPrints={setSelectedPrints} />
+                        <MultiMarkAs setIsMultiSelect={setIsMultiSelect} isAdminPage={false} selectedPrints={selectedPrints} setSelectedPrints={setSelectedPrints} />
                     )}
 
                     <Button variant="foreground" onClick={() => setIsMultiSelect(true)}><LuCheck size={32} /> Select</Button>

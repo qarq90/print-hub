@@ -12,9 +12,10 @@ interface MultiMarkAsProps {
     selectedPrints: PrintRecord[]
     setSelectedPrints: React.Dispatch<React.SetStateAction<PrintRecord[]>>;
     isAdminPage?: boolean;
+    setIsMultiSelect: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const MultiMarkAs = ({ selectedPrints, setSelectedPrints, isAdminPage }: MultiMarkAsProps) => {
+export const MultiMarkAs = ({ selectedPrints, setSelectedPrints, isAdminPage, setIsMultiSelect }: MultiMarkAsProps) => {
 
     const [processing, setProcessing] = useState<boolean>(false);
 
@@ -34,6 +35,7 @@ export const MultiMarkAs = ({ selectedPrints, setSelectedPrints, isAdminPage }: 
         } finally {
             setProcessing(false);
             setSelectedPrints([]);
+            setIsMultiSelect(false)
             router.refresh();
         }
     }
@@ -55,6 +57,7 @@ export const MultiMarkAs = ({ selectedPrints, setSelectedPrints, isAdminPage }: 
         } finally {
             setProcessing(false);
             setSelectedPrints([]);
+            setIsMultiSelect(false)
             router.refresh();
         }
     }
@@ -72,6 +75,7 @@ export const MultiMarkAs = ({ selectedPrints, setSelectedPrints, isAdminPage }: 
         } finally {
             setProcessing(false);
             setSelectedPrints([]);
+            setIsMultiSelect(false)
             router.refresh();
         }
     }

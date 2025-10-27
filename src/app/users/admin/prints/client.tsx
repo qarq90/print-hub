@@ -117,7 +117,7 @@ export default function Client() {
                     )}
 
                     {isMultiSelect && (
-                        <MultiMarkAs isAdminPage={true} selectedPrints={selectedPrints} setSelectedPrints={setSelectedPrints} />
+                        <MultiMarkAs setIsMultiSelect={setIsMultiSelect} isAdminPage={true} selectedPrints={selectedPrints} setSelectedPrints={setSelectedPrints} />
                     )}
 
                     <UserFilter
