@@ -78,7 +78,11 @@ export default function AdminOrdersClient() {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory description="No orders have been placed yet" title="No Orders" />
+                <EmptyHistory
+                    type="orders"
+                    description="No orders have been placed yet"
+                    title="No Orders"
+                />
             </div>
         );
     }

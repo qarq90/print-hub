@@ -7,10 +7,10 @@ import { EmptyHistoryImages } from "@/data/empty-svgs";
 interface EmptyHistoryProps {
     title: string;
     description: string;
+    type: "prints" | "orders";
 }
 
-
-export const EmptyHistory = ({ title, description }: EmptyHistoryProps) => {
+export const EmptyHistory = ({ title, description, type }: EmptyHistoryProps) => {
     const [randomImage] = useState(
         () => EmptyHistoryImages[Math.floor(Math.random() * EmptyHistoryImages.length)]
     );
@@ -30,7 +30,7 @@ export const EmptyHistory = ({ title, description }: EmptyHistoryProps) => {
                     {description}.
                 </p>
                 <Link
-                    href={title.includes("History") ? "/new/print" : "/new/order"}
+                    href={type === "prints" ? "/new/print" : "/new/order"}
                     className="flex w-full cursor-pointer bg-accent text-black items-center justify-center rounded-md gap-2 py-2 px-3 shadow-md transition-all duration-200 hover:opacity-75"
                 >
                     <LuPlus className="mt-1" /> New

@@ -21,7 +21,7 @@ export default function Page() {
                 </Text>
             </div>
 
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-24">
                 <Hero />
                 <Problems />
                 <Features />

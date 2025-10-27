@@ -8,7 +8,7 @@ export const Footer = () => {
     const isAuthPage = pathname.endsWith("/authentication");
 
     return (
-        <footer className="w-full h-fit text-center pb-20 md:pb-4 px-6 md:px-0 text-base">
+        <footer className="w-full h-fit text-center pb-20 md:pb-6 md:pt-12 px-6 md:px-0 text-base">
             {isAuthPage ? (
                 <>
                     By continuing, you agree to our{" "}

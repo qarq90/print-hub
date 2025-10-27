@@ -5,7 +5,7 @@ import { Text } from "@/components/ui/text";
 export const Problems = () => {
     return (
         <>
-            <section className="text-left flex flex-col gap-4">
+            <section className="text-left flex flex-col gap-4 md:pb-16">
                 <div className="flex flex-col-reverse md:flex-row gap-36 items-center">
                     <div className="relative rounded-full overflow-hidden">
                         <Image

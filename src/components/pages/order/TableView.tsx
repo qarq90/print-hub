@@ -70,7 +70,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, orderResult, p
 
         return (
             <div className="my-8 flex flex-col text-left">
-                <EmptyHistory description={description} title={title} />
+                <EmptyHistory type="orders" description={description} title={title} />
             </div>
         );
     }

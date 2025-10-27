@@ -74,7 +74,11 @@ export default function Client({ user: user }: ClientProps) {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory title="No Orders" description="No orders have been placed yet to be delivered" />
+                <EmptyHistory
+                    type="orders"
+                    title="No Orders"
+                    description="No orders have been placed yet to be delivered"
+                />
             </MainLayout>
         );
     }

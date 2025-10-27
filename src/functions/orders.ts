@@ -1,5 +1,5 @@
-import { OrderType, OrderRecord } from "@/interfaces/Order";
 import { UserProps } from "@/interfaces/User";
+import { OrderType, OrderRecord } from "@/interfaces/Order";
 
 export const fetchPendingOrders = async () => {
     try {

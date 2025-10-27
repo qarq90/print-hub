@@ -127,6 +127,7 @@ export default function Client({ user }: ClientProps) {
                     <Text size="base">Last updated: {new Date().toLocaleDateString()}</Text>
                 </div>
                 <EmptyHistory
+                    type="prints"
                     description="All your print orders have been paid. There are no unpaid prints at this time."
                     title="All Prints Paid"
                 />

@@ -91,7 +91,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
 
         return (
             <div className="my-8 flex flex-col text-left">
-                <EmptyHistory description={description} title={title} />
+                <EmptyHistory type="prints" description={description} title={title} />
             </div>
         );
     }
@@ -196,7 +196,7 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
                                                     </td>
                                                 )}
                                                 <td className="p-4 align-middle text-foreground">
-                                                    {item.file_name}
+                                                    {truncateText(item.file_name, 20)}
                                                 </td>
                                                 <td className="p-4 align-middle text-center text-foreground">
                                                     <span className="rounded-full px-2 py-1">

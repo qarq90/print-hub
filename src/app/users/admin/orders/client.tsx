@@ -84,7 +84,11 @@ export default function AdminOrdersClient() {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory description="No orders have been placed yet" title="No Orders" />
+                <EmptyHistory
+                    type="orders"
+                    description="No orders have been placed yet"
+                    title="No Orders"
+                />
             </div>
         );
     }
@@ -122,6 +126,7 @@ export default function AdminOrdersClient() {
             {cartItems.length === 0 ? (
                 <div className="mb-16">
                     <EmptyHistory
+                        type="orders"
                         description="No active carts found"
                         title="No Items in Carts"
                     />

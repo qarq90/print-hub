@@ -88,7 +88,11 @@ export default function Client({ user }: ClientProps) {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory description="You haven't placed any orders yet" title="No Orders" />
+                <EmptyHistory
+                    type="orders"
+                    description="You haven't placed any orders yet"
+                    title="No Orders"
+                />
             </div>
         );
     }
@@ -125,6 +129,7 @@ export default function Client({ user }: ClientProps) {
             {cartItems.length === 0 ? (
                 <div className="mb-16">
                     <EmptyHistory
+                        type="orders"
                         description="Your cart is empty"
                         title="No Items in Cart"
                     />

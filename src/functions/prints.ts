@@ -1,6 +1,6 @@
-import { PrintType, PrintRecord } from "@/interfaces/Print";
-import { PinataResult } from "@/interfaces/Pinata";
 import { UserProps } from "@/interfaces/User";
+import { PinataResult } from "@/interfaces/Pinata";
+import { PrintType, PrintRecord } from "@/interfaces/Print";
 
 export const fetchTodaysQueue = async () => {
     try {

@@ -39,23 +39,23 @@ export const AuthenticationImages = [
     Cake,
     Cocktail,
     Dessert,
+    Astronaut,
+    Banker,
+    Teacher,
+    Yoga,
+    Baseball,
+    Basketball,
 ];
 
 export const EmptyHistoryImages = [
-    Astronaut,
-    Banker,
-    Baseball,
-    Basketball,
     Bikini,
     Diving,
     Fitness,
     Relaxing,
     Surfing,
     Swimming,
-    Teacher,
     Tennis,
     Volleyball,
-    Yoga,
 ];
 
 export const NotLoggedInImages = [Alien, Bunny, Bottle, Chicken, Snow, Sun];

@@ -90,7 +90,11 @@ export default function Client({ user }: ClientProps) {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory description="You haven't uploaded or scheduled any documents for printouts yet" title="Empty History" />
+                <EmptyHistory
+                    type="prints"
+                    description="You haven't uploaded or scheduled any documents for printouts yet"
+                    title="Empty History"
+                />
             </div>
         );
     }

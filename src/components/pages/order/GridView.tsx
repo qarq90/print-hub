@@ -62,7 +62,7 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
 
         return (
             <div className="my-8 flex flex-col text-left">
-                <EmptyHistory description={description} title={title} />
+                <EmptyHistory type="orders" description={description} title={title} />
             </div>
         );
     }

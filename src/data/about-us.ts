@@ -1,10 +1,10 @@
 import { StaticImageData } from "next/image";
 
-import ReportAnalysis from "../../public/img/about-us/ReportAnalysis.png";
 import MobilePhone from "../../public/img/about-us/MobilePhone.png";
 import Post from "../../public/img/about-us/Post.png";
 import DataVisualization from "../../public/img/about-us/DataVisualization.png";
-import MachineLearning from "../../public/img/about-us/MachineLearning.png";
+import UserProfile from "../../public/img/about-us/UserProfile.png";
+import OnlineShopping from "../../public/img/about-us/OnlineShopping.png";
 import DataCloud from "../../public/img/about-us/DataCloud.png";
 
 type AboutUsFeature = {
@@ -72,35 +72,32 @@ export const AboutUsFAQs: AboutUsFAQ[] = [
 export const AboutUsFeatures: AboutUsFeature[] = [
     {
         title: "Smart Request System",
-        description:
-            "Intuitive forms with auto-fill and templates for common document types.",
+        description: "Intuitive forms with auto-fill and templates.",
         image: Post,
     },
     {
-        title: "Automated Workflows",
-        description:
-            "Routing logic that ensures documents reach the right approvers instantly.",
-        image: MachineLearning,
-    },
-    {
-        title: "Real-Time Tracking",
-        description:
-            "Live status updates from submission to printing to pickup.",
-        image: ReportAnalysis,
-    },
-    {
-        title: "Secure Cloud Storage",
-        description: "All documents securely stored with version history.",
-        image: DataCloud,
+        title: "Product Catalog",
+        description: "Explore our complete range of items.",
+        image: OnlineShopping,
     },
     {
         title: "Mobile Ready",
-        description: "Request and approve documents from any device.",
+        description: "Request and approve from any device.",
         image: MobilePhone,
     },
     {
-        title: "Analytics Dashboard",
-        description: "Insights into printing volumes and process bottlenecks.",
+        title: "Role-Based Access Control",
+        description: "Granular permissions for document access.",
+        image: UserProfile,
+    },
+    {
+        title: "Secure Cloud Storage",
+        description: "Encrypted storage with version history.",
+        image: DataCloud,
+    },
+    {
+        title: "Session Management",
+        description: "Auto-timeout with activity monitoring.",
         image: DataVisualization,
     },
 ];

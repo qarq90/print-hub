@@ -96,7 +96,11 @@ export default function Client() {
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
-                <EmptyHistory description="No users have scheduled any prints." title="Empty Schedule" />
+                <EmptyHistory
+                    type="prints"
+                    description="No users have scheduled any prints."
+                    title="Empty Schedule"
+                />
             </>
         );
     }

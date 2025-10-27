@@ -1,4 +1,3 @@
-// middleware.ts
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isPublicRoute = createRouteMatcher([
@@ -14,9 +13,9 @@ const isPublicRoute = createRouteMatcher([
     "/users/shopkeeper/prints",
     "/users/shopkeeper/orders",
     "/sso-callback(.*)",
-    "/authentication(.*)", // Keep Clerk's default auth routes
+    "/authentication(.*)", // Clerk's default auth routes
     "/sign-in(.*)", // Custom auth routes
-    "/api(.*)", // Allow API routes
+    "/api(.*)", // To Allow API routes
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
