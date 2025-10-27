@@ -42,7 +42,7 @@ export const deleteFromPinata = async (file: PrintRecord) => {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ id: file.print_id }),
+            body: JSON.stringify({ ipfs_id: file.ipfs_id }),
         });
 
         const data = await response.json();

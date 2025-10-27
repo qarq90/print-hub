@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { Button } from "@/components/ui/button";
+import { truncateText } from "@/functions/utility";
 
 interface UserFilterProps {
     users: string[];
@@ -32,7 +33,7 @@ export const UserFilter = ({ users, selectedUser, onUserChange }: UserFilterProp
                     {selectedUser === "all" ? "All Users" : selectedUser}
                 </Text>
                 <svg
-                    className={`-mr-1 ml-2 h-5 w-5 transition-transform ${isOpen ? "transform rotate-180" : ""
+                    className={`h-5 w-5 transition-transform ${isOpen ? "transform rotate-180" : ""
                         }`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -48,29 +49,29 @@ export const UserFilter = ({ users, selectedUser, onUserChange }: UserFilterProp
             </Button>
 
             {isOpen && (
-                <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-accent ring-1 ring-black ring-opacity-5 focus:outline-none z-50 max-h-60 overflow-y-auto">
-                    <div className="py-1">
-                        <Button
-                            className={`block w-full text-left px-4 py-2 text-sm ${selectedUser === "all"
-                                ? "bg-accent/70"
-                                : "hover:bg-accent/50"
+                <div className="origin-top-right absolute right-0 mt-2 min-w-52 overflow-y-fo overflow-x-hidden rounded-md shadow-lg bg-foreground ring-1 ring-black ring-opacity-5 focus:outline-none z-50 max-h-60 overflow-y-auto">
+                    <div className="">
+                        <span
+                            className={`block bg-accent w-full cursor-pointer text-left px-4 py-2 text-sm ${selectedUser === "all"
+                                ? ""
+                                : "hover:bg-light"
                                 }`}
                             onClick={() => handleUserSelect("all")}
                         >
-                            <Text size="sm" className="text-black">All Users</Text>
-                        </Button>
+                            <Text size="sm" className="text-dark">All Users</Text>
+                        </span>
 
                         {uniqueUsers.map((user) => (
-                            <Button
+                            <span
                                 key={user}
-                                className={`block w-full text-left px-4 py-2 text-sm ${selectedUser === user
-                                    ? "bg-accent/70"
-                                    : "hover:bg-accent/50"
+                                className={`block bg-accent rounded-none cursor-pointer w-full text-left px-4 py-2 text-sm ${selectedUser === user
+                                    ? ""
+                                    : "hover:bg-light"
                                     }`}
                                 onClick={() => handleUserSelect(user)}
                             >
-                                <Text size="sm" className="text-black">{user}</Text>
-                            </Button>
+                                <Text size="sm" className="text-dark">{truncateText(user, 18)}</Text>
+                            </span>
                         ))}
                     </div>
                 </div>

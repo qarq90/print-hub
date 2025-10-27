@@ -13,15 +13,15 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        const result = await pinata.upload.public.file(file);
-
-        const url = await pinata.gateways.public.convert(result.cid);
+        const { cid, id } = await pinata.upload.public.file(file);
+        const url = await pinata.gateways.public.convert(cid);
 
         return NextResponse.json(
             {
-                id: result.id,
-                ipfs_hash: result.cid,
+                ipfs_id: id,
+                ipfs_hash: cid,
                 ipfs_url: url,
+                timestamp: new Date().toISOString(),
             },
             { status: 200 }
         );

@@ -29,6 +29,7 @@ export default function Client({ user }: ClientProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [isFilesSelected, setIsFilesSelected] = useState(false)
     const fileInputRef = React.useRef<HTMLInputElement>(null);
+    const [uploadProgress, setUploadProgress] = useState<number>(0);
 
     const router = useRouter();
 
@@ -151,29 +152,41 @@ export default function Client({ user }: ClientProps) {
 
     const submitHandler = async () => {
         setLoading(true);
-        await Promise.all(
-            selectedFiles.map(async (file) => {
-                try {
-                    const existingFileResponse = await checkExistingHash(file);
+        setUploadProgress(0);
 
-                    let pinataResult: PinataResult;
+        try {
+            let completed = 0;
+            const total = selectedFiles.length;
 
-                    if (existingFileResponse.fileExists) {
-                        pinataResult = existingFileResponse.existsResult;
-                    } else {
-                        pinataResult = await uploadToPinata(file);
+            await Promise.all(
+                selectedFiles.map(async (file) => {
+                    try {
+                        const existingFileResponse = await checkExistingHash(file);
+                        let pinataResult: PinataResult;
+
+                        if (existingFileResponse.fileExists) {
+                            pinataResult = existingFileResponse.existsResult;
+                        } else {
+                            pinataResult = await uploadToPinata(file);
+                        }
+
+                        await insertNeon(user, file, pinataResult);
+                    } finally {
+                        completed++;
+                        setUploadProgress((completed / total) * 100);
                     }
+                })
+            );
 
-                    await insertNeon(user, file, pinataResult);
-                } catch (e) {
-                    console.log("Something went wrong: ", e);
-                } finally {
-                    setLoading(false);
-                    setIsOpen(true);
-                    setSelectedFiles([]);
-                }
-            })
-        );
+            setIsOpen(true);
+            setSelectedFiles([]);
+
+        } catch (e) {
+            console.log("Something went wrong: ", e);
+        } finally {
+            setLoading(false);
+            setUploadProgress(0);
+        }
     };
 
     return (
@@ -378,7 +391,10 @@ export default function Client({ user }: ClientProps) {
                 {isOpen && (
                     <Modal
                         isOpen={isOpen}
-                        onClose={() => setIsOpen(false)}
+                        onClose={() => {
+                            setIsFilesSelected(false)
+                            setIsOpen(false)
+                        }}
                         closeOnOutsideClick
                         closeOnEsc
                     >

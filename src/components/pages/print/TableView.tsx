@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { LuEllipsisVertical, LuUser, LuCalendarDays, LuIndianRupee } from "react-icons/lu";
+import { LuEllipsisVertical, LuUser, LuCalendarDays, LuIndianRupee, LuCheck } from "react-icons/lu";
 import { Details } from './Details';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { PrintRecord } from "@/interfaces/Print";
@@ -12,10 +12,17 @@ interface TableViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending";
     documentResult: PrintRecord[];
     page_type: "user_history" | "prints_queue" | "admin_page" | "shopkeeper_page"
+    isMultiSelect?: boolean | null;
+    setSelectedPrints?: React.Dispatch<React.SetStateAction<PrintRecord[]>>;
+    selectedPrints?: PrintRecord[];
 }
 
-export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult, page_type }) => {
+export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult, page_type, isMultiSelect, setSelectedPrints, selectedPrints = [] }) => {
     const [selectedDoc, setSelectedDoc] = useState<PrintRecord | null>(null);
+
+    const isDocSelected = (doc: PrintRecord) => {
+        return selectedPrints.some(print => print.print_id === doc.print_id);
+    };
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -31,7 +38,23 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
     };
 
     const handleRowClick = (doc: PrintRecord) => {
-        setSelectedDoc(doc);
+        if (isMultiSelect && doc.print_status === "cancelled") {
+            return;
+        }
+
+        if (isMultiSelect && setSelectedPrints) {
+            setSelectedPrints(prev => {
+                const isAlreadySelected = prev.some(print => print.print_id === doc.print_id);
+
+                if (isAlreadySelected) {
+                    return prev.filter(print => print.print_id !== doc.print_id);
+                } else {
+                    return [...prev, doc];
+                }
+            });
+        } else if (!isMultiSelect) {
+            setSelectedDoc(doc);
+        }
     };
 
     const handleCloseDetails = () => {
@@ -103,6 +126,11 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
                                 <table className="w-full caption-bottom text-sm shadow-md">
                                     <thead className="[&_tr]:border-b [&_tr]:border-foreground/10 transition-colors">
                                         <tr className="hover:bg-background">
+                                            {isMultiSelect && (
+                                                <th className="h-12 px-4 align-middle text-center text-foreground font-bold">
+                                                    Select
+                                                </th>
+                                            )}
                                             {page_type === "user_history" && (
                                                 <th className="h-12 px-4 text-left align-middle text-foreground font-bold">
                                                     User
@@ -141,9 +169,25 @@ export const TableView: React.FC<TableViewProps> = ({ statusType, documentResult
                                         {docs.map((item, index) => (
                                             <tr
                                                 key={index}
-                                                className={cn("border-b border-foreground/10 transition-colors hover:bg-foreground/10", page_type !== "prints_queue" && "cursor-pointer")}
-                                                onClick={() => handleRowClick(item)}
+                                                className={cn(
+                                                    "border-b border-foreground/10 transition-colors hover:bg-foreground/10",
+                                                    page_type !== "prints_queue" && "cursor-pointer",
+                                                    isMultiSelect && isDocSelected(item) && "bg-accent/10 hover:bg-accent/10"
+                                                )}
+                                                onClick={() => item.print_status !== "cancelled" && handleRowClick(item)}
                                             >
+                                                {isMultiSelect && (
+                                                    <td className="p-4 align-middle text-center">
+                                                        {isDocSelected(item) && (
+                                                            <div className="flex justify-center">
+                                                                <LuCheck
+                                                                    size={20}
+                                                                    className="bg-accent text-dark p-1 rounded-full"
+                                                                />
+                                                            </div>
+                                                        )}
+                                                    </td>
+                                                )}
                                                 {page_type === "user_history" && (
                                                     <td className="p-4 align-middle">
                                                         <div className="flex flex-col">

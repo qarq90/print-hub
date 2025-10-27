@@ -11,7 +11,7 @@ interface StatusTypeProps {
 
 export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
     return (
-        <div className="md:mb-4 flex flex-row justify-around md:gap-4 w-full md:w-fit items-center">
+        <div className="flex flex-row justify-around md:gap-4 w-full md:w-fit items-center">
             <div
                 className={cn(
                     "flex flex-row items-center cursor-pointer rounded-lg transition-colors",

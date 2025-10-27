@@ -12,10 +12,17 @@ interface GridViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending";
     documentResult: PrintRecord[];
     page_type: "user_history" | "prints_queue" | "admin_page" | "shopkeeper_page";
+    isMultiSelect?: boolean | null;
+    setSelectedPrints?: React.Dispatch<React.SetStateAction<PrintRecord[]>>;
+    selectedPrints?: PrintRecord[];
 }
 
-export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, page_type }) => {
+export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, page_type, isMultiSelect, setSelectedPrints, selectedPrints = [] }) => {
     const [selectedDoc, setSelectedDoc] = useState<PrintRecord | null>(null);
+
+    const isDocSelected = (doc: PrintRecord) => {
+        return selectedPrints.some(print => print.print_id === doc.print_id);
+    };
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -31,7 +38,23 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
     };
 
     const handleRowClick = (doc: PrintRecord) => {
-        setSelectedDoc(doc);
+        if (isMultiSelect && doc.print_status === "cancelled") {
+            return;
+        }
+
+        if (isMultiSelect && setSelectedPrints) {
+            setSelectedPrints(prev => {
+                const isAlreadySelected = prev.some(print => print.print_id === doc.print_id);
+
+                if (isAlreadySelected) {
+                    return prev.filter(print => print.print_id !== doc.print_id);
+                } else {
+                    return [...prev, doc];
+                }
+            });
+        } else if (!isMultiSelect) {
+            setSelectedDoc(doc);
+        }
     };
 
     const handleCloseDetails = () => {
@@ -103,8 +126,12 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, documentResult, 
                                 {docs.map((item, itemIndex) => (
                                     <div
                                         key={`${groupKey}-${itemIndex}`}
-                                        className={cn("hover:bg-foreground/5 shadow-md transition-colors rounded-lg border border-foreground/10 overflow-hidden hover:shadow-md", page_type !== "prints_queue" && "cursor-pointer")}
-                                        onClick={() => handleRowClick(item)}
+                                        className={cn(
+                                            "hover:bg-foreground/5 shadow-md transition-colors rounded-lg border border-foreground/10 overflow-hidden hover:shadow-md",
+                                            page_type !== "prints_queue" && "cursor-pointer",
+                                            isMultiSelect && isDocSelected(item) && "bg-accent/10 hover:bg-accent/10"
+                                        )}
+                                        onClick={() => item.print_status !== "cancelled" && handleRowClick(item)}
                                     >
                                         <div className="p-4">
                                             <div className="flex justify-between items-start gap-2">

@@ -9,6 +9,7 @@ export async function POST(req: Request) {
       SELECT * FROM "prints"
       WHERE payment_status = 'unpaid'
       AND user_id = $1
+      AND print_status IN ('completed', 'pending')
       ORDER BY uploaded_at ASC;
     `;
 

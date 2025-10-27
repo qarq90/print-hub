@@ -1,4 +1,4 @@
-"use client";
+"use client";;
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
 import { Text } from "@/components/ui/text";
 import { useEffect, useState } from "react";
@@ -10,14 +10,19 @@ import { UserFilter } from "@/components/pages/print/UserFilter";
 import { PrintRecord } from "@/interfaces/Print";
 import { fetchAllPrints } from "@/functions/prints";
 import { HalfLoader } from "@/components/ui/loader";
+import { Button } from "@/components/ui/button";
+import { LuCheck, LuX } from "react-icons/lu";
+import { MultiMarkAs } from "@/components/pages/print/MultiMarkAs";
 
 export default function Client() {
     const [viewType, setViewType] = useState(false);
-    const [prints, setPrints] = useState<PrintRecord[] | null>(null);
     const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
-    const [selectedUser, setSelectedUser] = useState<string>("all");
+    const [prints, setPrints] = useState<PrintRecord[]>([]);
     const [loading, setLoading] = useState(true);
+    const [selectedUser, setSelectedUser] = useState<string>("all");
     const [error, setError] = useState<string | null>(null);
+    const [isMultiSelect, setIsMultiSelect] = useState<boolean>(false)
+    const [selectedPrints, setSelectedPrints] = useState<PrintRecord[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -41,6 +46,11 @@ export default function Client() {
 
         fetchData()
     }, []);
+
+    const clearSelected = () => {
+        setIsMultiSelect(false);
+        setSelectedPrints([]);
+    }
 
     const userNames = prints ? prints.map(print => print.user_name) : [];
 
@@ -102,18 +112,47 @@ export default function Client() {
             <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
                 <ViewType setViewType={setViewType} viewType={viewType} />
                 <div className="flex gap-3">
-                    <StatusType setStatusType={setStatusType} statusType={statusType} />
+                    {!isMultiSelect && (
+                        <StatusType setStatusType={setStatusType} statusType={statusType} />
+                    )}
+
+                    {isMultiSelect && (
+                        <MultiMarkAs isAdminPage={true} selectedPrints={selectedPrints} setSelectedPrints={setSelectedPrints} />
+                    )}
+
                     <UserFilter
                         users={userNames}
                         selectedUser={selectedUser}
                         onUserChange={setSelectedUser}
                     />
+
+                    <Button variant="foreground" onClick={() => setIsMultiSelect(true)}><LuCheck size={32} /> Select</Button>
+
+                    {isMultiSelect && (
+                        <Button variant="destructive" onClick={clearSelected}>
+                            <LuX size={32} /> Cancel
+                        </Button>
+                    )}
                 </div>
             </div>
             {viewType ? (
-                <TableView documentResult={filteredHistory} page_type="admin_page" statusType={statusType} />
+                <TableView
+                    documentResult={filteredHistory}
+                    page_type="admin_page"
+                    statusType={statusType}
+                    isMultiSelect={isMultiSelect}
+                    selectedPrints={selectedPrints}
+                    setSelectedPrints={setSelectedPrints}
+                />
             ) : (
-                <GridView documentResult={filteredHistory} page_type="admin_page" statusType={statusType} />
+                <GridView
+                    documentResult={filteredHistory}
+                    page_type="admin_page"
+                    statusType={statusType}
+                    isMultiSelect={isMultiSelect}
+                    selectedPrints={selectedPrints}
+                    setSelectedPrints={setSelectedPrints}
+                />
             )}
         </>
     );

@@ -10,6 +10,9 @@ import { UserProps } from "@/interfaces/User";
 import { PrintRecord } from "@/interfaces/Print";
 import { fetchUserHistory } from "@/functions/prints";
 import { HalfLoader } from "@/components/ui/loader";
+import { MultiMarkAs } from "@/components/pages/print/MultiMarkAs";
+import { Button } from "@/components/ui/button";
+import { LuCheck, LuX } from "react-icons/lu";
 
 interface ClientProps {
     user: UserProps;
@@ -18,9 +21,11 @@ interface ClientProps {
 export default function Client({ user }: ClientProps) {
     const [viewType, setViewType] = useState(false);
     const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending">("all");
-    const [prints, setPrints] = useState<PrintRecord[] | null>(null);
+    const [prints, setPrints] = useState<PrintRecord[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const [isMultiSelect, setIsMultiSelect] = useState<boolean>(false)
+    const [selectedPrints, setSelectedPrints] = useState<PrintRecord[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -46,6 +51,11 @@ export default function Client({ user }: ClientProps) {
             fetchData();
         }
     }, [user]);
+
+    const clearSelected = () => {
+        setIsMultiSelect(false);
+        setSelectedPrints([]);
+    }
 
     const filteredHistory = statusType === "all"
         ? prints || []
@@ -92,14 +102,44 @@ export default function Client({ user }: ClientProps) {
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>
             </div>
-            <div className="flex justify-between md:py-0 py-3 flex-row items-center">
+            <div className="relative flex justify-between md:py-0 py-3 flex-row items-center z-40">
                 <ViewType setViewType={setViewType} viewType={viewType} />
-                <StatusType setStatusType={setStatusType} statusType={statusType} />
+                <div className="flex gap-3">
+                    {!isMultiSelect && (
+                        <StatusType setStatusType={setStatusType} statusType={statusType} />
+                    )}
+
+                    {isMultiSelect && (
+                        <MultiMarkAs isAdminPage={false} selectedPrints={selectedPrints} setSelectedPrints={setSelectedPrints} />
+                    )}
+
+                    <Button variant="foreground" onClick={() => setIsMultiSelect(true)}><LuCheck size={32} /> Select</Button>
+
+                    {isMultiSelect && (
+                        <Button variant="destructive" onClick={clearSelected}>
+                            <LuX size={32} /> Cancel
+                        </Button>
+                    )}
+                </div>
             </div>
             {viewType ? (
-                <TableView documentResult={filteredHistory} page_type="user_history" statusType={statusType} />
+                <TableView
+                    documentResult={filteredHistory}
+                    page_type="user_history"
+                    statusType={statusType}
+                    isMultiSelect={isMultiSelect}
+                    selectedPrints={selectedPrints}
+                    setSelectedPrints={setSelectedPrints}
+                />
             ) : (
-                <GridView documentResult={filteredHistory} page_type="user_history" statusType={statusType} />
+                <GridView
+                    documentResult={filteredHistory}
+                    page_type="user_history"
+                    statusType={statusType}
+                    isMultiSelect={isMultiSelect}
+                    selectedPrints={selectedPrints}
+                    setSelectedPrints={setSelectedPrints}
+                />
             )}
         </>
     );
