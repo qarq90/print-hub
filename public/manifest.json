@@ -1,0 +1,50 @@
+{
+    "name": "Printhub",
+    "short_name": "Printhub",
+    "theme_color": "#fff",
+    "background_color": "#191919",
+    "start_url": "/",
+    "id": "Printhub",
+    "display": "standalone",
+    "description": "A modern web app for queueing, uploading, and managing print jobs and orders seamlessly.",
+    "icons": [
+        {
+            "purpose": "maskable",
+            "sizes": "256x256",
+            "src": "favicon256x256.png",
+            "type": "image/png"
+        },
+        {
+            "purpose": "any",
+            "sizes": "256x256",
+            "src": "favicon256x256.png",
+            "type": "image/png"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "Print Hub Home.png",
+            "type": "image/png",
+            "sizes": "1846x980",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "Print Hub New Order Item.png",
+            "type": "image/png",
+            "sizes": "1846x980",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "Print Hub User Prints.png",
+            "type": "image/png",
+            "sizes": "1846x980",
+            "form_factor": "narrow"
+        },
+        {
+            "src": "Print Hub Upload Files.png",
+            "type": "image/png",
+            "sizes": "1846x980",
+            "form_factor": "narrow"
+        }
+    ]
+}

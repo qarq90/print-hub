@@ -8,6 +8,7 @@ import { ClerkProvider } from '@clerk/nextjs';
 export const metadata: Metadata = {
   title: "Print Hub | Home",
   description: "Your one-stop solution for all printing needs.",
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({
@@ -18,6 +19,10 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en">
+        <head>
+          <link rel="manifest" href="/manifest.json" crossOrigin="use-credentials" />
+          <meta name="theme-color" content="#f79817" />
+        </head>
         <body className="flex justify-center items-center">
           <PrimaryBar />
           <SecondaryBar />
