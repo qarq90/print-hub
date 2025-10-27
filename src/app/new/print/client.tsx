@@ -29,7 +29,6 @@ export default function Client({ user }: ClientProps) {
     const [isOpen, setIsOpen] = useState(false)
     const [isFilesSelected, setIsFilesSelected] = useState(false)
     const fileInputRef = React.useRef<HTMLInputElement>(null);
-    const [uploadProgress, setUploadProgress] = useState<number>(0);
 
     const router = useRouter();
 
@@ -152,12 +151,8 @@ export default function Client({ user }: ClientProps) {
 
     const submitHandler = async () => {
         setLoading(true);
-        setUploadProgress(0);
 
         try {
-            let completed = 0;
-            const total = selectedFiles.length;
-
             await Promise.all(
                 selectedFiles.map(async (file) => {
                     try {
@@ -172,8 +167,6 @@ export default function Client({ user }: ClientProps) {
 
                         await insertNeon(user, file, pinataResult);
                     } finally {
-                        completed++;
-                        setUploadProgress((completed / total) * 100);
                     }
                 })
             );
@@ -185,7 +178,6 @@ export default function Client({ user }: ClientProps) {
             console.log("Something went wrong: ", e);
         } finally {
             setLoading(false);
-            setUploadProgress(0);
         }
     };
 
