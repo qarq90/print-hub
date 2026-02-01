@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 export const useConsistentRandom = <T>(
     items: T[],
-    seed: string | number
+    seed: string | number,
 ): T => {
     return useMemo(() => {
         const numericSeed =

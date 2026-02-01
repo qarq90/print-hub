@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import React from "react";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { cn } from "@/lib/utils";
@@ -10,20 +10,35 @@ export default function NewLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-
-    const pathname = usePathname()
+    const pathname = usePathname();
 
     return (
         <MainLayout>
-            {
-                !pathname.includes("pay") && (
-                    <section className="flex justify-evenly bg-foreground/10 rounded-xl w-full">
-                        <Link href="/user/prints" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/user/prints") && "bg-accent text-black")}>Your Prints</Link>
-                        <Link href="/user/orders" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/user/orders") && "bg-accent text-black")}>Your Orders</Link>
-                    </section>
-                )
-            }
+            {!pathname.includes("pay") && (
+                <section className="flex justify-evenly bg-foreground/10 rounded-xl w-full">
+                    <Link
+                        href="/user/prints"
+                        className={cn(
+                            "cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md",
+                            pathname.includes("/user/prints") &&
+                                "bg-accent text-black",
+                        )}
+                    >
+                        Your Prints
+                    </Link>
+                    <Link
+                        href="/user/orders"
+                        className={cn(
+                            "cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md",
+                            pathname.includes("/user/orders") &&
+                                "bg-accent text-black",
+                        )}
+                    >
+                        Your Orders
+                    </Link>
+                </section>
+            )}
             {children}
         </MainLayout>
-    )
+    );
 }

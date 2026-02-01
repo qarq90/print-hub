@@ -18,7 +18,8 @@ export default function Client() {
             const syncUserToDB = async () => {
                 const client = await pool.connect();
                 try {
-                    await client.query(`
+                    await client.query(
+                        `
                         INSERT INTO "users" (
                             "user-id",
                             "user-name",
@@ -30,16 +31,24 @@ export default function Client() {
                         )
                         VALUES ($1, $2, $3, $4, $5, $6, $7)
                         ON CONFLICT ("user-id") DO NOTHING
-                    `, [
-                        user.id,
-                        user.username || user.primaryEmailAddress?.emailAddress?.split("@")[0],
-                        user.primaryEmailAddress?.emailAddress || null,
-                        user.firstName || user.externalAccounts?.[0]?.firstName || "",
-                        user.lastName || user.externalAccounts?.[0]?.lastName || "",
-                        user.imageUrl || null,
-                        user.primaryPhoneNumber?.phoneNumber || null,
-                    ]);
-
+                    `,
+                        [
+                            user.id,
+                            user.username ||
+                                user.primaryEmailAddress?.emailAddress?.split(
+                                    "@",
+                                )[0],
+                            user.primaryEmailAddress?.emailAddress || null,
+                            user.firstName ||
+                                user.externalAccounts?.[0]?.firstName ||
+                                "",
+                            user.lastName ||
+                                user.externalAccounts?.[0]?.lastName ||
+                                "",
+                            user.imageUrl || null,
+                            user.primaryPhoneNumber?.phoneNumber || null,
+                        ],
+                    );
                 } catch (error) {
                     console.error("Failed to sync user:", error);
                 } finally {
@@ -69,7 +78,9 @@ export default function Client() {
     return (
         <MainLayout className="custom-signup-container">
             <section className="flex gap-4 flex-col justify-center items-center py-64">
-                <Text weight="bold" size="5xl">Join PrintHub</Text>
+                <Text weight="bold" size="5xl">
+                    Join PrintHub
+                </Text>
                 <Button
                     onClick={handleGoogleSignUp}
                     className="google-signup-button flex items-center gap-2"

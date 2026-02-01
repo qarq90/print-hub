@@ -1,32 +1,45 @@
-import React, { useState } from 'react';
-import { Details } from './Details';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import React, { useState } from "react";
+import { Details } from "./Details";
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion";
 import { LuUser, LuCalendarDays } from "react-icons/lu";
-import { cn } from '@/lib/utils';
-import { OrderRecord } from '@/interfaces/Order';
-import { EmptyHistory } from '@/components/empty/EmptyHistory';
-import { getEmptyStateConfig } from '@/functions/orders';
-import { truncateText } from '@/functions/utility';
+import { cn } from "@/lib/utils";
+import { OrderRecord } from "@/interfaces/Order";
+import { EmptyHistory } from "@/components/empty/EmptyHistory";
+import { getEmptyStateConfig } from "@/functions/orders";
+import { truncateText } from "@/functions/utility";
 
 interface GridViewProps {
     statusType?: "all" | "cancelled" | "completed" | "pending" | "in-cart";
     orderResult: OrderRecord[];
-    page_type: "user_history" | "order_queue" | "admin_page" | "shopkeeper_page";
+    page_type:
+        | "user_history"
+        | "order_queue"
+        | "admin_page"
+        | "shopkeeper_page";
 }
 
-export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, page_type }) => {
+export const GridView: React.FC<GridViewProps> = ({
+    statusType,
+    orderResult,
+    page_type,
+}) => {
     const [selectedItem, setSelectedItem] = useState<OrderRecord | null>(null);
 
     const getStatusColor = (status: string) => {
         switch (status) {
-            case 'completed':
-                return 'bg-lime-500';
-            case 'cancelled':
-                return 'bg-red-500';
-            case 'pending':
-                return 'bg-yellow-300';
+            case "completed":
+                return "bg-lime-500";
+            case "cancelled":
+                return "bg-red-500";
+            case "pending":
+                return "bg-yellow-300";
             default:
-                return 'bg-gray-300';
+                return "bg-gray-300";
         }
     };
 
@@ -38,14 +51,24 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
         setSelectedItem(null);
     };
 
-    const groupedDocuments = orderResult.reduce((acc, item) => {
-        const groupKey = (page_type === "order_queue" || page_type === "shopkeeper_page") ? (item.user_name ? item.user_name : "") : (item.ordered_at ? item.ordered_at : "");
-        if (!acc[groupKey]) {
-            acc[groupKey] = [];
-        }
-        acc[groupKey].push(item);
-        return acc;
-    }, {} as Record<string, OrderRecord[]>);
+    const groupedDocuments = orderResult.reduce(
+        (acc, item) => {
+            const groupKey =
+                page_type === "order_queue" || page_type === "shopkeeper_page"
+                    ? item.user_name
+                        ? item.user_name
+                        : ""
+                    : item.ordered_at
+                      ? item.ordered_at
+                      : "";
+            if (!acc[groupKey]) {
+                acc[groupKey] = [];
+            }
+            acc[groupKey].push(item);
+            return acc;
+        },
+        {} as Record<string, OrderRecord[]>,
+    );
 
     let groupEntries = Object.entries(groupedDocuments);
 
@@ -58,11 +81,18 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
     }
 
     if (orderResult.length === 0) {
-        const { title, description } = getEmptyStateConfig(page_type, statusType || "all");
+        const { title, description } = getEmptyStateConfig(
+            page_type,
+            statusType || "all",
+        );
 
         return (
             <div className="my-8 flex flex-col text-left">
-                <EmptyHistory type="orders" description={description} title={title} />
+                <EmptyHistory
+                    type="orders"
+                    description={description}
+                    title={title}
+                />
             </div>
         );
     }
@@ -73,7 +103,7 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
                 <div className="flex flex-col" key={groupKey}>
                     <Accordion type="single" collapsible>
                         <AccordionItem value="groupKey">
-                            <AccordionTrigger className="border bg-gray-500/5 border-foreground/10 shadow-md rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
+                            <AccordionTrigger className="bg-neutral-800 shadow-md rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
                                 <div className="md:grid md:grid-cols-4 items-center w-full">
                                     <div className="flex flex-row gap-2 col-span-2 items-center">
                                         <span>
@@ -92,7 +122,11 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
                                 {items.map((item, itemIndex) => (
                                     <div
                                         key={`${groupKey}-${itemIndex}`}
-                                        className={cn("hover:bg-foreground/5 shadow-md transition-colors rounded-lg border border-foreground/10 overflow-hidden hover:shadow-md", page_type !== "order_queue" && "cursor-pointer")}
+                                        className={cn(
+                                            "hover:bg-foreground/5 shadow-md transition-colors rounded-lg border border-foreground/10 overflow-hidden hover:shadow-md",
+                                            page_type !== "order_queue" &&
+                                                "cursor-pointer",
+                                        )}
                                         onClick={() => handleRowClick(item)}
                                     >
                                         <div className="p-4">
@@ -104,30 +138,54 @@ export const GridView: React.FC<GridViewProps> = ({ statusType, orderResult, pag
                                                 </div>
                                                 <span
                                                     className={`h-3 w-3 mt-2 rounded-full flex-shrink-0 ${getStatusColor(item.order_status)}`}
-                                                    aria-label={item.order_status}
+                                                    aria-label={
+                                                        item.order_status
+                                                    }
                                                 />
                                             </div>
 
                                             <div className="mt-2 space-y-2">
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-foreground/70">Category :</span>
-                                                    <span className="text-foreground font-medium">{item.item_category}</span>
+                                                    <span className="text-foreground/70">
+                                                        Category :
+                                                    </span>
+                                                    <span className="text-foreground font-medium">
+                                                        {item.item_category}
+                                                    </span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-foreground/70">Pages :</span>
-                                                    <span className="text-foreground font-medium">{item.item_quantity}</span>
+                                                    <span className="text-foreground/70">
+                                                        Pages :
+                                                    </span>
+                                                    <span className="text-foreground font-medium">
+                                                        {item.item_quantity}
+                                                    </span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-foreground/70">Quantity :</span>
-                                                    <span className="text-foreground font-medium">{item.item_quantity}</span>
+                                                    <span className="text-foreground/70">
+                                                        Quantity :
+                                                    </span>
+                                                    <span className="text-foreground font-medium">
+                                                        {item.item_quantity}
+                                                    </span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-foreground/70">Price :</span>
-                                                    <span className="text-foreground font-medium">₹ {item.item_price}</span>
+                                                    <span className="text-foreground/70">
+                                                        Price :
+                                                    </span>
+                                                    <span className="text-foreground font-medium">
+                                                        ₹ {item.item_price}
+                                                    </span>
                                                 </div>
                                                 <div className="flex justify-between text-sm">
-                                                    <span className="text-foreground/70">Cart :</span>
-                                                    <span className="text-foreground font-medium">{item.in_cart === true ? "Yes" : "No"}</span>
+                                                    <span className="text-foreground/70">
+                                                        Cart :
+                                                    </span>
+                                                    <span className="text-foreground font-medium">
+                                                        {item.in_cart === true
+                                                            ? "Yes"
+                                                            : "No"}
+                                                    </span>
                                                 </div>
                                             </div>
                                         </div>

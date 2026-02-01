@@ -27,7 +27,7 @@ export default function Client({ id, user }: Props) {
     const [quantity, setQuantity] = useState(1);
     const [instructions, setInstructions] = useState("");
     const [actionType, setActionType] = useState<"cart" | "order">("cart");
-    const router = useRouter()
+    const router = useRouter();
 
     if (!item) {
         return (
@@ -48,35 +48,39 @@ export default function Client({ id, user }: Props) {
     };
 
     const incrementQuantity = () => {
-        setQuantity(prev => prev + 1);
+        setQuantity((prev) => prev + 1);
     };
 
     const decrementQuantity = () => {
         if (quantity > 1) {
-            setQuantity(prev => prev - 1);
+            setQuantity((prev) => prev - 1);
         }
     };
 
     const confirmAction = async () => {
         try {
             setIsLoading(true);
-            const insertRecord = await insertOrder({
-                item_id: item.id,
-                item_name: item.name,
-                item_category: item.category,
-                item_type: "" + item.types.map(t => t.factor).join(", "),
-                item_quantity: quantity.toString(),
-                item_price: item.price,
-                instructions: instructions,
-                ordered_at: getFormatDate(new Date()),
-                order_status: actionType === "cart" ? "in-cart" : "pending",
-                in_cart: actionType === "cart",
-            }, user)
+            const insertRecord = await insertOrder(
+                {
+                    item_id: item.id,
+                    item_name: item.name,
+                    item_category: item.category,
+                    item_type: "" + item.types.map((t) => t.factor).join(", "),
+                    item_quantity: quantity.toString(),
+                    item_price: item.price,
+                    instructions: instructions,
+                    ordered_at: getFormatDate(new Date()),
+                    order_status: actionType === "cart" ? "in-cart" : "pending",
+                    in_cart: actionType === "cart",
+                },
+                user,
+            );
 
             if (insertRecord.status) {
-                router.push(actionType === "cart" ? "/user/orders" : "/user/orders")
+                router.push(
+                    actionType === "cart" ? "/user/orders" : "/user/orders",
+                );
             }
-
         } catch (error) {
             console.error("Error processing order:", error);
         } finally {
@@ -105,35 +109,59 @@ export default function Client({ id, user }: Props) {
                         <div className="mt-3 grid grid-cols-2 gap-3">
                             {item.types.length > 0 && (
                                 <div className="mt-3 col-span-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
-                                    {item.types.map((t: ItemType, i: number) => (
-                                        <div
-                                            key={`${t.factor}-${i}`}
-                                            className="flex flex-col rounded-md border border-foreground/10 bg-background/60 px-3 py-2"
-                                        >
-                                            <span className="text-foreground/50">{t.factor}     :</span>
-                                            <span className="font-medium text-foreground">{t.value}</span>
-                                        </div>
-                                    ))}
+                                    {item.types.map(
+                                        (t: ItemType, i: number) => (
+                                            <div
+                                                key={`${t.factor}-${i}`}
+                                                className="flex flex-col rounded-md border border-foreground/10 bg-background/60 px-3 py-2"
+                                            >
+                                                <span className="text-foreground/50">
+                                                    {t.factor} :
+                                                </span>
+                                                <span className="font-medium text-foreground">
+                                                    {t.value}
+                                                </span>
+                                            </div>
+                                        ),
+                                    )}
                                 </div>
                             )}
                             <div className="rounded-md flex flex-col border border-foreground/10 px-3 py-2">
-                                <Text className="text-foreground/50">Weight :</Text>
-                                <Text weight="semibold">{item.weight || "—"}</Text>
+                                <Text className="text-foreground/50">
+                                    Weight :
+                                </Text>
+                                <Text weight="semibold">
+                                    {item.weight || "—"}
+                                </Text>
                             </div>
                             <div className="rounded-md flex flex-col border border-foreground/10 px-3 py-2">
-                                <Text className="text-foreground/50">Dimensions :</Text>
-                                <Text weight="semibold">{item.dimensions || "—"}</Text>
+                                <Text className="text-foreground/50">
+                                    Dimensions :
+                                </Text>
+                                <Text weight="semibold">
+                                    {item.dimensions || "—"}
+                                </Text>
                             </div>
                         </div>
                     </div>
 
                     <div className="flex flex-col gap-4">
                         <div className="flex flex-col gap-2">
-                            <Text size="4xl" weight="bold" className="text-balance">
+                            <Text
+                                size="4xl"
+                                weight="bold"
+                                className="text-balance"
+                            >
                                 {item.name}
                             </Text>
-                            <Text className="text-foreground/70">{item.category}</Text>
-                            {item.short_description && <Text className=" text-foreground/80">{item.short_description}</Text>}
+                            <Text className="text-foreground/70">
+                                {item.category}
+                            </Text>
+                            {item.short_description && (
+                                <Text className=" text-foreground/80">
+                                    {item.short_description}
+                                </Text>
+                            )}
                         </div>
 
                         {item.long_description.length > 0 && (
@@ -142,24 +170,32 @@ export default function Client({ id, user }: Props) {
                                     About this item :
                                 </Text>
                                 <ul className="mt-3 list-disc space-y-2 pl-5">
-                                    {item.long_description.map((line: string, i: number) => (
-                                        <li key={i} className="text-foreground/80">
-                                            {line}
-                                        </li>
-                                    ))}
+                                    {item.long_description.map(
+                                        (line: string, i: number) => (
+                                            <li
+                                                key={i}
+                                                className="text-foreground/80"
+                                            >
+                                                {line}
+                                            </li>
+                                        ),
+                                    )}
                                 </ul>
                             </div>
                         )}
 
                         <div className="flex items-center gap-3">
-                            <Text className="text-foreground/70">Quantity :</Text>
+                            <Text className="text-foreground/70">
+                                Quantity :
+                            </Text>
                             <div className="flex items-center gap-2">
                                 <LuMinus
                                     onClick={decrementQuantity}
                                     size={24}
                                     className={cn(
                                         "p-1 bg-foreground/10 hover:bg-accent cursor-pointer hover:text-black rounded-sm",
-                                        quantity <= 1 && "opacity-50 cursor-not-allowed"
+                                        quantity <= 1 &&
+                                            "opacity-50 cursor-not-allowed",
                                     )}
                                 />
                                 <span className="text-foreground font-medium w-6 text-center">
@@ -174,7 +210,9 @@ export default function Client({ id, user }: Props) {
                         </div>
 
                         <div className="flex flex-col items-start gap-3 w-full">
-                            <Text className="text-foreground/70 whitespace-nowrap">Instructions :</Text>
+                            <Text className="text-foreground/70 whitespace-nowrap">
+                                Instructions :
+                            </Text>
                             <div className="flex-1 w-full">
                                 <Textarea
                                     onChange={(e) => {
@@ -191,17 +229,29 @@ export default function Client({ id, user }: Props) {
                         <div className="rounded-lg">
                             <div className="flex flex-col gap-3">
                                 <div className="flex flex-row items-center gap-2">
-                                    <Text size="xl" className="text-foreground/70">Price :</Text>
+                                    <Text
+                                        size="xl"
+                                        className="text-foreground/70"
+                                    >
+                                        Price :
+                                    </Text>
                                     <Text size="xl" weight="semibold">
                                         {"₹"}
-                                        {typeof item.price === "number" ? (item.price * quantity).toFixed(2) : item.price}
+                                        {typeof item.price === "number"
+                                            ? (item.price * quantity).toFixed(2)
+                                            : item.price}
                                     </Text>
                                 </div>
                                 <div className="flex items-center gap-2">
-                                    <Button variant="outline" onClick={handleAddToCart}>
+                                    <Button
+                                        variant="outline"
+                                        onClick={handleAddToCart}
+                                    >
                                         <LuShoppingCart /> Add to Cart
                                     </Button>
-                                    <Button onClick={handleOrderNow}><LuTruck /> Order Now</Button>
+                                    <Button onClick={handleOrderNow}>
+                                        <LuTruck /> Order Now
+                                    </Button>
                                 </div>
                             </div>
                         </div>
@@ -220,9 +270,15 @@ export default function Client({ id, user }: Props) {
                         {!isLoading ? (
                             <>
                                 {actionType === "cart" ? (
-                                    <LuShoppingCart size={48} className="mx-auto text-accent" />
+                                    <LuShoppingCart
+                                        size={48}
+                                        className="mx-auto text-accent"
+                                    />
                                 ) : (
-                                    <LuTruck size={48} className="mx-auto text-accent" />
+                                    <LuTruck
+                                        size={48}
+                                        className="mx-auto text-accent"
+                                    />
                                 )}
                                 <h3 className="mt-2 text-lg font-medium">
                                     {actionType === "cart"
@@ -236,16 +292,16 @@ export default function Client({ id, user }: Props) {
                                     >
                                         No
                                     </Button>
-                                    <Button onClick={confirmAction}>
-                                        Yes
-                                    </Button>
+                                    <Button onClick={confirmAction}>Yes</Button>
                                 </div>
                             </>
                         ) : (
                             <div className="flex flex-col items-center gap-3">
                                 <div className="h-10 w-10 animate-spin rounded-full border-4 border-accent border-t-transparent"></div>
                                 <p className="text-sm text-foreground/70">
-                                    {actionType === "cart" ? "Adding to cart..." : "Placing order..."}
+                                    {actionType === "cart"
+                                        ? "Adding to cart..."
+                                        : "Placing order..."}
                                 </p>
                             </div>
                         )}

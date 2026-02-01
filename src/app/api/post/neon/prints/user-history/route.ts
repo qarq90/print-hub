@@ -17,7 +17,7 @@ export async function POST(req: Request) {
         console.error("Error fetching user history:", error);
         return NextResponse.json(
             { error: String(error), status: false },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

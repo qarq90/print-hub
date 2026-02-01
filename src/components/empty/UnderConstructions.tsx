@@ -5,9 +5,11 @@ import { LuHouse } from "react-icons/lu";
 import { UnderDevelopmentImages } from "@/data/empty-svgs";
 
 export const UnderConstructions = () => {
-
     const [randomImage] = useState(
-        () => UnderDevelopmentImages[Math.floor(Math.random() * UnderDevelopmentImages.length)]
+        () =>
+            UnderDevelopmentImages[
+                Math.floor(Math.random() * UnderDevelopmentImages.length)
+            ],
     );
 
     return (
@@ -22,8 +24,8 @@ export const UnderConstructions = () => {
                     Page Under Development
                 </h2>
                 <p className="text-muted-foreground">
-                    We&apos;re working hard to bring you this feature soon. Please check back
-                    later!
+                    We&apos;re working hard to bring you this feature soon.
+                    Please check back later!
                 </p>
                 <Link
                     href="/"

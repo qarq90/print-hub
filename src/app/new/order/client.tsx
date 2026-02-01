@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-"use client";;
+"use client";
 import { Text } from "@/components/ui/text";
 import { UserProps } from "@/interfaces/User";
 import { Items } from "@/data/item-data";
@@ -13,18 +13,25 @@ interface ClientProps {
 }
 
 export default function Client({ user: _user }: ClientProps) {
-    const [orderType, setOrderType] = useState<"Paper" | "Writing" | "Art" | "Accessories" | "all">("all");
+    const [orderType, setOrderType] = useState<
+        "Paper" | "Writing" | "Art" | "Accessories" | "all"
+    >("all");
 
-    const filteredItems = orderType === "all"
-        ? Items || []
-        : (Items || []).filter(item => item.category === orderType);
+    const filteredItems =
+        orderType === "all"
+            ? Items || []
+            : (Items || []).filter((item) => item.category === orderType);
 
     return (
         <section key="stationary" title="Stationary" className="mb-12">
             <div className="flex flex-col gap-6">
                 <div className="flex flex-col">
-                    <Text size="5xl" weight="bold" className="text-foreground">Stationery</Text>
-                    <Text size="base" className="text-foreground/60">Last updated: {new Date().toLocaleDateString()}</Text>
+                    <Text size="5xl" weight="bold" className="text-foreground">
+                        Stationery
+                    </Text>
+                    <Text size="base" className="text-foreground/60">
+                        Last updated: {new Date().toLocaleDateString()}
+                    </Text>
                 </div>
 
                 <OrderType orderType={orderType} setOrderType={setOrderType} />

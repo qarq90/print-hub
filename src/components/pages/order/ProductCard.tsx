@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { Text } from "@/components/ui/text";
@@ -9,7 +9,6 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ item }: ProductCardProps) => {
-
     return (
         <Link
             href={`/new/order/${item.id}`}
@@ -28,12 +27,19 @@ export const ProductCard = ({ item }: ProductCardProps) => {
 
             <div className="p-4 flex flex-col gap-3 flex-grow bg-gray-500/5">
                 <div className="flex justify-between items-start gap-2">
-                    <Text weight="bold" className="text-lg line-clamp-2">{item.name}</Text>
-                    <Text weight="bold" className="text-primary whitespace-nowrap pl-2">
+                    <Text weight="bold" className="text-lg line-clamp-2">
+                        {item.name}
+                    </Text>
+                    <Text
+                        weight="bold"
+                        className="text-primary whitespace-nowrap pl-2"
+                    >
                         ₹{item.price}
                     </Text>
                 </div>
-                <Text className="text-foreground/80 line-clamp-3">{item.short_description}</Text>
+                <Text className="text-foreground/80 line-clamp-3">
+                    {item.short_description}
+                </Text>
             </div>
         </Link>
     );

@@ -19,7 +19,7 @@ export async function POST() {
         console.error("Error processing order:", error);
         return NextResponse.json(
             { error: "Error processing Order" },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

@@ -68,8 +68,9 @@ const textVariants = cva("text-foreground", {
 });
 
 interface TextProps
-    extends React.HTMLAttributes<HTMLSpanElement>,
-    VariantProps<typeof textVariants> {
+    extends
+        React.HTMLAttributes<HTMLSpanElement>,
+        VariantProps<typeof textVariants> {
     asChild?: boolean;
 }
 
@@ -96,7 +97,7 @@ const Text: React.FC<TextProps> = ({
                     decoration,
                     transform,
                     className,
-                })
+                }),
             )}
             {...props}
         />

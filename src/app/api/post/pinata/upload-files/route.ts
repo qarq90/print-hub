@@ -9,7 +9,7 @@ export async function POST(request: NextRequest) {
         if (!file) {
             return NextResponse.json(
                 { error: "No file provided" },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -23,13 +23,13 @@ export async function POST(request: NextRequest) {
                 ipfs_url: url,
                 timestamp: new Date().toISOString(),
             },
-            { status: 200 }
+            { status: 200 },
         );
     } catch (e) {
         console.error("Pinata upload error:", e);
         return NextResponse.json(
             { error: "Internal Server Error" },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

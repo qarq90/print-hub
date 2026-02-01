@@ -17,10 +17,10 @@ export default function Page() {
         <MainLayout>
             <>
                 <div className="-mb-4 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">Privacy Policy</Text>
-                    <Text size="base">
-                        Last updated: 30/05/2025
+                    <Text size="5xl" weight="bold">
+                        Privacy Policy
                     </Text>
+                    <Text size="base">Last updated: 30/05/2025</Text>
                 </div>
 
                 <PrivacyPolicySections />
@@ -30,10 +30,10 @@ export default function Page() {
 
             <>
                 <div className="-mb-4 mt-8 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">Terms of Service</Text>
-                    <Text size="base">
-                        Last updated: 30/05/2025
+                    <Text size="5xl" weight="bold">
+                        Terms of Service
                     </Text>
+                    <Text size="base">Last updated: 30/05/2025</Text>
                 </div>
 
                 <TermsOfServiceSections />

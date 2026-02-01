@@ -16,10 +16,11 @@ export const Problems = () => {
                     </div>
                     <div>
                         <div className="flex flex-row">
-                            <Text className="text-4xl">
-                                The&nbsp;
-                            </Text>
-                            <Text weight="bold" className="text-4xl text-accent">
+                            <Text className="text-4xl">The&nbsp;</Text>
+                            <Text
+                                weight="bold"
+                                className="text-4xl text-accent"
+                            >
                                 Problems
                             </Text>
                             <Text className="text-4xl">
@@ -39,7 +40,7 @@ export const Problems = () => {
                         </p>
                     </div>
                 </div>
-            </section >
+            </section>
         </>
-    )
-}
+    );
+};

@@ -1,19 +1,29 @@
-import * as React from "react"
-import { cn } from "@/lib/utils"
-import { LuUpload } from "react-icons/lu"
-import { Text } from "./text"
+import * as React from "react";
+import { cn } from "@/lib/utils";
+import { LuUpload } from "react-icons/lu";
+import { Text } from "./text";
 
 interface FileUploadProps extends React.InputHTMLAttributes<HTMLInputElement> {
-    label?: string
-    description?: string
-    supportedFormats?: string
-    handleFiles: (files: File[]) => void
-    isFilesSelected?: boolean
+    label?: string;
+    description?: string;
+    supportedFormats?: string;
+    handleFiles: (files: File[]) => void;
+    isFilesSelected?: boolean;
 }
 
 const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
-    ({ className, label = "Click to upload files", description = ".pdf, .png, .jpeg, .jpg", supportedFormats, handleFiles, isFilesSelected, ...props }, ref) => {
-
+    (
+        {
+            className,
+            label = "Click to upload files",
+            description = ".pdf, .png, .jpeg, .jpg",
+            supportedFormats,
+            handleFiles,
+            isFilesSelected,
+            ...props
+        },
+        ref,
+    ) => {
         const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.files) {
                 handleFiles(Array.from(e.target.files));
@@ -25,7 +35,7 @@ const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                 <div
                     className={cn(
                         "flex items-center justify-center w-full rounded-lg border border-foreground/5 hover:scale-105 bg-foreground/5",
-                        isFilesSelected && "hidden"
+                        isFilesSelected && "hidden",
                     )}
                 >
                     <label
@@ -34,16 +44,20 @@ const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                             "flex flex-col items-center justify-center w-full h-80 md:h-[425px] rounded-lg cursor-pointer",
                             "border-border hover:bg-accent/10",
                             "transition-colors duration-200 ease-in-out",
-                            className
+                            className,
                         )}
                     >
-                        <div className="flex flex-col items-center justify-center py-6">
+                        <div className="flex flex-col items-center justify-center gap-4 py-6">
                             <LuUpload className="w-8 h-8 mb-4" />
-                            <p className="mb-2 text-sm">
+                            <p className="text-sm">
                                 <span className="font-semibold">{label}</span>
                             </p>
                             <p className="text-xs">
                                 {supportedFormats || description}
+                            </p>
+                            <p className="text-sm text-foreground/70">
+                                Incase file upload fails, send it to +91
+                                8879662240
                             </p>
                         </div>
                         <input
@@ -57,18 +71,14 @@ const FileUpload = React.forwardRef<HTMLInputElement, FileUploadProps>(
                         />
                     </label>
                 </div>
-                {
-                    isFilesSelected && (
-                        <Text className="text-3xl md:text-5xl">
-                            Selected Files
-                        </Text>
-                    )
-                }
+                {isFilesSelected && (
+                    <Text className="text-3xl md:text-5xl">Selected Files</Text>
+                )}
             </div>
-        )
-    }
-)
+        );
+    },
+);
 
-FileUpload.displayName = "FileUpload"
+FileUpload.displayName = "FileUpload";
 
-export { FileUpload }
+export { FileUpload };

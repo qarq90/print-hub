@@ -18,7 +18,7 @@ export async function GET() {
         console.error("Error fetching all orders:", error);
         return NextResponse.json(
             { error: String(error), status: false },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

@@ -15,7 +15,10 @@ export const ViewType = ({ setViewType, viewType }: ViewTypeProps) => {
             >
                 <LuGrid3X3
                     size="36"
-                    className={cn(!viewType && "bg-foreground/10", "p-1.5 rounded-sm")}
+                    className={cn(
+                        !viewType && "bg-foreground/10",
+                        "p-1.5 rounded-sm",
+                    )}
                 />
             </div>
             <div
@@ -24,7 +27,10 @@ export const ViewType = ({ setViewType, viewType }: ViewTypeProps) => {
             >
                 <LuTable2
                     size="36"
-                    className={cn(viewType && "bg-foreground/10", "p-1.5 rounded-sm")}
+                    className={cn(
+                        viewType && "bg-foreground/10",
+                        "p-1.5 rounded-sm",
+                    )}
                 />
             </div>
         </div>

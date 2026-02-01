@@ -7,17 +7,18 @@ import { Mail } from "@/components/pages/contact-us/Mail";
 
 export const metadata: Metadata = {
     title: "Print Hub | Contact Us",
-    description: "Get in touch with Print Hub for support, inquiries, or service requests.",
+    description:
+        "Get in touch with Print Hub for support, inquiries, or service requests.",
 };
 
 export default function Page() {
     return (
         <MainLayout>
             <div className="mb-8 text-left flex flex-col">
-                <Text size="5xl" weight="bold">Contact Us</Text>
-                <Text>
-                    We&apos;d love to hear from you!
+                <Text size="5xl" weight="bold">
+                    Contact Us
                 </Text>
+                <Text>We&apos;d love to hear from you!</Text>
             </div>
 
             <FAQSection />

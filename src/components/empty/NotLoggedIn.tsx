@@ -4,7 +4,8 @@ import Link from "next/link";
 import { LuUserPlus } from "react-icons/lu";
 
 export const NotLoggedIn = () => {
-    const randomImage = NotLoggedInImages[Math.floor(Math.random() * NotLoggedInImages.length)];
+    const randomImage =
+        NotLoggedInImages[Math.floor(Math.random() * NotLoggedInImages.length)];
 
     return (
         <div className="w-full h-[82vh] md:h-[85vh] md:w-full flex justify-center items-center flex-col gap-4 md:mt-0 text-center">

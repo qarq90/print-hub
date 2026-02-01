@@ -8,8 +8,8 @@ export const FullLoader = () => {
                 <span className="bar"></span>
             </div>
         </>
-    )
-}
+    );
+};
 
 export const HalfLoader = () => {
     return (
@@ -20,5 +20,5 @@ export const HalfLoader = () => {
                 <span className="bar"></span>
             </div>
         </>
-    )
-}
+    );
+};

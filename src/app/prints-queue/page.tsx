@@ -1,6 +1,6 @@
 import Client from "./client";
 import { Metadata } from "next";
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { UserProps } from "@/interfaces/User";
 import { NotLoggedIn } from "@/components/empty/NotLoggedIn";
 
@@ -15,7 +15,7 @@ export default async function Page() {
     const user = await currentUser();
 
     if (!userId || !user) {
-        return <NotLoggedIn />
+        return <NotLoggedIn />;
     }
 
     const userProps: UserProps = {
@@ -23,10 +23,10 @@ export default async function Page() {
         firstName: user.firstName,
         lastName: user.lastName,
         fullName: user.fullName,
-        emailAddresses: user.emailAddresses.map(email => ({
-            emailAddress: email.emailAddress
+        emailAddresses: user.emailAddresses.map((email) => ({
+            emailAddress: email.emailAddress,
         })),
-        imageUrl: user.imageUrl
+        imageUrl: user.imageUrl,
     };
 
     return <Client user={userProps} />;

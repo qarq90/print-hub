@@ -9,7 +9,11 @@ interface UserFilterProps {
     onUserChange: (user: string) => void;
 }
 
-export const UserFilter = ({ users, selectedUser, onUserChange }: UserFilterProps) => {
+export const UserFilter = ({
+    users,
+    selectedUser,
+    onUserChange,
+}: UserFilterProps) => {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => setIsOpen(!isOpen);
@@ -18,7 +22,7 @@ export const UserFilter = ({ users, selectedUser, onUserChange }: UserFilterProp
     const handleUserSelect = (user: string) => {
         onUserChange(user);
         console.log("Selected user:", user);
-        closeDropdown()
+        closeDropdown();
     };
 
     const uniqueUsers = Array.from(new Set(users)).sort();
@@ -33,8 +37,9 @@ export const UserFilter = ({ users, selectedUser, onUserChange }: UserFilterProp
                     {selectedUser === "all" ? "All Users" : selectedUser}
                 </Text>
                 <svg
-                    className={`h-5 w-5 transition-transform ${isOpen ? "transform rotate-180" : ""
-                        }`}
+                    className={`h-5 w-5 transition-transform ${
+                        isOpen ? "transform rotate-180" : ""
+                    }`}
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -52,25 +57,29 @@ export const UserFilter = ({ users, selectedUser, onUserChange }: UserFilterProp
                 <div className="origin-top-right absolute right-0 mt-2 min-w-52 overflow-y-fo overflow-x-hidden rounded-md shadow-lg bg-foreground ring-1 ring-black ring-opacity-5 focus:outline-none z-50 max-h-60 overflow-y-auto">
                     <div className="">
                         <span
-                            className={`block bg-accent w-full cursor-pointer text-left px-4 py-2 text-sm ${selectedUser === "all"
-                                ? ""
-                                : "hover:bg-light"
-                                }`}
+                            className={`block bg-accent w-full cursor-pointer text-left px-4 py-2 text-sm ${
+                                selectedUser === "all" ? "" : "hover:bg-light"
+                            }`}
                             onClick={() => handleUserSelect("all")}
                         >
-                            <Text size="sm" className="text-dark">All Users</Text>
+                            <Text size="sm" className="text-dark">
+                                All Users
+                            </Text>
                         </span>
 
                         {uniqueUsers.map((user) => (
                             <span
                                 key={user}
-                                className={`block bg-accent rounded-none cursor-pointer w-full text-left px-4 py-2 text-sm ${selectedUser === user
-                                    ? ""
-                                    : "hover:bg-light"
-                                    }`}
+                                className={`block bg-accent rounded-none cursor-pointer w-full text-left px-4 py-2 text-sm ${
+                                    selectedUser === user
+                                        ? ""
+                                        : "hover:bg-light"
+                                }`}
                                 onClick={() => handleUserSelect(user)}
                             >
-                                <Text size="sm" className="text-dark">{truncateText(user, 18)}</Text>
+                                <Text size="sm" className="text-dark">
+                                    {truncateText(user, 18)}
+                                </Text>
                             </span>
                         ))}
                     </div>

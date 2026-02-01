@@ -1,11 +1,12 @@
 import Client from "./client";
 import { Metadata } from "next";
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { UserProps } from "@/interfaces/User";
 
 export const metadata: Metadata = {
     title: "Print Hub | Upload Files",
-    description: "Submit documents and files to create new print requests in Print Hub.",
+    description:
+        "Submit documents and files to create new print requests in Print Hub.",
 };
 
 export default async function Page() {
@@ -26,10 +27,10 @@ export default async function Page() {
         firstName: user.firstName,
         lastName: user.lastName,
         fullName: user.fullName,
-        emailAddresses: user.emailAddresses.map(email => ({
-            emailAddress: email.emailAddress
+        emailAddresses: user.emailAddresses.map((email) => ({
+            emailAddress: email.emailAddress,
         })),
-        imageUrl: user.imageUrl
+        imageUrl: user.imageUrl,
     };
 
     return <Client user={userProps} />;

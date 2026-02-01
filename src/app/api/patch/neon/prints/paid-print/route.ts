@@ -8,7 +8,7 @@ export async function PATCH(req: Request) {
         if (!print_id) {
             return NextResponse.json(
                 { error: "Print ID is required", status: false },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -26,7 +26,7 @@ export async function PATCH(req: Request) {
         if (result.rows.length === 0) {
             return NextResponse.json(
                 { error: "Print not found", status: false },
-                { status: 404 }
+                { status: 404 },
             );
         }
 
@@ -39,7 +39,7 @@ export async function PATCH(req: Request) {
         console.error("Error cancelling:", error);
         return NextResponse.json(
             { error: String(error), status: false },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

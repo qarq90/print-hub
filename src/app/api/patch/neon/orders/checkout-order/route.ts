@@ -12,7 +12,7 @@ export async function PATCH(req: Request) {
                     error: "Order ID is required to cancel order",
                     status: false,
                 },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -32,7 +32,7 @@ export async function PATCH(req: Request) {
         if (result.rows.length === 0) {
             return NextResponse.json(
                 { error: "Order not found", status: false },
-                { status: 404 }
+                { status: 404 },
             );
         }
 
@@ -45,7 +45,7 @@ export async function PATCH(req: Request) {
         console.error("Error cancelling order:", error);
         return NextResponse.json(
             { error: String(error), status: false },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

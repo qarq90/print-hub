@@ -43,7 +43,7 @@ export const fetchAllPrints = async () => {
 export const insertNeon = async (
     user: UserProps,
     file: PrintType,
-    pinataResult: PinataResult
+    pinataResult: PinataResult,
 ) => {
     try {
         const response = await fetch("/api/post/neon/prints/insert-record", {

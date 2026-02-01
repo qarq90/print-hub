@@ -9,28 +9,27 @@ export const Hero = () => {
                 <div className="grid md:grid-cols-2 gap-36 items-center">
                     <div>
                         <div className="flex flex-row">
-                            <Text className="text-4xl">
-                                Our&nbsp;
-                            </Text>
-                            <Text weight="bold" className="text-4xl text-accent">
+                            <Text className="text-4xl">Our&nbsp;</Text>
+                            <Text
+                                weight="bold"
+                                className="text-4xl text-accent"
+                            >
                                 Vision
                             </Text>
                         </div>
                         <br />
                         <p className="my-4 text-justify">
-                            Founded by Abdurrahman, Print Hub was born from
-                            a simple need: to make document printing
-                            effortless for both requesters and
-                            administrators. Frustrated with clunky
-                            processes, we set out to build a modern solution
-                            that leverages cutting-edge technologies to
+                            Founded by Abdurrahman, Print Hub was born from a
+                            simple need: to make document printing effortless
+                            for both requesters and administrators. Frustrated
+                            with clunky processes, we set out to build a modern
+                            solution that leverages cutting-edge technologies to
                             streamline the entire workflow.
                         </p>
                         <p className="text-justify">
-                            Our platform eliminates paperwork
-                            back-and-forth, reduces errors, and saves
-                            valuable time for everyone involved in the
-                            document printing process.
+                            Our platform eliminates paperwork back-and-forth,
+                            reduces errors, and saves valuable time for everyone
+                            involved in the document printing process.
                         </p>
                     </div>
                     <div className="relative rounded-full overflow-hidden">
@@ -43,5 +42,5 @@ export const Hero = () => {
                 </div>
             </section>
         </>
-    )
-}
+    );
+};

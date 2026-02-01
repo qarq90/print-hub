@@ -13,7 +13,9 @@ import { fetchAllOrders } from "@/functions/orders";
 
 export default function AdminOrdersClient() {
     const [viewType, setViewType] = useState(false);
-    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending" | "in-cart">("all");
+    const [statusType, setStatusType] = useState<
+        "all" | "cancelled" | "completed" | "pending" | "in-cart"
+    >("all");
     const [orders, setOrders] = useState<OrderRecord[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -31,7 +33,11 @@ export default function AdminOrdersClient() {
                 setOrders(result.data || []);
             } catch (error) {
                 console.error("Error fetching all orders:", error);
-                setError(error instanceof Error ? error.message : "Failed to fetch orders");
+                setError(
+                    error instanceof Error
+                        ? error.message
+                        : "Failed to fetch orders",
+                );
                 setOrders([]);
             } finally {
                 setLoading(false);
@@ -41,20 +47,22 @@ export default function AdminOrdersClient() {
         fetchData();
     }, []);
 
-    const filteredOrders = statusType === "all"
-        ? orders || []
-        : (orders || []).filter(item => item.order_status === statusType);
+    const filteredOrders =
+        statusType === "all"
+            ? orders || []
+            : (orders || []).filter((item) => item.order_status === statusType);
 
-
-    const cartItems = (orders || []).filter(item =>
-        item.in_cart === true && item.order_status === "pending"
+    const cartItems = (orders || []).filter(
+        (item) => item.in_cart === true && item.order_status === "pending",
     );
 
     if (loading) {
         return (
             <div className="mb-20">
                 <div className="md:mb-4 mb-2 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">All Orders</Text>
+                    <Text size="5xl" weight="bold">
+                        All Orders
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -79,7 +87,9 @@ export default function AdminOrdersClient() {
         return (
             <div className="mb-20">
                 <div className="mb-16 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">All Orders</Text>
+                    <Text size="5xl" weight="bold">
+                        All Orders
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -96,30 +106,41 @@ export default function AdminOrdersClient() {
     return (
         <>
             <div className="md:mb-4 mb-2 flex flex-col text-left">
-                <Text size="5xl" weight="bold">All Orders</Text>
+                <Text size="5xl" weight="bold">
+                    All Orders
+                </Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>
             </div>
             <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
                 <ViewType setViewType={setViewType} viewType={viewType} />
-                <StatusType setStatusType={setStatusType} statusType={statusType} />
+                <StatusType
+                    setStatusType={setStatusType}
+                    statusType={statusType}
+                />
             </div>
             {viewType ? (
-                <TableView orderResult={filteredOrders} page_type="admin_page" />
+                <TableView
+                    orderResult={filteredOrders}
+                    page_type="admin_page"
+                />
             ) : (
                 <GridView orderResult={filteredOrders} page_type="admin_page" />
             )}
 
             <div className="mb-6 flex flex-row items-center justify-between text-left">
                 <div className="flex flex-col">
-                    <Text size="5xl" weight="bold">Active Carts</Text>
+                    <Text size="5xl" weight="bold">
+                        Active Carts
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
                 <Text size="lg" className="flex flex-row items-center gap-2">
-                    {cartItems.length} item{cartItems.length !== 1 ? 's' : ''} in carts <LuShoppingCart />
+                    {cartItems.length} item{cartItems.length !== 1 ? "s" : ""}{" "}
+                    in carts <LuShoppingCart />
                 </Text>
             </div>
 
@@ -134,12 +155,23 @@ export default function AdminOrdersClient() {
             ) : (
                 <>
                     <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
-                        <ViewType setViewType={setViewType} viewType={viewType} />
+                        <ViewType
+                            setViewType={setViewType}
+                            viewType={viewType}
+                        />
                     </div>
                     {viewType ? (
-                        <TableView orderResult={cartItems} page_type="admin_page" statusType={statusType} />
+                        <TableView
+                            orderResult={cartItems}
+                            page_type="admin_page"
+                            statusType={statusType}
+                        />
                     ) : (
-                        <GridView orderResult={cartItems} page_type="admin_page" statusType={statusType} />
+                        <GridView
+                            orderResult={cartItems}
+                            page_type="admin_page"
+                            statusType={statusType}
+                        />
                     )}
                 </>
             )}

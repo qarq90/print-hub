@@ -21,48 +21,58 @@ import {
     LuClipboardList,
 } from "react-icons/lu";
 import { PrintRecord } from "@/interfaces/Print";
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import { usePathname, useRouter } from "next/navigation";
 import { deleteFromPinata } from "@/functions/pinata";
 import { FullLoader } from "@/components/ui/loader";
-import { cancelDocument, checkExistingHash, completeDocument, paidDocument, updateDocument } from "@/functions/prints";
+import {
+    cancelDocument,
+    checkExistingHash,
+    completeDocument,
+    paidDocument,
+    updateDocument,
+} from "@/functions/prints";
 import { Textarea } from "@/components/ui/textarea";
 
 interface DetailsProps {
     doc: PrintRecord;
     onClose: () => void;
-    page_type: "user_history" | "prints_queue" | "admin_page" | "shopkeeper_page";
+    page_type:
+        | "user_history"
+        | "prints_queue"
+        | "admin_page"
+        | "shopkeeper_page";
 }
 
 const getStatusStyles = (status: string) => {
     switch (status.toLowerCase()) {
-        case 'completed':
+        case "completed":
             return {
                 icon: <LuCheck />,
-                text: "text-green-500"
+                text: "text-green-500",
             };
-        case 'cancelled':
+        case "cancelled":
             return {
                 icon: <LuX />,
-                text: "text-red-500"
+                text: "text-red-500",
             };
         default:
             return {
                 icon: <LuClock />,
-                text: "text-yellow-500"
+                text: "text-yellow-500",
             };
     }
 };
 
 const getFileTypeIcon = (fileType: string) => {
     switch (fileType.toLowerCase()) {
-        case 'image':
+        case "image":
             return <LuFileImage />;
-        case 'pdf':
+        case "pdf":
             return <LuFileText />;
-        case 'word':
+        case "word":
             return <LuFileInput />;
-        case 'archive':
+        case "archive":
             return <LuFileArchive />;
         default:
             return <LuFile />;
@@ -75,10 +85,10 @@ const formatFileType = (fileType: string) => {
 
 export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     const [currentDoc, setCurrentDoc] = useState(doc);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
-    const router = useRouter()
-    const pathname = usePathname()
+    const router = useRouter();
+    const pathname = usePathname();
 
     const statusStyles = getStatusStyles(currentDoc.print_status);
 
@@ -94,8 +104,11 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const incrementPrintCount = () => {
-        if (page_type === "user_history" && currentDoc.print_status === "pending") {
-            setCurrentDoc(prev => ({
+        if (
+            page_type === "user_history" &&
+            currentDoc.print_status === "pending"
+        ) {
+            setCurrentDoc((prev) => ({
                 ...prev,
                 print_count: Number(prev.print_count) + 1,
             }));
@@ -103,27 +116,38 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const decrementPrintCount = () => {
-        if (page_type === "user_history" && currentDoc.print_status === "pending") {
-            setCurrentDoc(prev => ({
+        if (
+            page_type === "user_history" &&
+            currentDoc.print_status === "pending"
+        ) {
+            setCurrentDoc((prev) => ({
                 ...prev,
-                print_count: Math.max(1, prev.print_count - 1)
+                print_count: Math.max(1, prev.print_count - 1),
             }));
         }
     };
 
     const togglePrintType = () => {
-        if (page_type === "user_history" && currentDoc.print_status === "pending") {
-            setCurrentDoc(prev => {
+        if (
+            page_type === "user_history" &&
+            currentDoc.print_status === "pending"
+        ) {
+            setCurrentDoc((prev) => {
                 const newPrintType =
-                    prev.print_type === "single_side" ? "double_side" : "single_side";
+                    prev.print_type === "single_side"
+                        ? "double_side"
+                        : "single_side";
                 return { ...prev, print_type: newPrintType };
             });
         }
     };
 
     const togglePrintColor = () => {
-        if (page_type === "user_history" && currentDoc.print_status === "pending") {
-            setCurrentDoc(prev => {
+        if (
+            page_type === "user_history" &&
+            currentDoc.print_status === "pending"
+        ) {
+            setCurrentDoc((prev) => {
                 const newPrintColor =
                     prev.print_color === "b/w" ? "colored" : "b/w";
                 return { ...prev, print_color: newPrintColor };
@@ -132,10 +156,12 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
     };
 
     const toggleBinding = () => {
-        if (page_type === "user_history" && currentDoc.print_status === "pending") {
-            setCurrentDoc(prev => {
-                const newBindType =
-                    prev.binding_type === "no" ? "bind" : "no";
+        if (
+            page_type === "user_history" &&
+            currentDoc.print_status === "pending"
+        ) {
+            setCurrentDoc((prev) => {
+                const newBindType = prev.binding_type === "no" ? "bind" : "no";
                 return { ...prev, binding_type: newBindType };
             });
         }
@@ -214,13 +240,12 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
         }
     };
 
-
     const truncateText = (text: string) => {
         return text.length > 18 ? `${text.substring(0, 18)}...` : text;
     };
 
     if (pathname.includes("/prints-queue")) {
-        return null
+        return null;
     }
 
     return (
@@ -237,7 +262,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                 aria-labelledby="modal-title"
             >
                 <div className="flex justify-between items-center mb-4">
-                    <h3 id="modal-title" className="text-lg font-semibold flex items-center gap-2">
+                    <h3
+                        id="modal-title"
+                        className="text-lg font-semibold flex items-center gap-2"
+                    >
                         <LuFileText className="h-5 w-5" />
                         File Details
                     </h3>
@@ -251,24 +279,24 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                 </div>
 
                 <div className="space-y-3">
-                    {
-                        page_type !== "user_history" && (
-                            <div className="flex justify-center items-center gap-3 my-3.5">
-                                <span className="text-foreground flex-shrink-0 mt-1">
-                                    <LuUser />
+                    {page_type !== "user_history" && (
+                        <div className="flex justify-center items-center gap-3 my-3.5">
+                            <span className="text-foreground flex-shrink-0 mt-1">
+                                <LuUser />
+                            </span>
+                            <div className="flex-1 flex justify-between">
+                                <span className="text-foreground">Owner:</span>
+                                <span
+                                    className="font-medium text-right"
+                                    title={currentDoc.user_name ?? ""}
+                                >
+                                    {truncateText(
+                                        currentDoc.user_name || "N/A",
+                                    )}
                                 </span>
-                                <div className="flex-1 flex justify-between">
-                                    <span className="text-foreground">Owner:</span>
-                                    <span
-                                        className="font-medium text-right"
-                                        title={currentDoc.user_name ?? ""}
-                                    >
-                                        {truncateText(currentDoc.user_name || "N/A")}
-                                    </span>
-                                </div>
                             </div>
-                        )
-                    }
+                        </div>
+                    )}
 
                     <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
@@ -279,8 +307,13 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                             <span className="font-medium text-right truncate">
                                 {(() => {
                                     const fileName = currentDoc.file_name ?? "";
-                                    const nameWithoutExt = fileName.includes(".")
-                                        ? fileName.substring(0, fileName.lastIndexOf("."))
+                                    const nameWithoutExt = fileName.includes(
+                                        ".",
+                                    )
+                                        ? fileName.substring(
+                                              0,
+                                              fileName.lastIndexOf("."),
+                                          )
                                         : fileName;
 
                                     return nameWithoutExt.length > 30
@@ -303,46 +336,50 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    {
-                        currentDoc.file_type === ".pdf" && (
-                            <div className="flex justify-center items-center gap-3 my-3.5">
-                                <span className="text-foreground flex-shrink-0 mt-1">
-                                    <LuBookOpen />
-                                </span>
-                                <div className="flex-1 flex justify-between">
-                                    <span className="text-foreground">Sided:</span>
-                                    <div className="flex flex-row gap-2">
-                                        <span
-                                            className={cn(
-                                                "rounded-md transition-colors text-right px-2 py-0.5",
-                                                currentDoc.print_type === "double_side"
-                                                    ? "bg-accent text-black"
-                                                    : "text-foreground",
-                                                page_type === "user_history" && currentDoc.print_status === "pending" &&
-                                                "cursor-pointer hover:bg-foreground hover:text-background"
-                                            )}
-                                            onClick={togglePrintType}
-                                        >
-                                            Double Side
-                                        </span>
-                                        <span
-                                            className={cn(
-                                                "rounded-md transition-colors text-right px-2 py-0.5",
-                                                currentDoc.print_type === "single_side"
-                                                    ? "bg-accent text-black"
-                                                    : "text-foreground",
-                                                page_type === "user_history" && currentDoc.print_status === "pending" &&
-                                                "cursor-pointer hover:bg-foreground hover:text-background"
-                                            )}
-                                            onClick={togglePrintType}
-                                        >
-                                            Single Side
-                                        </span>
-                                    </div>
+                    {currentDoc.file_type === ".pdf" && (
+                        <div className="flex justify-center items-center gap-3 my-3.5">
+                            <span className="text-foreground flex-shrink-0 mt-1">
+                                <LuBookOpen />
+                            </span>
+                            <div className="flex-1 flex justify-between">
+                                <span className="text-foreground">Sided:</span>
+                                <div className="flex flex-row gap-2">
+                                    <span
+                                        className={cn(
+                                            "rounded-md transition-colors text-right px-2 py-0.5",
+                                            currentDoc.print_type ===
+                                                "double_side"
+                                                ? "bg-accent text-black"
+                                                : "text-foreground",
+                                            page_type === "user_history" &&
+                                                currentDoc.print_status ===
+                                                    "pending" &&
+                                                "cursor-pointer hover:bg-foreground hover:text-background",
+                                        )}
+                                        onClick={togglePrintType}
+                                    >
+                                        Double Side
+                                    </span>
+                                    <span
+                                        className={cn(
+                                            "rounded-md transition-colors text-right px-2 py-0.5",
+                                            currentDoc.print_type ===
+                                                "single_side"
+                                                ? "bg-accent text-black"
+                                                : "text-foreground",
+                                            page_type === "user_history" &&
+                                                currentDoc.print_status ===
+                                                    "pending" &&
+                                                "cursor-pointer hover:bg-foreground hover:text-background",
+                                        )}
+                                        onClick={togglePrintType}
+                                    >
+                                        Single Side
+                                    </span>
                                 </div>
                             </div>
-                        )
-                    }
+                        </div>
+                    )}
 
                     <div className="flex justify-center items-center gap-3">
                         <span className="text-foreground flex-shrink-0 mt-1">
@@ -357,8 +394,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         currentDoc.print_color === "b/w"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && currentDoc.print_status === "pending" &&
-                                        "cursor-pointer hover:bg-foreground hover:text-background"
+                                        page_type === "user_history" &&
+                                            currentDoc.print_status ===
+                                                "pending" &&
+                                            "cursor-pointer hover:bg-foreground hover:text-background",
                                     )}
                                     onClick={togglePrintColor}
                                 >
@@ -370,8 +409,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         currentDoc.print_color === "colored"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && currentDoc.print_status === "pending" &&
-                                        "cursor-pointer hover:bg-foreground hover:text-background"
+                                        page_type === "user_history" &&
+                                            currentDoc.print_status ===
+                                                "pending" &&
+                                            "cursor-pointer hover:bg-foreground hover:text-background",
                                     )}
                                     onClick={togglePrintColor}
                                 >
@@ -394,8 +435,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         currentDoc.binding_type === "no"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && currentDoc.print_status === "pending" &&
-                                        "cursor-pointer hover:bg-foreground hover:text-background"
+                                        page_type === "user_history" &&
+                                            currentDoc.print_status ===
+                                                "pending" &&
+                                            "cursor-pointer hover:bg-foreground hover:text-background",
                                     )}
                                     onClick={toggleBinding}
                                 >
@@ -407,8 +450,10 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                         currentDoc.binding_type === "bind"
                                             ? "bg-accent text-black"
                                             : "text-foreground",
-                                        page_type === "user_history" && currentDoc.print_status === "pending" &&
-                                        "cursor-pointer hover:bg-foreground hover:text-background"
+                                        page_type === "user_history" &&
+                                            currentDoc.print_status ===
+                                                "pending" &&
+                                            "cursor-pointer hover:bg-foreground hover:text-background",
                                     )}
                                     onClick={toggleBinding}
                                 >
@@ -437,28 +482,27 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Copies:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
-                                {
-                                    page_type === "user_history" && currentDoc.print_status === "pending" && (
+                                {page_type === "user_history" &&
+                                    currentDoc.print_status === "pending" && (
                                         <LuMinus
                                             className={cn(
                                                 "mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm",
-                                                currentDoc.print_count <= 1 && "cursor-not-allowed pointer-events-none"
+                                                currentDoc.print_count <= 1 &&
+                                                    "cursor-not-allowed pointer-events-none",
                                             )}
                                             size="24"
                                             onClick={decrementPrintCount}
                                         />
-                                    )
-                                }
+                                    )}
                                 <span>{currentDoc.print_count}</span>
-                                {
-                                    page_type === "user_history" && currentDoc.print_status === "pending" && (
+                                {page_type === "user_history" &&
+                                    currentDoc.print_status === "pending" && (
                                         <LuPlus
                                             className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
                                             size="24"
                                             onClick={incrementPrintCount}
                                         />
-                                    )
-                                }
+                                    )}
                             </span>
                         </div>
                     </div>
@@ -469,7 +513,9 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Status:</span>
-                            <span className={`font-medium text-right ${statusStyles.text}`}>
+                            <span
+                                className={`font-medium text-right ${statusStyles.text}`}
+                            >
                                 {currentDoc.print_status}
                             </span>
                         </div>
@@ -488,7 +534,9 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                     </div>
 
                     <div className="flex justify-center items-center gap-3 my-3.5">
-                        <span className="text-foreground/70"><LuClipboardList /> </span>
+                        <span className="text-foreground/70">
+                            <LuClipboardList />{" "}
+                        </span>
                         <span className="text-foreground">Instructions:</span>
                         <div className="flex justify-end gap-2 items-center w-full ml-32">
                             <Textarea
@@ -514,80 +562,95 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                         </div>
                     </div>
 
-                    {
-                        (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
+                    {page_type !== "prints_queue" &&
+                        page_type !== "shopkeeper_page" && (
                             <div className="flex justify-center items-center gap-3 my-3.5">
                                 <span className="text-foreground flex-shrink-0 mt-1">
                                     <LuBadgeIndianRupee />
                                 </span>
                                 <div className="flex-1 flex justify-between">
-                                    <span className="text-foreground">Cost:</span>
+                                    <span className="text-foreground">
+                                        Cost:
+                                    </span>
                                     <span className="font-medium text-right">
                                         ₹ {calculateCost(currentDoc)}
                                     </span>
                                 </div>
                             </div>
-                        )
-                    }
+                        )}
 
                     <div className="flex flex-row w-full gap-2 pt-3">
-                        {
-                            (page_type !== "prints_queue" && page_type !== "shopkeeper_page") && (
+                        {page_type !== "prints_queue" &&
+                            page_type !== "shopkeeper_page" && (
                                 <Button
                                     variant={
                                         currentDoc.print_status === "pending"
                                             ? "destructive"
-                                            : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
-                                                ? "ghost"
-                                                : "foreground"
+                                            : currentDoc.print_status ===
+                                                    "completed" ||
+                                                currentDoc.print_status ===
+                                                    "cancelled"
+                                              ? "ghost"
+                                              : "foreground"
                                     }
                                     onClick={cancelHandler}
                                     disabled={
-                                        currentDoc.print_status === "completed" ||
+                                        currentDoc.print_status ===
+                                            "completed" ||
                                         currentDoc.print_status === "cancelled"
                                     }
                                     className="grow"
                                 >
                                     Cancel
                                 </Button>
-                            )
-                        }
-                        {
-                            (page_type !== "admin_page" && (page_type === "user_history" || page_type === "prints_queue" || page_type === "shopkeeper_page")) && (
-                                <Button variant="outline" className="grow" onClick={onClose}>Close</Button>
-                            )
-                        }
-                        {
-                            (page_type === "user_history") && (
+                            )}
+                        {page_type !== "admin_page" &&
+                            (page_type === "user_history" ||
+                                page_type === "prints_queue" ||
+                                page_type === "shopkeeper_page") && (
                                 <Button
-                                    variant={
-                                        currentDoc.print_status === "pending"
-                                            ? (
-                                                JSON.stringify(currentDoc) === JSON.stringify(doc) ? "ghost" : "foreground"
-                                            )
-                                            : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
-                                                ? "ghost"
-                                                : "foreground"
-                                    }
-                                    onClick={updateHandler}
-                                    disabled={
-                                        JSON.stringify(currentDoc) === JSON.stringify(doc) ||
-                                        currentDoc.print_status === "completed" ||
-                                        currentDoc.print_status === "cancelled"
-                                    }
+                                    variant="outline"
                                     className="grow"
+                                    onClick={onClose}
                                 >
-                                    Update
+                                    Close
                                 </Button>
-                            )
-                        }
+                            )}
+                        {page_type === "user_history" && (
+                            <Button
+                                variant={
+                                    currentDoc.print_status === "pending"
+                                        ? JSON.stringify(currentDoc) ===
+                                          JSON.stringify(doc)
+                                            ? "ghost"
+                                            : "foreground"
+                                        : currentDoc.print_status ===
+                                                "completed" ||
+                                            currentDoc.print_status ===
+                                                "cancelled"
+                                          ? "ghost"
+                                          : "foreground"
+                                }
+                                onClick={updateHandler}
+                                disabled={
+                                    JSON.stringify(currentDoc) ===
+                                        JSON.stringify(doc) ||
+                                    currentDoc.print_status === "completed" ||
+                                    currentDoc.print_status === "cancelled"
+                                }
+                                className="grow"
+                            >
+                                Update
+                            </Button>
+                        )}
                         <Button
                             variant={
                                 currentDoc.print_status === "pending"
                                     ? "foreground"
-                                    : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
-                                        ? "ghost"
-                                        : "foreground"
+                                    : currentDoc.print_status === "completed" ||
+                                        currentDoc.print_status === "cancelled"
+                                      ? "ghost"
+                                      : "foreground"
                             }
                             disabled={
                                 currentDoc.print_status === "completed" ||
@@ -604,35 +667,47 @@ export const Details = ({ doc, onClose, page_type }: DetailsProps) => {
                                 variant={
                                     currentDoc.print_status === "pending"
                                         ? "foreground"
-                                        : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
-                                            ? "ghost"
-                                            : "foreground"
+                                        : currentDoc.print_status ===
+                                                "completed" ||
+                                            currentDoc.print_status ===
+                                                "cancelled"
+                                          ? "ghost"
+                                          : "foreground"
                                 }
                                 disabled={
-                                    currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled"
-                                } onClick={completeHandler}
+                                    currentDoc.print_status === "completed" ||
+                                    currentDoc.print_status === "cancelled"
+                                }
+                                onClick={completeHandler}
                             >
                                 Completed
                             </Button>
                         )}
 
-                        {page_type === "admin_page" && currentDoc.payment_status === "unpaid" && (
-                            <Button
-                                className="grow"
-                                variant={
-                                    currentDoc.print_status === "pending"
-                                        ? "foreground"
-                                        : (currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled")
-                                            ? "ghost"
-                                            : "foreground"
-                                }
-                                disabled={
-                                    currentDoc.print_status === "completed" || currentDoc.print_status === "cancelled"
-                                } onClick={paidHandler}
-                            >
-                                Paid
-                            </Button>
-                        )}
+                        {page_type === "admin_page" &&
+                            currentDoc.payment_status === "unpaid" && (
+                                <Button
+                                    className="grow"
+                                    variant={
+                                        currentDoc.print_status === "pending"
+                                            ? "foreground"
+                                            : currentDoc.print_status ===
+                                                    "completed" ||
+                                                currentDoc.print_status ===
+                                                    "cancelled"
+                                              ? "ghost"
+                                              : "foreground"
+                                    }
+                                    disabled={
+                                        currentDoc.print_status ===
+                                            "completed" ||
+                                        currentDoc.print_status === "cancelled"
+                                    }
+                                    onClick={paidHandler}
+                                >
+                                    Paid
+                                </Button>
+                            )}
                     </div>
                 </div>
             </div>

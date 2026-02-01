@@ -15,7 +15,7 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
             <div
                 className={cn(
                     "flex flex-row items-center cursor-pointer rounded-lg transition-colors",
-                    statusType === "all" && "bg-blue-500/10"
+                    statusType === "all" && "bg-blue-500/10",
                 )}
                 onClick={() => setStatusType("all")}
             >
@@ -23,13 +23,15 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     size="36"
                     className={cn(
                         "py-1.5 pl-1.5 rounded-sm",
-                        statusType === "all" && "text-blue-500"
+                        statusType === "all" && "text-blue-500",
                     )}
                 />
-                <Text className={cn(
-                    "text-sm pr-3 pl-1 rounded-md hidden md:block",
-                    statusType === "all" && "text-blue-500 font-medium"
-                )}>
+                <Text
+                    className={cn(
+                        "text-sm pr-3 pl-1 rounded-md hidden md:block",
+                        statusType === "all" && "text-blue-500 font-medium",
+                    )}
+                >
                     All
                 </Text>
             </div>
@@ -37,7 +39,7 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
             <div
                 className={cn(
                     "flex flex-row items-center cursor-pointer rounded-lg transition-colors",
-                    statusType === "cancelled" && "bg-red-500/10"
+                    statusType === "cancelled" && "bg-red-500/10",
                 )}
                 onClick={() => setStatusType("cancelled")}
             >
@@ -45,13 +47,16 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     size="36"
                     className={cn(
                         "py-1.5 pl-1.5 rounded-sm",
-                        statusType === "cancelled" && "text-red-500"
+                        statusType === "cancelled" && "text-red-500",
                     )}
                 />
-                <Text className={cn(
-                    "text-sm pr-3 pl-1 rounded-md hidden md:block",
-                    statusType === "cancelled" && "text-red-500 font-medium"
-                )}>
+                <Text
+                    className={cn(
+                        "text-sm pr-3 pl-1 rounded-md hidden md:block",
+                        statusType === "cancelled" &&
+                            "text-red-500 font-medium",
+                    )}
+                >
                     Cancelled
                 </Text>
             </div>
@@ -59,7 +64,7 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
             <div
                 className={cn(
                     "flex flex-row items-center cursor-pointer rounded-lg transition-colors",
-                    statusType === "completed" && "bg-green-500/10"
+                    statusType === "completed" && "bg-green-500/10",
                 )}
                 onClick={() => setStatusType("completed")}
             >
@@ -67,13 +72,16 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     size="36"
                     className={cn(
                         "py-1.5 pl-1.5 rounded-sm",
-                        statusType === "completed" && "text-green-500"
+                        statusType === "completed" && "text-green-500",
                     )}
                 />
-                <Text className={cn(
-                    "text-sm pr-3 pl-1 rounded-md hidden md:block",
-                    statusType === "completed" && "text-green-500 font-medium"
-                )}>
+                <Text
+                    className={cn(
+                        "text-sm pr-3 pl-1 rounded-md hidden md:block",
+                        statusType === "completed" &&
+                            "text-green-500 font-medium",
+                    )}
+                >
                     Completed
                 </Text>
             </div>
@@ -81,7 +89,7 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
             <div
                 className={cn(
                     "flex flex-row items-center cursor-pointer rounded-lg transition-colors",
-                    statusType === "pending" && "bg-yellow-500/10"
+                    statusType === "pending" && "bg-yellow-500/10",
                 )}
                 onClick={() => setStatusType("pending")}
             >
@@ -89,13 +97,16 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     size="36"
                     className={cn(
                         "py-1.5 pl-1.5 rounded-sm",
-                        statusType === "pending" && "text-yellow-500"
+                        statusType === "pending" && "text-yellow-500",
                     )}
                 />
-                <Text className={cn(
-                    "text-sm pr-3 pl-1 rounded-md hidden md:block",
-                    statusType === "pending" && "text-yellow-500 font-medium"
-                )}>
+                <Text
+                    className={cn(
+                        "text-sm pr-3 pl-1 rounded-md hidden md:block",
+                        statusType === "pending" &&
+                            "text-yellow-500 font-medium",
+                    )}
+                >
                     Pending
                 </Text>
             </div>

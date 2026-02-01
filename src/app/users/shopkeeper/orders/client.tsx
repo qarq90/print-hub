@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { Text } from "@/components/ui/text";
 import { OrderRecord } from "@/interfaces/Order";
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
@@ -12,7 +12,9 @@ import { fetchPendingOrders } from "@/functions/orders";
 
 export default function AdminOrdersClient() {
     const [viewType, setViewType] = useState(false);
-    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending" | "in-cart">("all");
+    const [statusType, setStatusType] = useState<
+        "all" | "cancelled" | "completed" | "pending" | "in-cart"
+    >("all");
     const [orders, setOrders] = useState<OrderRecord[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -30,7 +32,11 @@ export default function AdminOrdersClient() {
                 setOrders(result.data || []);
             } catch (error) {
                 console.error("Error fetching Pending Orders:", error);
-                setError(error instanceof Error ? error.message : "Failed to fetch orders");
+                setError(
+                    error instanceof Error
+                        ? error.message
+                        : "Failed to fetch orders",
+                );
                 setOrders([]);
             } finally {
                 setLoading(false);
@@ -40,15 +46,18 @@ export default function AdminOrdersClient() {
         fetchData();
     }, []);
 
-    const filteredOrders = statusType === "all"
-        ? orders || []
-        : (orders || []).filter(item => item.order_status === statusType);
+    const filteredOrders =
+        statusType === "all"
+            ? orders || []
+            : (orders || []).filter((item) => item.order_status === statusType);
 
     if (loading) {
         return (
             <div className="mb-20">
                 <div className="md:mb-4 mb-2 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">Pending Orders</Text>
+                    <Text size="5xl" weight="bold">
+                        Pending Orders
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -73,7 +82,9 @@ export default function AdminOrdersClient() {
         return (
             <div className="mb-20">
                 <div className="mb-16 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">Pending Orders</Text>
+                    <Text size="5xl" weight="bold">
+                        Pending Orders
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -90,19 +101,30 @@ export default function AdminOrdersClient() {
     return (
         <>
             <div className="md:mb-4 mb-2 flex flex-col text-left">
-                <Text size="5xl" weight="bold">Pending Orders</Text>
+                <Text size="5xl" weight="bold">
+                    Pending Orders
+                </Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>
             </div>
             <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
                 <ViewType setViewType={setViewType} viewType={viewType} />
-                <StatusType setStatusType={setStatusType} statusType={statusType} />
+                <StatusType
+                    setStatusType={setStatusType}
+                    statusType={statusType}
+                />
             </div>
             {viewType ? (
-                <TableView orderResult={filteredOrders} page_type="shopkeeper_page" />
+                <TableView
+                    orderResult={filteredOrders}
+                    page_type="shopkeeper_page"
+                />
             ) : (
-                <GridView orderResult={filteredOrders} page_type="shopkeeper_page" />
+                <GridView
+                    orderResult={filteredOrders}
+                    page_type="shopkeeper_page"
+                />
             )}
         </>
     );

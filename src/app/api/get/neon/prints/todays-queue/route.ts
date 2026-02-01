@@ -15,7 +15,7 @@ export async function GET() {
         console.error("Error fetching queue:", error);
         return NextResponse.json(
             { error: String(error), status: false },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

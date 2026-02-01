@@ -8,7 +8,7 @@ export async function DELETE(request: Request) {
         if (!ipfs_id) {
             return NextResponse.json(
                 { error: "File ID is required" },
-                { status: 400 }
+                { status: 400 },
             );
         }
 
@@ -19,7 +19,7 @@ export async function DELETE(request: Request) {
         console.error("Server error:", e);
         return NextResponse.json(
             { error: "Internal server error" },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

@@ -57,7 +57,7 @@ export async function POST(req: Request) {
         console.error("Error inserting:", error);
         return NextResponse.json(
             { error: String(error), status: false },
-            { status: 500 }
+            { status: 500 },
         );
     }
 }

@@ -1,5 +1,5 @@
 import Client from "./client";
-import { auth, currentUser } from '@clerk/nextjs/server';
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { UserProps } from "@/interfaces/User";
 
 interface PageProps {
@@ -23,13 +23,13 @@ export default async function Item({ params }: PageProps) {
 
     const userProps: UserProps = {
         id: user.id,
-        firstName: user.firstName || '',
-        lastName: user.lastName || '',
-        fullName: user.fullName || '',
-        emailAddresses: user.emailAddresses.map(email => ({
-            emailAddress: email.emailAddress
+        firstName: user.firstName || "",
+        lastName: user.lastName || "",
+        fullName: user.fullName || "",
+        emailAddresses: user.emailAddresses.map((email) => ({
+            emailAddress: email.emailAddress,
         })),
-        imageUrl: user.imageUrl || ''
+        imageUrl: user.imageUrl || "",
     };
 
     return (

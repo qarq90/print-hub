@@ -83,7 +83,7 @@ export const updateFromPinata = async (file: PrintRecord) => {
         if (!response.ok) {
             const errorData = await response.json();
             throw new Error(
-                errorData.error || "Failed to update file in Pinata"
+                errorData.error || "Failed to update file in Pinata",
             );
         }
 

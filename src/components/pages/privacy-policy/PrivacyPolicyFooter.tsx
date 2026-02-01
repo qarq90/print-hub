@@ -15,5 +15,5 @@ export const PrivacyPolicyFooter = () => {
                 </Text>
             </div>
         </>
-    )
-}
+    );
+};

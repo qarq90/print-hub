@@ -1,9 +1,9 @@
-"use client"
-import { MainLayout } from "@/components/layouts/MainLayout"
-import { Button } from "@/components/ui/button"
-import { printHubFeatures, printhubTestimonials } from "@/data/home-data"
-import { cn } from "@/lib/utils"
-import Link from "next/link"
+"use client";
+import { MainLayout } from "@/components/layouts/MainLayout";
+import { Button } from "@/components/ui/button";
+import { printHubFeatures, printhubTestimonials } from "@/data/home-data";
+import { cn } from "@/lib/utils";
+import Link from "next/link";
 import {
     LuList,
     LuUpload,
@@ -15,7 +15,7 @@ import {
     LuArrowRight,
     LuPlus,
 } from "react-icons/lu";
-import { Text } from "@/components/ui/text"
+import { Text } from "@/components/ui/text";
 
 export default function Client() {
     return (
@@ -25,7 +25,10 @@ export default function Client() {
                     <Text weight="bold" className="text-5xl md:text-7xl">
                         Print
                     </Text>
-                    <Text weight="bold" className="text-5xl md:text-7xl text-accent">
+                    <Text
+                        weight="bold"
+                        className="text-5xl md:text-7xl text-accent"
+                    >
                         hub
                     </Text>
                 </div>
@@ -54,11 +57,16 @@ export default function Client() {
                         <Text weight="bold" className="text-5xl md:text-5xl">
                             Print
                         </Text>
-                        <Text weight="bold" className="text-5xl md:text-5xl text-accent">
+                        <Text
+                            weight="bold"
+                            className="text-5xl md:text-5xl text-accent"
+                        >
                             hub
                         </Text>
                     </div>
-                    <Text className="text-xl text-foreground/70">Simple steps to get your prints or items delivered</Text>
+                    <Text className="text-xl text-foreground/70">
+                        Simple steps to get your prints or items delivered
+                    </Text>
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12 max-w-6xl mx-auto">
@@ -76,7 +84,10 @@ export default function Client() {
                         </Text>
                     </div>
 
-                    <LuArrowRight size={28} className="hidden md:block text-accent/50" />
+                    <LuArrowRight
+                        size={28}
+                        className="hidden md:block text-accent/50"
+                    />
 
                     <div className="flex flex-col items-center text-center group">
                         <div className="relative mb-6">
@@ -92,12 +103,18 @@ export default function Client() {
                         </Text>
                     </div>
 
-                    <LuArrowRight size={28} className="hidden md:block text-accent/50" />
+                    <LuArrowRight
+                        size={28}
+                        className="hidden md:block text-accent/50"
+                    />
 
                     <div className="flex flex-col items-center text-center group">
                         <div className="relative mb-6">
                             <div className="w-20 h-20 rounded-full bg-accent/10 border-2 border-accent flex items-center justify-center group-hover:scale-110 transition-transform">
-                                <LuShoppingCart size={32} className="text-accent" />
+                                <LuShoppingCart
+                                    size={32}
+                                    className="text-accent"
+                                />
                             </div>
                             <div className="absolute -top-2 -right-2 w-8 h-8 rounded-full bg-accent text-accent-foreground flex items-center justify-center text-sm font-bold">
                                 3
@@ -108,7 +125,10 @@ export default function Client() {
                         </Text>
                     </div>
 
-                    <LuArrowRight size={28} className="hidden md:block text-accent/50" />
+                    <LuArrowRight
+                        size={28}
+                        className="hidden md:block text-accent/50"
+                    />
 
                     <div className="flex flex-col items-center text-center group">
                         <div className="relative mb-6">
@@ -148,27 +168,30 @@ export default function Client() {
                     <Text weight="bold" className="text-5xl md:text-5xl">
                         Print
                     </Text>
-                    <Text weight="bold" className="text-5xl md:text-5xl text-accent">
+                    <Text
+                        weight="bold"
+                        className="text-5xl md:text-5xl text-accent"
+                    >
                         hub
                     </Text>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
                     {printHubFeatures.map((feature, index) => {
-                        const Icon = feature.icon
+                        const Icon = feature.icon;
                         return (
                             <div
                                 key={index}
                                 className={cn(
-                                    "flex flex-col gap-3 rounded-lg border bg-gray-500/5 border-foreground/10 justify-center items-center px-8 py-10 hover:shadow-md transition-all",
+                                    "flex flex-col gap-3 rounded-lg bg-neutral-800 justify-center items-center px-8 py-10 hover:shadow-md transition-all",
                                 )}
                             >
                                 <Icon size={36} className="text-accent" />
-                                <Text size="xl">
-                                    {feature.header}
+                                <Text size="xl">{feature.header}</Text>
+                                <Text className="text-center text-foreground/80">
+                                    {feature.text}
                                 </Text>
-                                <Text className="text-center text-foreground/80">{feature.text}</Text>
                             </div>
-                        )
+                        );
                     })}
                 </div>
             </div>
@@ -182,12 +205,15 @@ export default function Client() {
                     {printhubTestimonials.map((testimonial, index) => (
                         <div
                             key={index}
-                            className="flex flex-col gap-4 rounded-xl border bg-gray-500/5 border-foreground/10 p-6 hover:shadow-md transition-all"
+                            className="flex flex-col gap-4 rounded-xl bg-neutral-800 p-6 hover:shadow-md transition-all"
                         >
                             <Text className="text-accent flex flex-row gap-2 items-center">
                                 <LuUser size={24} /> {testimonial.name}
                             </Text>
-                            <Text size="lg" className="text-left text-foreground/70">
+                            <Text
+                                size="lg"
+                                className="text-left text-foreground/70"
+                            >
                                 &#34;{testimonial.feedback}&#34;
                             </Text>
                         </div>
@@ -195,5 +221,5 @@ export default function Client() {
                 </div>
             </div>
         </MainLayout>
-    )
+    );
 }

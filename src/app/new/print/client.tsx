@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import React, { useState } from "react";
 import { Text } from "@/components/ui/text";
 import { PrintType } from "@/interfaces/Print";
@@ -23,11 +23,10 @@ interface ClientProps {
 }
 
 export default function Client({ user }: ClientProps) {
-
     const [selectedFiles, setSelectedFiles] = useState<PrintType[]>([]);
     const [loading, setLoading] = useState(false);
-    const [isOpen, setIsOpen] = useState(false)
-    const [isFilesSelected, setIsFilesSelected] = useState(false)
+    const [isOpen, setIsOpen] = useState(false);
+    const [isFilesSelected, setIsFilesSelected] = useState(false);
     const fileInputRef = React.useRef<HTMLInputElement>(null);
 
     const router = useRouter();
@@ -65,7 +64,7 @@ export default function Client({ user }: ClientProps) {
                     original_file: file,
                     hashed_content: await generateFileHash(file),
                 };
-            })
+            }),
         );
         setSelectedFiles([...selectedFiles, ...processedFiles]);
         setIsFilesSelected(true);
@@ -74,8 +73,10 @@ export default function Client({ user }: ClientProps) {
     const incrementPrintCount = (index: number) => {
         setSelectedFiles((prevFiles) =>
             prevFiles.map((file, i) =>
-                i === index ? { ...file, print_count: file.print_count + 1 } : file
-            )
+                i === index
+                    ? { ...file, print_count: file.print_count + 1 }
+                    : file,
+            ),
         );
     };
 
@@ -83,9 +84,12 @@ export default function Client({ user }: ClientProps) {
         setSelectedFiles((prevFiles) =>
             prevFiles.map((file, i) =>
                 i === index
-                    ? { ...file, print_count: Math.max(1, file.print_count - 1) }
-                    : file
-            )
+                    ? {
+                          ...file,
+                          print_count: Math.max(1, file.print_count - 1),
+                      }
+                    : file,
+            ),
         );
     };
 
@@ -93,7 +97,10 @@ export default function Client({ user }: ClientProps) {
         setSelectedFiles((prevFiles) =>
             prevFiles.map((file, i) => {
                 if (i === index) {
-                    const newPrintType = file.print_type === "single_side" ? "double_side" : "single_side";
+                    const newPrintType =
+                        file.print_type === "single_side"
+                            ? "double_side"
+                            : "single_side";
 
                     return {
                         ...file,
@@ -101,7 +108,7 @@ export default function Client({ user }: ClientProps) {
                     };
                 }
                 return file;
-            })
+            }),
         );
     };
 
@@ -109,7 +116,8 @@ export default function Client({ user }: ClientProps) {
         setSelectedFiles((prevFiles) =>
             prevFiles.map((file, i) => {
                 if (i === index) {
-                    const newPrintColor = file.print_color === "b/w" ? "colored" : "b/w";
+                    const newPrintColor =
+                        file.print_color === "b/w" ? "colored" : "b/w";
 
                     return {
                         ...file,
@@ -117,7 +125,7 @@ export default function Client({ user }: ClientProps) {
                     };
                 }
                 return file;
-            })
+            }),
         );
     };
 
@@ -125,14 +133,15 @@ export default function Client({ user }: ClientProps) {
         setSelectedFiles((prevFiles) =>
             prevFiles.map((file, i) => {
                 if (i === index) {
-                    const newBinding = file.binding_type === "no" ? "bind" : "no";
+                    const newBinding =
+                        file.binding_type === "no" ? "bind" : "no";
                     return {
                         ...file,
                         binding_type: newBinding,
                     };
                 }
                 return file;
-            })
+            }),
         );
     };
 
@@ -140,7 +149,9 @@ export default function Client({ user }: ClientProps) {
         if (selectedFiles.length === 1) {
             setIsFilesSelected(false);
         }
-        setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+        setSelectedFiles((prevFiles) =>
+            prevFiles.filter((_, i) => i !== index),
+        );
     };
 
     const triggerFileInput = () => {
@@ -156,7 +167,8 @@ export default function Client({ user }: ClientProps) {
             await Promise.all(
                 selectedFiles.map(async (file) => {
                     try {
-                        const existingFileResponse = await checkExistingHash(file);
+                        const existingFileResponse =
+                            await checkExistingHash(file);
                         let pinataResult: PinataResult;
 
                         if (existingFileResponse.fileExists) {
@@ -168,12 +180,11 @@ export default function Client({ user }: ClientProps) {
                         await insertNeon(user, file, pinataResult);
                     } finally {
                     }
-                })
+                }),
             );
 
             setIsOpen(true);
             setSelectedFiles([]);
-
         } catch (e) {
             console.log("Something went wrong: ", e);
         } finally {
@@ -186,8 +197,21 @@ export default function Client({ user }: ClientProps) {
             <section key="files" title="Upload Files">
                 <div className="flex flex-col gap-4">
                     <div className="w-full flex justify-center items-center">
-                        <FileUpload isFilesSelected={isFilesSelected} handleFiles={handleFiles} ref={fileInputRef} />
+                        <FileUpload
+                            isFilesSelected={isFilesSelected}
+                            handleFiles={handleFiles}
+                            ref={fileInputRef}
+                        />
                     </div>
+
+                    {isFilesSelected && (
+                        <div className="w-full flex">
+                            <p className="text-sm text-foreground/70">
+                                Incase file upload fails, send it to +91
+                                8879662240
+                            </p>
+                        </div>
+                    )}
 
                     {selectedFiles.length > 0 && (
                         <>
@@ -203,10 +227,14 @@ export default function Client({ user }: ClientProps) {
                                             </h3>
                                             <div className="flex flex-row justify-between items-center">
                                                 <p className="text-sm text-foreground/70">
-                                                    {getFileType(file.file_type)}
+                                                    {getFileType(
+                                                        file.file_type,
+                                                    )}
                                                 </p>
                                                 <LuTrash
-                                                    onClick={() => handleDeleteFile(index)}
+                                                    onClick={() =>
+                                                        handleDeleteFile(index)
+                                                    }
                                                     size={24}
                                                     className="p-1 mt-1 bg-red-700 hover:bg-foreground hover:text-background cursor-pointer rounded-sm ml-2"
                                                 />
@@ -214,43 +242,63 @@ export default function Client({ user }: ClientProps) {
 
                                             <div className="grid grid-cols-1 gap-2">
                                                 <div className="grid grid-cols-2 items-center">
-                                                    <span className="text-foreground/70">Size:</span>
+                                                    <span className="text-foreground/70">
+                                                        Size:
+                                                    </span>
                                                     <span className="text-foreground font-medium text-right">
                                                         {file.original_file
-                                                            ? getFileSize(file.original_file.size)
+                                                            ? getFileSize(
+                                                                  file
+                                                                      .original_file
+                                                                      .size,
+                                                              )
                                                             : "N/A"}
                                                     </span>
                                                 </div>
 
                                                 <div className="grid grid-cols-2 items-center">
-                                                    <span className="text-foreground/70">Pages:</span>
+                                                    <span className="text-foreground/70">
+                                                        Pages:
+                                                    </span>
                                                     <span className="text-foreground font-medium text-right">
                                                         {file.page_count}
                                                     </span>
                                                 </div>
 
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-foreground">Sided:</span>
+                                                    <span className="text-foreground">
+                                                        Sided:
+                                                    </span>
                                                     <div className="flex flex-row gap-2">
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5 hover:bg-foreground hover:text-background",
-                                                                file.print_type === "double_side"
+                                                                file.print_type ===
+                                                                    "double_side"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
                                                             )}
-                                                            onClick={() => togglePrintType(index)}
+                                                            onClick={() =>
+                                                                togglePrintType(
+                                                                    index,
+                                                                )
+                                                            }
                                                         >
                                                             Double Side
                                                         </span>
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors px-2 py-0.5 hover:bg-foreground hover:text-background text-right",
-                                                                file.print_type === "single_side"
+                                                                file.print_type ===
+                                                                    "single_side"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
                                                             )}
-                                                            onClick={() => togglePrintType(index)}
+                                                            onClick={() =>
+                                                                togglePrintType(
+                                                                    index,
+                                                                )
+                                                            }
                                                         >
                                                             Single Side
                                                         </span>
@@ -258,27 +306,39 @@ export default function Client({ user }: ClientProps) {
                                                 </div>
 
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-foreground">Color:</span>
+                                                    <span className="text-foreground">
+                                                        Color:
+                                                    </span>
                                                     <div className="flex flex-row gap-2">
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5 hover:bg-foreground hover:text-background",
-                                                                file.print_color === "b/w"
+                                                                file.print_color ===
+                                                                    "b/w"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
                                                             )}
-                                                            onClick={() => togglePrintColor(index)}
+                                                            onClick={() =>
+                                                                togglePrintColor(
+                                                                    index,
+                                                                )
+                                                            }
                                                         >
                                                             Black & White
                                                         </span>
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5 hover:bg-foreground hover:text-background",
-                                                                file.print_color === "colored"
+                                                                file.print_color ===
+                                                                    "colored"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
                                                             )}
-                                                            onClick={() => togglePrintColor(index)}
+                                                            onClick={() =>
+                                                                togglePrintColor(
+                                                                    index,
+                                                                )
+                                                            }
                                                         >
                                                             Colored
                                                         </span>
@@ -286,27 +346,39 @@ export default function Client({ user }: ClientProps) {
                                                 </div>
 
                                                 <div className="flex items-center justify-between">
-                                                    <span className="text-foreground">Binding:</span>
+                                                    <span className="text-foreground">
+                                                        Binding:
+                                                    </span>
                                                     <div className="flex flex-row gap-2">
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors text-right px-2 py-0.5 hover:bg-foreground hover:text-background",
-                                                                file.binding_type === "no"
+                                                                file.binding_type ===
+                                                                    "no"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
                                                             )}
-                                                            onClick={() => toggleBinding(index)}
+                                                            onClick={() =>
+                                                                toggleBinding(
+                                                                    index,
+                                                                )
+                                                            }
                                                         >
                                                             No
                                                         </span>
                                                         <span
                                                             className={cn(
                                                                 "cursor-pointer rounded-md transition-colors px-2 py-0.5 hover:bg-foreground hover:text-background text-right",
-                                                                file.binding_type === "bind"
+                                                                file.binding_type ===
+                                                                    "bind"
                                                                     ? "bg-accent text-black"
                                                                     : "text-foreground",
                                                             )}
-                                                            onClick={() => toggleBinding(index)}
+                                                            onClick={() =>
+                                                                toggleBinding(
+                                                                    index,
+                                                                )
+                                                            }
                                                         >
                                                             Bind
                                                         </span>
@@ -314,17 +386,24 @@ export default function Client({ user }: ClientProps) {
                                                 </div>
 
                                                 <div className="grid grid-cols-2 items-center">
-                                                    <span className="text-foreground/70">Copies:</span>
+                                                    <span className="text-foreground/70">
+                                                        Copies:
+                                                    </span>
                                                     <div className="flex justify-end gap-2 items-center">
                                                         <LuMinus
                                                             size={24}
                                                             className={cn(
                                                                 "p-1 mt-1 bg-foreground/10 hover:text-black hover:bg-accent cursor-pointer rounded-sm",
-                                                                file.print_count <= 1 &&
-                                                                "opacity-50 cursor-not-allowed pointer-events-none hover:bg-accent"
+                                                                file.print_count <=
+                                                                    1 &&
+                                                                    "opacity-50 cursor-not-allowed pointer-events-none hover:bg-accent",
                                                             )}
                                                             onClick={() =>
-                                                                file.print_count > 1 && decrementPrintCount(index)
+                                                                file.print_count >
+                                                                    1 &&
+                                                                decrementPrintCount(
+                                                                    index,
+                                                                )
                                                             }
                                                         />
                                                         <span className="text-foreground font-medium w-6 text-center">
@@ -332,32 +411,56 @@ export default function Client({ user }: ClientProps) {
                                                         </span>
                                                         <LuPlus
                                                             size={24}
-                                                            onClick={() => incrementPrintCount(index)}
+                                                            onClick={() =>
+                                                                incrementPrintCount(
+                                                                    index,
+                                                                )
+                                                            }
                                                             className="p-1 bg-foreground/10 hover:bg-accent hover:text-black cursor-pointer rounded-sm"
                                                         />
                                                     </div>
                                                 </div>
 
                                                 <div className="flex flex-col items-start gap-3 w-full">
-                                                    <Text className="text-foreground/70 whitespace-nowrap">Instructions :</Text>
+                                                    <Text className="text-foreground/70 whitespace-nowrap">
+                                                        Instructions :
+                                                    </Text>
                                                     <div className="flex-1 w-full">
                                                         <Textarea
                                                             onChange={(e) => {
-                                                                const newValue = e.target.value;
-                                                                setSelectedFiles((prevFiles) =>
-                                                                    prevFiles.map((f, i) =>
-                                                                        i === index ? { ...f, instructions: newValue } : f
-                                                                    )
+                                                                const newValue =
+                                                                    e.target
+                                                                        .value;
+                                                                setSelectedFiles(
+                                                                    (
+                                                                        prevFiles,
+                                                                    ) =>
+                                                                        prevFiles.map(
+                                                                            (
+                                                                                f,
+                                                                                i,
+                                                                            ) =>
+                                                                                i ===
+                                                                                index
+                                                                                    ? {
+                                                                                          ...f,
+                                                                                          instructions:
+                                                                                              newValue,
+                                                                                      }
+                                                                                    : f,
+                                                                        ),
                                                                 );
                                                             }}
-                                                            value={file.instructions || ""}
+                                                            value={
+                                                                file.instructions ||
+                                                                ""
+                                                            }
                                                             placeholder="Specify Instructions..."
                                                             className="w-full h-16"
                                                             rows={5}
                                                         />
                                                     </div>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
@@ -367,11 +470,17 @@ export default function Client({ user }: ClientProps) {
                             <div className="w-full my-10 grid grid-cols-3 gap-3">
                                 <Button
                                     variant="destructive"
-                                    onClick={() => setSelectedFiles([])}
+                                    onClick={() => {
+                                        setSelectedFiles([]);
+                                        setIsFilesSelected(false);
+                                    }}
                                 >
                                     Clear all
                                 </Button>
-                                <Button variant="foreground" onClick={triggerFileInput}>
+                                <Button
+                                    variant="foreground"
+                                    onClick={triggerFileInput}
+                                >
                                     Add more files
                                 </Button>
                                 <Button onClick={submitHandler}>Submit</Button>
@@ -384,8 +493,8 @@ export default function Client({ user }: ClientProps) {
                     <Modal
                         isOpen={isOpen}
                         onClose={() => {
-                            setIsFilesSelected(false)
-                            setIsOpen(false)
+                            setIsFilesSelected(false);
+                            setIsOpen(false);
                         }}
                         closeOnOutsideClick
                         closeOnEsc
@@ -398,7 +507,8 @@ export default function Client({ user }: ClientProps) {
                                 </h3>
                                 <div className="">
                                     <p className="text-sm">
-                                        Your files have been queued for printing.
+                                        Your files have been queued for
+                                        printing.
                                     </p>
                                 </div>
                             </div>
@@ -415,7 +525,7 @@ export default function Client({ user }: ClientProps) {
                                 <Button
                                     onClick={() => {
                                         setIsOpen(false);
-                                        router.push('/user/prints');
+                                        router.push("/user/prints");
                                     }}
                                 >
                                     View Print History
@@ -425,6 +535,6 @@ export default function Client({ user }: ClientProps) {
                     </Modal>
                 )}
             </section>
-        </ >
+        </>
     );
 }

@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
@@ -34,7 +34,11 @@ export default function Client({ user }: ClientProps) {
                 setPrints(result.data || []);
             } catch (error) {
                 console.error("Error fetching prints queue:", error);
-                setError(error instanceof Error ? error.message : "Failed to fetch history");
+                setError(
+                    error instanceof Error
+                        ? error.message
+                        : "Failed to fetch history",
+                );
                 setPrints([]);
             } finally {
                 setLoading(false);
@@ -50,7 +54,9 @@ export default function Client({ user }: ClientProps) {
         return (
             <MainLayout>
                 <div className="md:mb-4 mb-2 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">Prints Queue</Text>
+                    <Text size="5xl" weight="bold">
+                        Prints Queue
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -74,7 +80,9 @@ export default function Client({ user }: ClientProps) {
         return (
             <MainLayout>
                 <div className="md:mb-4 mb-2 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">Prints Queue</Text>
+                    <Text size="5xl" weight="bold">
+                        Prints Queue
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -91,7 +99,9 @@ export default function Client({ user }: ClientProps) {
     return (
         <MainLayout>
             <div className="md:mb-4 mb-2 flex flex-col text-left">
-                <Text size="5xl" weight="bold">Prints Queue</Text>
+                <Text size="5xl" weight="bold">
+                    Prints Queue
+                </Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>

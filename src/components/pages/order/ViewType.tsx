@@ -16,7 +16,10 @@ export const ViewType = ({ setViewType, viewType }: ViewTypeProps) => {
             >
                 <LuGrid3X3
                     size="36"
-                    className={cn(!viewType && "bg-foreground/10", "p-1.5 rounded-sm")}
+                    className={cn(
+                        !viewType && "bg-foreground/10",
+                        "p-1.5 rounded-sm",
+                    )}
                 />
                 <Text className="absolute w-19.5 top-11 text-sm opacity-0 group-hover:opacity-100 py-1 px-2 rounded-md group-hover:bg-foreground/10 transition-opacity duration-200">
                     Grid View
@@ -28,7 +31,10 @@ export const ViewType = ({ setViewType, viewType }: ViewTypeProps) => {
             >
                 <LuTable2
                     size="36"
-                    className={cn(viewType && "bg-foreground/10", "p-1.5 rounded-sm")}
+                    className={cn(
+                        viewType && "bg-foreground/10",
+                        "p-1.5 rounded-sm",
+                    )}
                 />
                 <Text className="absolute w-20.5 top-11 text-sm opacity-0 group-hover:opacity-100 py-1 px-2 rounded-md group-hover:bg-foreground/10 transition-opacity duration-200">
                     Table View

@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import React from "react";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { cn } from "@/lib/utils";
@@ -10,16 +10,33 @@ export default function NewLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-
-    const pathname = usePathname()
+    const pathname = usePathname();
 
     return (
         <MainLayout>
             <section className="flex justify-evenly bg-foreground/10 rounded-xl w-full">
-                <Link href="/users/shopkeeper/prints" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/users/shopkeeper/prints") && "bg-accent text-black")}>Scheduled Prints</Link>
-                <Link href="/users/shopkeeper/orders" className={cn("cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md", pathname.includes("/users/shopkeeper/orders") && "bg-accent text-black")}>Pending Orders</Link>
+                <Link
+                    href="/users/shopkeeper/prints"
+                    className={cn(
+                        "cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md",
+                        pathname.includes("/users/shopkeeper/prints") &&
+                            "bg-accent text-black",
+                    )}
+                >
+                    Scheduled Prints
+                </Link>
+                <Link
+                    href="/users/shopkeeper/orders"
+                    className={cn(
+                        "cursor-pointer transition-colors w-1/2 text-foreground text-center p-1.5 rounded-md",
+                        pathname.includes("/users/shopkeeper/orders") &&
+                            "bg-accent text-black",
+                    )}
+                >
+                    Pending Orders
+                </Link>
             </section>
             {children}
         </MainLayout>
-    )
+    );
 }

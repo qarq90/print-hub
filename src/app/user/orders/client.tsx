@@ -18,7 +18,9 @@ interface ClientProps {
 
 export default function Client({ user }: ClientProps) {
     const [viewType, setViewType] = useState(false);
-    const [statusType, setStatusType] = useState<"all" | "cancelled" | "completed" | "pending" | "in-cart">("all");
+    const [statusType, setStatusType] = useState<
+        "all" | "cancelled" | "completed" | "pending" | "in-cart"
+    >("all");
     const [orders, setOrders] = useState<OrderRecord[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -36,7 +38,11 @@ export default function Client({ user }: ClientProps) {
                 setOrders(result.data || []);
             } catch (error) {
                 console.error("Error fetching user history:", error);
-                setError(error instanceof Error ? error.message : "Failed to fetch history");
+                setError(
+                    error instanceof Error
+                        ? error.message
+                        : "Failed to fetch history",
+                );
                 setOrders([]);
             } finally {
                 setLoading(false);
@@ -48,12 +54,17 @@ export default function Client({ user }: ClientProps) {
         }
     }, [user]);
 
-    const filteredHistory = statusType === "all"
-        ? (orders || []).filter(item => item.in_cart === false)
-        : (orders || []).filter(item => item.order_status === statusType && item.in_cart === false);
+    const filteredHistory =
+        statusType === "all"
+            ? (orders || []).filter((item) => item.in_cart === false)
+            : (orders || []).filter(
+                  (item) =>
+                      item.order_status === statusType &&
+                      item.in_cart === false,
+              );
 
-    const cartItems = (orders || []).filter(item =>
-        item.in_cart === true && item.order_status === "in-cart"
+    const cartItems = (orders || []).filter(
+        (item) => item.in_cart === true && item.order_status === "in-cart",
     );
 
     if (loading) {
@@ -106,23 +117,37 @@ export default function Client({ user }: ClientProps) {
             </div>
             <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
                 <ViewType setViewType={setViewType} viewType={viewType} />
-                <StatusType setStatusType={setStatusType} statusType={statusType} />
+                <StatusType
+                    setStatusType={setStatusType}
+                    statusType={statusType}
+                />
             </div>
             {viewType ? (
-                <TableView orderResult={filteredHistory} page_type="user_history" statusType={statusType} />
+                <TableView
+                    orderResult={filteredHistory}
+                    page_type="user_history"
+                    statusType={statusType}
+                />
             ) : (
-                <GridView orderResult={filteredHistory} page_type="user_history" statusType={statusType} />
+                <GridView
+                    orderResult={filteredHistory}
+                    page_type="user_history"
+                    statusType={statusType}
+                />
             )}
 
             <div className="mb-6 flex flex-row items-center justify-between text-left">
                 <div className="flex flex-col">
-                    <Text size="5xl" weight="bold">Cart</Text>
+                    <Text size="5xl" weight="bold">
+                        Cart
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
                 </div>
                 <Text size="lg" className="flex flex-row items-center gap-2">
-                    {cartItems.length} item{cartItems.length !== 1 ? 's' : ''} in <LuShoppingCart />
+                    {cartItems.length} item{cartItems.length !== 1 ? "s" : ""}{" "}
+                    in <LuShoppingCart />
                 </Text>
             </div>
 
@@ -139,16 +164,28 @@ export default function Client({ user }: ClientProps) {
                     {viewType ? (
                         <>
                             <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
-                                <ViewType setViewType={setViewType} viewType={viewType} />
+                                <ViewType
+                                    setViewType={setViewType}
+                                    viewType={viewType}
+                                />
                             </div>
-                            <TableView orderResult={cartItems} page_type="user_history" />
+                            <TableView
+                                orderResult={cartItems}
+                                page_type="user_history"
+                            />
                         </>
                     ) : (
                         <>
                             <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
-                                <ViewType setViewType={setViewType} viewType={viewType} />
+                                <ViewType
+                                    setViewType={setViewType}
+                                    viewType={viewType}
+                                />
                             </div>
-                            <GridView orderResult={cartItems} page_type="user_history" />
+                            <GridView
+                                orderResult={cartItems}
+                                page_type="user_history"
+                            />
                         </>
                     )}
                 </>

@@ -4,7 +4,10 @@ import { useState } from "react";
 
 export const Authentication = () => {
     const [randomImage] = useState(
-        () => AuthenticationImages[Math.floor(Math.random() * AuthenticationImages.length)]
+        () =>
+            AuthenticationImages[
+                Math.floor(Math.random() * AuthenticationImages.length)
+            ],
     );
 
     return (

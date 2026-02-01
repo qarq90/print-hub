@@ -1,4 +1,4 @@
-"use client";;
+"use client";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Text } from "@/components/ui/text";
 import { UserProps } from "@/interfaces/User";
@@ -29,7 +29,11 @@ export default function Client({ user: user }: ClientProps) {
                 setOrders(result?.data || []);
             } catch (error) {
                 console.error("Error fetching user history:", error);
-                setError(error instanceof Error ? error.message : "Failed to fetch history");
+                setError(
+                    error instanceof Error
+                        ? error.message
+                        : "Failed to fetch history",
+                );
                 setOrders([]);
             } finally {
                 setLoading(false);
@@ -45,7 +49,9 @@ export default function Client({ user: user }: ClientProps) {
         return (
             <MainLayout>
                 <div className="md:mb-4 mb-2 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">Orders</Text>
+                    <Text size="5xl" weight="bold">
+                        Orders
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -69,7 +75,9 @@ export default function Client({ user: user }: ClientProps) {
         return (
             <MainLayout>
                 <div className="mb-3 flex flex-col text-left">
-                    <Text size="5xl" weight="bold">Orders</Text>
+                    <Text size="5xl" weight="bold">
+                        Orders
+                    </Text>
                     <Text size="base">
                         Last updated: {new Date().toLocaleDateString()}
                     </Text>
@@ -86,7 +94,9 @@ export default function Client({ user: user }: ClientProps) {
     return (
         <MainLayout>
             <div className="md:mb-4 mb-2 flex flex-col text-left">
-                <Text size="5xl" weight="bold">Orders</Text>
+                <Text size="5xl" weight="bold">
+                    Orders
+                </Text>
                 <Text size="base">
                     Last updated: {new Date().toLocaleDateString()}
                 </Text>

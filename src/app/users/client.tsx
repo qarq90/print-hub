@@ -33,7 +33,7 @@ export default function Client() {
         if (e.key === "Enter") {
             loginHandler();
         }
-    }
+    };
 
     const clearHandler = () => {
         setPassword("");
@@ -45,7 +45,7 @@ export default function Client() {
                 <div
                     className={cn(
                         "cursor-pointer transition-colors w-1/2 text-center p-1.5 rounded-md",
-                        pageType === true && "bg-accent text-black"
+                        pageType === true && "bg-accent text-black",
                     )}
                     onClick={() => setPageType(true)}
                 >
@@ -54,7 +54,7 @@ export default function Client() {
                 <div
                     className={cn(
                         "cursor-pointer transition-colors w-1/2 text-center p-1.5 rounded-md",
-                        pageType === false && "bg-accent text-black"
+                        pageType === false && "bg-accent text-black",
                     )}
                     onClick={() => setPageType(false)}
                 >
@@ -78,10 +78,17 @@ export default function Client() {
                                 type="password"
                             />
                             <div className="flex w-30 justify-center items-center flex-row gap-2">
-                                <Button variant="outline" className="w-full" onClick={clearHandler}>
+                                <Button
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={clearHandler}
+                                >
                                     Clear
                                 </Button>
-                                <Button className="w-full" onClick={loginHandler}>
+                                <Button
+                                    className="w-full"
+                                    onClick={loginHandler}
+                                >
                                     Login
                                 </Button>
                             </div>
@@ -106,10 +113,17 @@ export default function Client() {
                                 type="password"
                             />
                             <div className="flex w-30 justify-center items-center flex-row gap-2">
-                                <Button variant="outline" className="w-full" onClick={clearHandler}>
+                                <Button
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={clearHandler}
+                                >
                                     Clear
                                 </Button>
-                                <Button className="w-full" onClick={loginHandler}>
+                                <Button
+                                    className="w-full"
+                                    onClick={loginHandler}
+                                >
                                     Login
                                 </Button>
                             </div>

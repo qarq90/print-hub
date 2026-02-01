@@ -13,37 +13,47 @@ import {
     LuPackage,
     LuMinus,
     LuPlus,
-    LuShoppingCart
+    LuShoppingCart,
 } from "react-icons/lu";
 import { OrderRecord } from "@/interfaces/Order";
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import { FullLoader } from "@/components/ui/loader";
 import { Textarea } from "@/components/ui/textarea";
 import { useRouter } from "next/navigation";
-import { cancelOrder, checkoutOrder, completeOrder, paidOrder, updateOrder } from "@/functions/orders";
+import {
+    cancelOrder,
+    checkoutOrder,
+    completeOrder,
+    paidOrder,
+    updateOrder,
+} from "@/functions/orders";
 
 interface OrderDetailsProps {
     item: OrderRecord;
     onClose: () => void;
-    page_type: "user_history" | "order_queue" | "admin_page" | "shopkeeper_page";
+    page_type:
+        | "user_history"
+        | "order_queue"
+        | "admin_page"
+        | "shopkeeper_page";
 }
 
 const getStatusStyles = (status: string) => {
     switch (status.toLowerCase()) {
-        case 'completed':
+        case "completed":
             return {
                 icon: <LuCheck />,
-                text: "text-green-500"
+                text: "text-green-500",
             };
-        case 'cancelled':
+        case "cancelled":
             return {
                 icon: <LuX />,
-                text: "text-red-500"
+                text: "text-red-500",
             };
         default:
             return {
                 icon: <LuClock />,
-                text: "text-yellow-500"
+                text: "text-yellow-500",
             };
     }
 };
@@ -56,25 +66,36 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
     const statusStyles = getStatusStyles(currentOrder.order_status);
 
     const calculateCost = (order: OrderRecord) => {
-        const quantity = parseInt(order.item_quantity || '0');
+        const quantity = parseInt(order.item_quantity || "0");
         const price = order.item_price || 0;
         return quantity * price;
     };
 
     const incrementQuantity = () => {
-        if (page_type === "user_history" && currentOrder.order_status === "in-cart") {
-            setCurrentOrder(prev => ({
+        if (
+            page_type === "user_history" &&
+            currentOrder.order_status === "in-cart"
+        ) {
+            setCurrentOrder((prev) => ({
                 ...prev,
-                item_quantity: (parseInt(prev.item_quantity || '0') + 1).toString(),
+                item_quantity: (
+                    parseInt(prev.item_quantity || "0") + 1
+                ).toString(),
             }));
         }
     };
 
     const decrementQuantity = () => {
-        if (page_type === "user_history" && currentOrder.order_status === "in-cart") {
-            setCurrentOrder(prev => ({
+        if (
+            page_type === "user_history" &&
+            currentOrder.order_status === "in-cart"
+        ) {
+            setCurrentOrder((prev) => ({
                 ...prev,
-                item_quantity: Math.max(1, parseInt(prev.item_quantity || '1') - 1).toString(),
+                item_quantity: Math.max(
+                    1,
+                    parseInt(prev.item_quantity || "1") - 1,
+                ).toString(),
             }));
         }
     };
@@ -161,7 +182,10 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                 aria-labelledby="modal-title"
             >
                 <div className="flex justify-between items-center mb-4">
-                    <h3 id="modal-title" className="text-lg font-semibold flex items-center gap-2">
+                    <h3
+                        id="modal-title"
+                        className="text-lg font-semibold flex items-center gap-2"
+                    >
                         <LuShoppingCart className="h-5 w-5" />
                         Order Details
                     </h3>
@@ -175,21 +199,23 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                 </div>
 
                 <div className="space-y-3">
-                    {
-                        page_type !== "user_history" && (
-                            <div className="flex justify-center items-center gap-3 my-3.5">
-                                <span className="text-foreground flex-shrink-0 mt-1">
-                                    <LuUser />
+                    {page_type !== "user_history" && (
+                        <div className="flex justify-center items-center gap-3 my-3.5">
+                            <span className="text-foreground flex-shrink-0 mt-1">
+                                <LuUser />
+                            </span>
+                            <div className="flex-1 flex justify-between">
+                                <span className="text-foreground">
+                                    Customer:
                                 </span>
-                                <div className="flex-1 flex justify-between">
-                                    <span className="text-foreground">Customer:</span>
-                                    <span className="font-medium text-right">
-                                        {truncateText(currentOrder.user_name || "N/A")}
-                                    </span>
-                                </div>
+                                <span className="font-medium text-right">
+                                    {truncateText(
+                                        currentOrder.user_name || "N/A",
+                                    )}
+                                </span>
                             </div>
-                        )
-                    }
+                        </div>
+                    )}
 
                     <div className="flex justify-center items-center gap-3 my-3.5">
                         <span className="text-foreground flex-shrink-0 mt-1">
@@ -222,24 +248,30 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Quantity:</span>
                             <span className="font-medium text-right flex gap-4 items-center justify-center">
-                                {page_type === "user_history" && currentOrder.order_status === "in-cart" && (
-                                    <LuMinus
-                                        className={cn(
-                                            "mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm",
-                                            parseInt(currentOrder.item_quantity || '0') <= 1 && "cursor-not-allowed pointer-events-none"
-                                        )}
-                                        size="24"
-                                        onClick={decrementQuantity}
-                                    />
-                                )}
+                                {page_type === "user_history" &&
+                                    currentOrder.order_status === "in-cart" && (
+                                        <LuMinus
+                                            className={cn(
+                                                "mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm",
+                                                parseInt(
+                                                    currentOrder.item_quantity ||
+                                                        "0",
+                                                ) <= 1 &&
+                                                    "cursor-not-allowed pointer-events-none",
+                                            )}
+                                            size="24"
+                                            onClick={decrementQuantity}
+                                        />
+                                    )}
                                 <span>{currentOrder.item_quantity}</span>
-                                {page_type === "user_history" && currentOrder.order_status === "in-cart" && (
-                                    <LuPlus
-                                        className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
-                                        size="24"
-                                        onClick={incrementQuantity}
-                                    />
-                                )}
+                                {page_type === "user_history" &&
+                                    currentOrder.order_status === "in-cart" && (
+                                        <LuPlus
+                                            className="mt-1 p-1 bg-foreground/10 hover:bg-foreground hover:text-background cursor-pointer rounded-sm"
+                                            size="24"
+                                            onClick={incrementQuantity}
+                                        />
+                                    )}
                             </span>
                         </div>
                     </div>
@@ -249,7 +281,9 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                             <LuBadgeIndianRupee />
                         </span>
                         <div className="flex-1 flex justify-between">
-                            <span className="text-foreground">Price per Item:</span>
+                            <span className="text-foreground">
+                                Price per Item:
+                            </span>
                             <span className="font-medium text-right">
                                 ₹{currentOrder.item_price}
                             </span>
@@ -262,7 +296,9 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                         </span>
                         <div className="flex-1 flex justify-between">
                             <span className="text-foreground">Status:</span>
-                            <span className={`font-medium text-right ${statusStyles.text}`}>
+                            <span
+                                className={`font-medium text-right ${statusStyles.text}`}
+                            >
                                 {currentOrder.order_status}
                             </span>
                         </div>
@@ -282,7 +318,9 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
 
                     <div className="flex justify-between items-center gap-3 my-3.5">
                         <LuClipboardList />
-                        <span className="text-foreground mb-2 w-48">Instructions:</span>
+                        <span className="text-foreground mb-2 w-48">
+                            Instructions:
+                        </span>
                         <Textarea
                             onChange={(e) => {
                                 if (
@@ -290,7 +328,7 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                                     currentOrder.order_status === "in-cart"
                                 ) {
                                     const newValue = e.target.value;
-                                    setCurrentOrder(prev => ({
+                                    setCurrentOrder((prev) => ({
                                         ...prev,
                                         instructions: newValue,
                                     }));
@@ -319,56 +357,71 @@ export const Details = ({ item, onClose, page_type }: OrderDetailsProps) => {
                     </div>
 
                     <div className="flex flex-row w-full gap-2 pt-3">
-                        {page_type === "user_history" && currentOrder.order_status === "in-cart" && currentOrder.in_cart === true && (
-                            <Button
-                                variant="accent"
-                                onClick={checkoutHandler}
-                                className="grow"
-                            >
-                                Checkout
-                            </Button>
-                        )}
+                        {page_type === "user_history" &&
+                            currentOrder.order_status === "in-cart" &&
+                            currentOrder.in_cart === true && (
+                                <Button
+                                    variant="accent"
+                                    onClick={checkoutHandler}
+                                    className="grow"
+                                >
+                                    Checkout
+                                </Button>
+                            )}
 
-                        {(page_type === "user_history" || page_type === "admin_page") && currentOrder.order_status === "pending" && currentOrder.in_cart === false && (
-                            <Button
-                                variant="destructive"
-                                onClick={cancelHandler}
-                                className="grow"
-                            >
-                                Cancel
-                            </Button>
-                        )}
+                        {(page_type === "user_history" ||
+                            page_type === "admin_page") &&
+                            currentOrder.order_status === "pending" &&
+                            currentOrder.in_cart === false && (
+                                <Button
+                                    variant="destructive"
+                                    onClick={cancelHandler}
+                                    className="grow"
+                                >
+                                    Cancel
+                                </Button>
+                            )}
 
-                        {page_type === "user_history" && (currentOrder.order_status === "pending" || currentOrder.order_status === "in-cart") && currentOrder.in_cart === true && (
-                            <Button
-                                variant="foreground"
-                                onClick={updateHandler}
-                                disabled={JSON.stringify(currentOrder) === JSON.stringify(item)}
-                                className="grow"
-                            >
-                                Update
-                            </Button>
-                        )}
+                        {page_type === "user_history" &&
+                            (currentOrder.order_status === "pending" ||
+                                currentOrder.order_status === "in-cart") &&
+                            currentOrder.in_cart === true && (
+                                <Button
+                                    variant="foreground"
+                                    onClick={updateHandler}
+                                    disabled={
+                                        JSON.stringify(currentOrder) ===
+                                        JSON.stringify(item)
+                                    }
+                                    className="grow"
+                                >
+                                    Update
+                                </Button>
+                            )}
 
-                        {page_type === "admin_page" && currentOrder.order_status === "pending" && currentOrder.in_cart === false && (
-                            <Button
-                                variant="foreground"
-                                onClick={completeHandler}
-                                className="grow"
-                            >
-                                Complete
-                            </Button>
-                        )}
+                        {page_type === "admin_page" &&
+                            currentOrder.order_status === "pending" &&
+                            currentOrder.in_cart === false && (
+                                <Button
+                                    variant="foreground"
+                                    onClick={completeHandler}
+                                    className="grow"
+                                >
+                                    Complete
+                                </Button>
+                            )}
 
-                        {page_type === "admin_page" && currentOrder.payment_status === "unpaid" && currentOrder.in_cart === false && (
-                            <Button
-                                variant="foreground"
-                                onClick={paidHandler}
-                                className="grow"
-                            >
-                                Paid
-                            </Button>
-                        )}
+                        {page_type === "admin_page" &&
+                            currentOrder.payment_status === "unpaid" &&
+                            currentOrder.in_cart === false && (
+                                <Button
+                                    variant="foreground"
+                                    onClick={paidHandler}
+                                    className="grow"
+                                >
+                                    Paid
+                                </Button>
+                            )}
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -12,11 +12,11 @@ export const Footer = () => {
             {isAuthPage ? (
                 <>
                     By continuing, you agree to our{" "}
-                    <Link href="/terms-of-service" className="text-accent">
+                    <Link href="/policies" className="text-accent">
                         Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link href="/privacy-policy" className="text-accent">
+                    <Link href="/policies" className="text-accent">
                         Privacy Policy
                     </Link>
                     .<br />© {new Date().getFullYear()} Print Hub. All rights
@@ -25,11 +25,11 @@ export const Footer = () => {
             ) : (
                 <>
                     Read our{" "}
-                    <Link href="/terms-of-service" className="text-accent">
+                    <Link href="/policies" className="text-accent">
                         Terms of Service
                     </Link>{" "}
                     and{" "}
-                    <Link href="/privacy-policy" className="text-accent">
+                    <Link href="/policies" className="text-accent">
                         Privacy Policy
                     </Link>
                     <br /> Need help?{" "}
