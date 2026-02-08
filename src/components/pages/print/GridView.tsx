@@ -142,7 +142,7 @@ export const GridView: React.FC<GridViewProps> = ({
                 <div className="flex flex-col" key={groupKey}>
                     <Accordion type="single" collapsible>
                         <AccordionItem value="groupKey">
-                            <AccordionTrigger className="bg-neutral-800 shadow-md rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
+                            <AccordionTrigger className="bg-stone shadow-md rounded-md font-bold cursor-pointer text-lg transition-colors text-foreground sticky top-0 backdrop-blur-sm z-10">
                                 <div className="md:grid md:grid-cols-4 items-center w-full">
                                     <div className="flex flex-row gap-2 col-span-2 items-center">
                                         <span>

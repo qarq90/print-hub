@@ -8,6 +8,7 @@
     --color-light: var(--light);
     --color-background: var(--background);
     --color-foreground: var(--foreground);
+    --color-stone: var(--stone);
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
     --color-sidebar-ring: var(--sidebar-ring);
@@ -54,6 +55,7 @@
     --accent: #f79817;
     --dark: #191919;
     --light: #eee;
+    --stone: #dddddd;
 
     /* Background shades */
     --background-50: #ffffff;
@@ -76,7 +78,7 @@
     --foreground-500: #7b7b7b;
     --foreground-600: #555555;
     --foreground-700: #434343;
-    --foreground-800: #262626;
+    --foreground-800: #202020;
     --foreground-900: #191919;
 
     /* Accent shades */
@@ -133,6 +135,7 @@
     --accent: #f79817;
     --dark: #191919;
     --light: #eee;
+    --stone: #202020;
 
     /* Dark mode background shades */
     --background-50: #212121;

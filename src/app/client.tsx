@@ -182,7 +182,7 @@ export default function Client() {
                             <div
                                 key={index}
                                 className={cn(
-                                    "flex flex-col gap-3 rounded-lg bg-neutral-800 justify-center items-center px-8 py-10 hover:shadow-md transition-all",
+                                    "flex flex-col gap-3 rounded-lg bg-stone justify-center items-center px-8 py-10 hover:shadow-md transition-all",
                                 )}
                             >
                                 <Icon size={36} className="text-accent" />
@@ -205,7 +205,7 @@ export default function Client() {
                     {printhubTestimonials.map((testimonial, index) => (
                         <div
                             key={index}
-                            className="flex flex-col gap-4 rounded-xl bg-neutral-800 p-6 hover:shadow-md transition-all"
+                            className="flex flex-col gap-4 rounded-xl bg-stone p-6 hover:shadow-md transition-all"
                         >
                             <Text className="text-accent flex flex-row gap-2 items-center">
                                 <LuUser size={24} /> {testimonial.name}

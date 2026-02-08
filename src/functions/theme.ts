@@ -7,4 +7,8 @@ export const applyTheme = (darkMode: boolean) => {
         "--foreground",
         darkMode ? "#fff" : "#191919",
     );
+    document.documentElement.style.setProperty(
+        "--stone",
+        darkMode ? "#202020" : "#dddddd",
+    );
 };

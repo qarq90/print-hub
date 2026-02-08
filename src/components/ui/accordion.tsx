@@ -31,7 +31,7 @@ function AccordionItem({
             className={cn(
                 "rounded-md",
                 background &&
-                    "bg-neutral-800 border-neutral-800 border-2 first:rounded-t-md last:rounded-b-md",
+                    "bg-stone border-neutral-800 border-2 first:rounded-t-md last:rounded-b-md",
                 className,
             )}
             {...props}
