@@ -2,20 +2,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 "use client";
-
 import { useState, useEffect } from "react";
 import Script from "next/script";
 import { EmptyHistory } from "@/components/empty/EmptyHistory";
 import { Text } from "@/components/ui/text";
 import { HalfLoader } from "@/components/ui/loader";
 import { truncateText } from "@/functions/utility";
-import { Button } from "@/components/ui/button";
-import { SiRazorpay } from "react-icons/si";
-import { FaMoneyBill } from "react-icons/fa6";
+import { FaMoneyBill, FaQrcode } from "react-icons/fa6";
 import Link from "next/link";
 import { UserProps } from "@/interfaces/User";
 import { PrintRecord } from "@/interfaces/Print";
-import { fetchUserUnpaidPrints } from "@/functions/prints";
+import { fetchUserPendingPrints } from "@/functions/prints";
+import Image from "next/image";
 
 interface ClientProps {
     user: UserProps;
@@ -43,7 +41,7 @@ export default function Client({ user }: ClientProps) {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const result = await fetchUserUnpaidPrints(user);
+                const result = await fetchUserPendingPrints(user);
 
                 if (result.error) throw result.error;
 
@@ -156,68 +154,81 @@ export default function Client({ user }: ClientProps) {
                 </Text>
             </div>
 
-            <div className="grid md:grid-cols-2 grid-cols-1 gap-4 w-full">
-                {/* Print List */}
-                <div className="grid grid-cols-1 p-2">
-                    <div className="grid grid-cols-4 p-1 items-center border-b border-foreground/10">
-                        <Text weight="bold" className="col-span-2">
-                            File Name
-                        </Text>
-                        <Text weight="bold">Pages</Text>
-                        <Text weight="bold">Cost</Text>
+            <div className="flex flex-row-gap-4 items-start">
+                <div className="grid md:grid-cols-1 grid-cols-1 items-start gap-4 w-2/3">
+                    <div className="grid grid-cols-1 p-2">
+                        <div className="grid grid-cols-4 p-1 items-center border-b border-foreground/10">
+                            <Text weight="bold" className="col-span-2">
+                                File Name
+                            </Text>
+                            <Text weight="bold">Pages</Text>
+                            <Text weight="bold">Cost</Text>
+                        </div>
+
+                        {prints.map((print, index) => (
+                            <div
+                                key={index}
+                                className="grid grid-cols-4 p-1 items-center border-b border-foreground/10"
+                            >
+                                <Text className="col-span-2">
+                                    {truncateText(print.file_name, 24)}
+                                </Text>
+                                <Text>{print.page_count}</Text>
+                                <Text>₹ {calculateCost(print)}</Text>
+                            </div>
+                        ))}
+
+                        <div className="grid grid-cols-4 p-1 items-center">
+                            <Text weight="bold" className="col-span-2"></Text>
+                            <Text weight="bold">Total</Text>
+                            <Text weight="bold">
+                                ₹{" "}
+                                {prints.reduce(
+                                    (total, doc) => total + calculateCost(doc),
+                                    0,
+                                )}
+                            </Text>
+                        </div>
                     </div>
 
-                    {prints.map((print, index) => (
-                        <div
-                            key={index}
-                            className="grid grid-cols-4 p-1 items-center border-b border-foreground/10"
-                        >
-                            <Text className="col-span-2">
-                                {truncateText(print.file_name, 24)}
-                            </Text>
-                            <Text>{print.page_count}</Text>
-                            <Text>₹ {calculateCost(print)}</Text>
-                        </div>
-                    ))}
-
-                    <div className="grid grid-cols-4 p-1 items-center">
-                        <Text weight="bold" className="col-span-2"></Text>
-                        <Text weight="bold">Total</Text>
-                        <Text weight="bold">
-                            ₹{" "}
-                            {prints.reduce(
-                                (total, doc) => total + calculateCost(doc),
-                                0,
-                            )}
+                    <div className="flex flex-col p-2 gap-4">
+                        <Text size="3xl">Choose a Payment Mode</Text>
+                        <Text size="base" className="text-foreground/70">
+                            Complete your payment securely using Razorpay or pay
+                            later using Cash on Delivery.
                         </Text>
+
+                        <div className="flex flex-row gap-2 h-fit">
+                            {/* <Button
+                                className="w-1/2"
+                                onClick={handlePayment}
+                                disabled={isProcess}
+                            >
+                                <SiRazorpay />{" "}
+                                {isProcess ? "Processing..." : "Razorpay"}
+                            </Button> */}
+
+                            <Link
+                                href="/user/prints"
+                                className="w-1/2 cursor-pointer bg-accent text-black shadow-xs hover:bg-primary/90 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:scale-105"
+                            >
+                                <FaMoneyBill className="mt-0.5" /> Cash on
+                                Delivery
+                            </Link>
+                            <div className="w-1/2 cursor-pointer bg-accent text-black shadow-xs hover:bg-primary/90 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:scale-105">
+                                <FaQrcode className="mt-0.5" /> Scan QR
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                {/* Payment Options */}
-                <div className="flex flex-col p-2 gap-4">
-                    <Text size="3xl">Choose a Payment Mode</Text>
-                    <Text size="base" className="text-foreground/70">
-                        Complete your payment securely using Razorpay or pay
-                        later using Cash on Delivery.
-                    </Text>
-
-                    <div className="flex flex-row gap-2 h-fit">
-                        <Button
-                            className="w-1/2"
-                            onClick={handlePayment}
-                            disabled={isProcess}
-                        >
-                            <SiRazorpay />{" "}
-                            {isProcess ? "Processing..." : "Razorpay"}
-                        </Button>
-
-                        <Link
-                            href="/user/prints"
-                            className="w-1/2 cursor-pointer bg-accent text-black shadow-xs hover:bg-primary/90 px-4 py-2 inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:scale-105"
-                        >
-                            <FaMoneyBill className="mt-0.5" /> Cash on Delivery
-                        </Link>
-                    </div>
+                <div className="w-1/2 flex flex-row justify-center h-full">
+                    <Image
+                        src="/img/scanner.jpeg"
+                        alt="QR Scanner"
+                        width={400}
+                        height={400}
+                        className="object-cover rounded-md"
+                    />
                 </div>
             </div>
         </>
