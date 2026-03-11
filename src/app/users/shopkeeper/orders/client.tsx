@@ -110,10 +110,6 @@ export default function AdminOrdersClient() {
             </div>
             <div className="flex justify-between md:py-0 pt-3 flex-row items-center">
                 <ViewType setViewType={setViewType} viewType={viewType} />
-                <StatusType
-                    setStatusType={setStatusType}
-                    statusType={statusType}
-                />
             </div>
             {viewType ? (
                 <TableView
