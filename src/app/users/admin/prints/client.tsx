@@ -30,6 +30,9 @@ export default function Client() {
     const [statusType, setStatusType] = useState<
         "all" | "cancelled" | "completed" | "pending"
     >("all");
+    const [paymentStatus, setPaymentStatus] = useState<"paid" | "unpaid">(
+        "paid",
+    );
     const [prints, setPrints] = useState<PrintRecord[]>([]);
     const [loading, setLoading] = useState(true);
     const [selectedUser, setSelectedUser] = useState<string>("all");
@@ -79,9 +82,13 @@ export default function Client() {
     const filteredHistory = (prints || []).filter((item) => {
         const statusMatch =
             statusType === "all" || item.print_status === statusType;
+        const paymentMatch =
+            paymentStatus === "paid"
+                ? item.payment_status === "paid"
+                : item.payment_status === "unpaid";
         const userMatch =
             selectedUser === "all" || item.user_name === selectedUser;
-        return statusMatch && userMatch;
+        return statusMatch && paymentMatch && userMatch;
     });
 
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -195,6 +202,8 @@ export default function Client() {
                         <StatusType
                             setStatusType={setStatusType}
                             statusType={statusType}
+                            setPaymentStatus={setPaymentStatus}
+                            paymentStatus={paymentStatus}
                         />
                     )}
 

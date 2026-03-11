@@ -14,7 +14,7 @@ import { getEmptyStateConfig } from "@/functions/orders";
 import { truncateText } from "@/functions/utility";
 
 interface GridViewProps {
-    statusType?: "all" | "cancelled" | "completed" | "pending";
+    statusType?: "all" | "cancelled" | "completed" | "pending" ;
     documentResult: PrintRecord[];
     page_type:
         | "user_history"

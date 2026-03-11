@@ -1,15 +1,29 @@
 import { Text } from "@/components/ui/text";
-import { LuX, LuCheck, LuClock, LuList } from "react-icons/lu";
+import { LuX, LuCheck, LuClock, LuList, LuIndianRupee } from "react-icons/lu";
 import { cn } from "@/lib/utils";
 
-type Status = "all" | "cancelled" | "completed" | "pending" | "in-cart";
+type Status =
+    | "all"
+    | "cancelled"
+    | "completed"
+    | "pending"
+    | "in-cart"
+    | "unpaid";
+type PaymentStatus = "paid" | "unpaid";
 
 interface StatusTypeProps {
     statusType: Status;
     setStatusType: React.Dispatch<React.SetStateAction<Status>>;
+    paymentStatus: PaymentStatus;
+    setPaymentStatus: React.Dispatch<React.SetStateAction<PaymentStatus>>;
 }
 
-export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
+export const StatusType = ({
+    statusType,
+    setStatusType,
+    paymentStatus,
+    setPaymentStatus,
+}: StatusTypeProps) => {
     return (
         <div className="md:mb-4 md:flex hidden flex-row justify-around md:gap-4 w-full md:w-fit items-center">
             <div
@@ -108,6 +122,56 @@ export const StatusType = ({ statusType, setStatusType }: StatusTypeProps) => {
                     )}
                 >
                     Pending
+                </Text>
+            </div>
+
+            <div
+                className={cn(
+                    "flex flex-row items-center cursor-pointer rounded-lg transition-colors",
+                    paymentStatus === "unpaid" && "bg-emerald-500/10",
+                )}
+                onClick={() => setPaymentStatus("unpaid")}
+            >
+                <LuIndianRupee
+                    size="36"
+                    className={cn(
+                        "py-1.5 pl-1.5 rounded-sm",
+                        paymentStatus === "unpaid" && "text-emerald-500",
+                    )}
+                />
+                <Text
+                    className={cn(
+                        "text-sm pr-3 pl-1 rounded-md hidden md:block",
+                        paymentStatus === "unpaid" &&
+                            "text-emerald-500 font-medium",
+                    )}
+                >
+                    Unpaid
+                </Text>
+            </div>
+
+            <div
+                className={cn(
+                    "flex flex-row items-center cursor-pointer rounded-lg transition-colors",
+                    paymentStatus === "paid" && "bg-emerald-500/10",
+                )}
+                onClick={() => setPaymentStatus("paid")}
+            >
+                <LuIndianRupee
+                    size="36"
+                    className={cn(
+                        "py-1.5 pl-1.5 rounded-sm",
+                        paymentStatus === "paid" && "text-emerald-500",
+                    )}
+                />
+                <Text
+                    className={cn(
+                        "text-sm pr-3 pl-1 rounded-md hidden md:block",
+                        paymentStatus === "paid" &&
+                            "text-emerald-500 font-medium",
+                    )}
+                >
+                    Paid
                 </Text>
             </div>
         </div>

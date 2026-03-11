@@ -19,8 +19,11 @@ interface ClientProps {
 export default function Client({ user }: ClientProps) {
     const [viewType, setViewType] = useState(false);
     const [statusType, setStatusType] = useState<
-        "all" | "cancelled" | "completed" | "pending" | "in-cart"
+        "all" | "cancelled" | "completed" | "pending" | "in-cart" | "unpaid"
     >("all");
+    const [paymentStatus, setPaymentStatus] = useState<"paid" | "unpaid">(
+        "paid",
+    );
     const [orders, setOrders] = useState<OrderRecord[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -54,14 +57,19 @@ export default function Client({ user }: ClientProps) {
         }
     }, [user]);
 
-    const filteredHistory =
-        statusType === "all"
-            ? (orders || []).filter((item) => item.in_cart === false)
-            : (orders || []).filter(
-                  (item) =>
-                      item.order_status === statusType &&
-                      item.in_cart === false,
-              );
+    const filteredHistory = (orders || [])
+        .filter((item) => item.in_cart === false)
+        .filter((item) => {
+            const statusMatch =
+                statusType === "all" || item.order_status === statusType;
+
+            const paymentMatch =
+                paymentStatus === "paid"
+                    ? item.payment_status === "paid"
+                    : item.payment_status === "unpaid";
+
+            return statusMatch && paymentMatch;
+        });
 
     const cartItems = (orders || []).filter(
         (item) => item.in_cart === true && item.order_status === "in-cart",
@@ -120,6 +128,8 @@ export default function Client({ user }: ClientProps) {
                 <StatusType
                     setStatusType={setStatusType}
                     statusType={statusType}
+                    setPaymentStatus={setPaymentStatus}
+                    paymentStatus={paymentStatus}
                 />
             </div>
             {viewType ? (

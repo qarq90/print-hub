@@ -34,6 +34,9 @@ export default function Client({ user }: ClientProps) {
     const [statusType, setStatusType] = useState<
         "all" | "cancelled" | "completed" | "pending"
     >("all");
+    const [paymentStatus, setPaymentStatus] = useState<"paid" | "unpaid">(
+        "paid",
+    );
     const [prints, setPrints] = useState<PrintRecord[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -76,17 +79,24 @@ export default function Client({ user }: ClientProps) {
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [statusType]);
+    }, [statusType, paymentStatus]);
 
     const clearSelected = () => {
         setIsMultiSelect(false);
         setSelectedPrints([]);
     };
 
-    const filteredHistory =
-        statusType === "all"
-            ? prints || []
-            : (prints || []).filter((item) => item.print_status === statusType);
+    const filteredHistory = (prints || []).filter((item) => {
+        const statusMatch =
+            statusType === "all" || item.print_status === statusType;
+
+        const paymentMatch =
+            paymentStatus === "paid"
+                ? item.payment_status === "paid"
+                : item.payment_status === "unpaid";
+
+        return statusMatch && paymentMatch;
+    });
 
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
@@ -185,6 +195,8 @@ export default function Client({ user }: ClientProps) {
                         <StatusType
                             setStatusType={setStatusType}
                             statusType={statusType}
+                            setPaymentStatus={setPaymentStatus}
+                            paymentStatus={paymentStatus}
                         />
                     )}
 

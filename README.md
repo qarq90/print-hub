@@ -1,6 +1,6 @@
 # Print Hub
 
-A modern web app for queueing, uploading, and managing print jobs seamlessly.
+Print Hub is a full-stack print shop management system deployed in a college environment, enabling students to queue, upload, and manage print jobs and stationery orders seamlessly.
 
 [![Vercel](https://img.shields.io/badge/deployed-on-vercel-000000?logo=vercel)](https://print-hub-five.vercel.app/)
 
