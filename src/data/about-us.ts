@@ -25,7 +25,7 @@ export const AboutUsFAQs: AboutUsFAQ[] = [
     },
     {
         question: "How much does printing cost per page?",
-        answer: "Our standard printing rate is 2 RP (Rupees) per page for black and white. Color printing and specialty papers are available at different rates shown in our pricing calculator.",
+        answer: "Our standard printing rate is 2.5 RP (Rupees) per page for black and white. Color printing and specialty papers are available at different rates shown in our pricing calculator.",
     },
     {
         question: "What is the cost for black & white printing?",
